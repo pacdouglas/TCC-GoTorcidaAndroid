@@ -24,9 +24,7 @@ import br.com.gotorcida.gotorcida.utils.DownloadImageTask;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
-/**
- * Created by dougl on 19/09/2016.
- */
+
 
 public class SportAdapter extends ArrayAdapter<JSONObject> {
 
@@ -56,8 +54,6 @@ public class SportAdapter extends ArrayAdapter<JSONObject> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
         // Return the completed view to render on screen
         return convertView;
     }

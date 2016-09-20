@@ -1,34 +1,39 @@
 package br.com.gotorcida.gotorcida.activity;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
+
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
 
 
 public class SelectSportActivity extends AppCompatActivity {
     ListView listSports;
     ArrayAdapter<JSONObject> adapter;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
 
+        listSports = (ListView) findViewById(R.id.list_select_sports);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar_loading);
+
+        listSports.setVisibility(View.GONE);
         GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
         try {
             getRequest.execute().get();
@@ -47,7 +52,7 @@ public class SelectSportActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayList<JSONObject> sportsList = new ArrayList<>();
+        final ArrayList<JSONObject> sportsList = new ArrayList<>();
 
         for(int i=0; i < sports.length(); i++)
         {
@@ -58,10 +63,14 @@ public class SelectSportActivity extends AppCompatActivity {
             }
         }
 
-        listSports = (ListView) findViewById(R.id.list_select_sports);
-
         adapter = new SportAdapter(this, sportsList);
-
         listSports.setAdapter(adapter);
+
+        showContent();
+    }
+
+    public void showContent(){
+        listSports.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 }
