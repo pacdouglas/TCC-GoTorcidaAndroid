@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
 
 
 public class SelectSportActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class SelectSportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
 
-        GetRequest getRequest = new GetRequest("http://10.0.2.2:8080/gotorcidaws/sport");
+        GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
         try {
             getRequest.execute().get();
         } catch (InterruptedException e) {

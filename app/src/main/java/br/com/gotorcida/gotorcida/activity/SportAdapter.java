@@ -1,18 +1,28 @@
 package br.com.gotorcida.gotorcida.activity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.DownloadImageTask;
+
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
 /**
  * Created by dougl on 19/09/2016.
@@ -33,13 +43,21 @@ public class SportAdapter extends ArrayAdapter<JSONObject> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_sports, parent, false);
         }
         // Lookup view for data population
-        TextView sportName = (TextView) convertView.findViewById(R.id.name_sport);
+        CheckBox sportName = (CheckBox) convertView.findViewById(R.id.name_sport);
+
         // Populate the data into the template view using the data object
         try {
             sportName.setText(json.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        try {
+            new DownloadImageTask((ImageView)convertView.findViewById(R.id.img_sport)).execute(URL_IMAGES_BASE+json.getString("description")+".png");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         // Return the completed view to render on screen
         return convertView;
     }
