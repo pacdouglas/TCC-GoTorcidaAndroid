@@ -9,13 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.gotorcida.gotorcida.activity.SelectSportActivity">
 
-    <ListView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
         android:layout_height="437dp"
         android:id="@+id/list_select_sports"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         />
+
 
     <Button
         android:text="OK"

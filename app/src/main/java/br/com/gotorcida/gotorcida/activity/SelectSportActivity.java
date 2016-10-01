@@ -3,6 +3,9 @@ package br.com.gotorcida.gotorcida.activity;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,8 +33,8 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SP
 
 public class SelectSportActivity extends AppCompatActivity {
 
-    ListView listSports;
-    ArrayAdapter<JSONObject> adapter;
+    RecyclerView listSports;
+    SportsListAdapter adapter;
     Button buttonOK;
 
     @Override
@@ -39,7 +42,7 @@ public class SelectSportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
 
-        listSports = (ListView) findViewById(R.id.list_select_sports);
+        listSports = (RecyclerView) findViewById(R.id.list_select_sports);
 
         buttonOK = (Button) findViewById(R.id.button_sports_ok);
 
@@ -72,30 +75,14 @@ public class SelectSportActivity extends AppCompatActivity {
             }
         }
 
-        adapter = new SportAdapter(this, sportsList);
-        listSports.setAdapter(adapter);
+        listSports.setAdapter(new SportsListAdapter(sportsList, this));
+
+        RecyclerView.LayoutManager layout = new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false);
+        listSports.setLayoutManager(layout);
 
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                StringBuilder result = new StringBuilder();
-                for(int i=0;i<adapter.mCheckStates.size();i++)
-                {
-                    if(adapter.mCheckStates.get(i)==true)
-                    {
-
-                        result.append(app_info[i].applicationName);
-                        result.append("\n");
-                    }
-
-                }
-                Toast.makeText(MainActivity.this, result, 1000).show();
-            }
-
-                for (int i = 0; i < selectedSports.size(); i++){
-                    Toast.makeText(SelectSportActivity.this, i, Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }

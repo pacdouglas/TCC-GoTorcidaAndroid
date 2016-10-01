@@ -61,8 +61,8 @@ public class SelectLeagueActivity extends AppCompatActivity {
             }
         }
 
-        adapter = new SportAdapter(this, sportsList);
-        listSports.setAdapter(adapter);
+        //adapter = new SportAdapter(this, sportsList);
+        //listSports.setAdapter(adapter);
 
     }
 

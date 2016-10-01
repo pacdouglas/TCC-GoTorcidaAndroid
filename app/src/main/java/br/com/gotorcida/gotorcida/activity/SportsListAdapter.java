@@ -1,43 +1,52 @@
 package br.com.gotorcida.gotorcida.activity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.SparseBooleanArray;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.utils.DownloadImageTask;
 
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
+public class SportsListAdapter extends RecyclerView.Adapter {
 
-public class SportAdapter extends ArrayAdapter<JSONObject> {
+    List<JSONObject> sports;
+    Context context;
 
-    SparseBooleanArray mCheckStates;
-
-    public SportAdapter(Context context, ArrayList<JSONObject> sports) {
-        super(context, 0, sports);
-        mCheckStates = new SparseBooleanArray(sports.size());
+    public SportsListAdapter(List<JSONObject> sports, Context context){
+        this.sports = sports;
+        this.context = context;
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_sports, parent, false);
+        SportsListHolder holder = new SportsListHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        JSONObject data = sports.get(position);
+
+        SportsListHolder holder = (SportsListHolder) viewHolder;
+        try {
+            holder.sport.setText(data.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return sports.size();
+    }
+
+   /* @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         JSONObject json = getItem(position);
 
@@ -57,5 +66,6 @@ public class SportAdapter extends ArrayAdapter<JSONObject> {
 
         return convertView;
     }
-
+*/
 }
+
