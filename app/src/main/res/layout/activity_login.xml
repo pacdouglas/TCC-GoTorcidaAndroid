@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
+                    android:inputType="date"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -62,6 +62,13 @@
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/meuPAU"
+                android:hint="oi"/>
 
             <Button
                 android:id="@+id/email_sign_in_button"

@@ -8,35 +8,36 @@ import android.view.ViewGroup;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
 
-public class SportsListAdapter extends RecyclerView.Adapter {
+public class TeamsListAdapter extends RecyclerView.Adapter {
 
-    List<JSONObject> sports;
+    List<JSONObject> leagues;
     Context context;
 
-    public SportsListAdapter(List<JSONObject> sports, Context context){
-        this.sports = sports;
+    public TeamsListAdapter(List<JSONObject> leagues, Context context){
+        this.leagues = leagues;
         this.context = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_sports, parent, false);
-        SportsListHolder holder = new SportsListHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_teams, parent, false);
+        TeamsListHolder holder = new TeamsListHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        JSONObject data = sports.get(position);
+        JSONObject data = leagues.get(position);
 
-        SportsListHolder holder = (SportsListHolder) viewHolder;
+        TeamsListHolder holder = (TeamsListHolder) viewHolder;
         try {
-            holder.sportID.setText(data.getString("id"));
-            holder.sportName.setText(data.getString("name"));
+            holder.leagueID.setText(data.getString("id"));
+            holder.leagueName.setText(data.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -44,7 +45,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return sports.size();
+        return leagues.size();
     }
 
 }

@@ -12,7 +12,7 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="437dp"
-        android:id="@+id/list_select_sports"
+        android:id="@+id/selectsports_listview_sports"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         />
@@ -22,6 +22,6 @@
         android:text="OK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_sports_ok"
+        android:id="@+id/selectsports_button_ok"
         android:layout_gravity="bottom|right"/>
 </FrameLayout>

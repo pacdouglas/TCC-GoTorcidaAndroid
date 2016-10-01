@@ -8,29 +8,27 @@ import org.json.JSONObject;
 public class GetRequest extends AsyncTask<String, Void, Boolean> {
 
     private String url;
-    private String params;
     private Message message;
 
-    public GetRequest(String url) {
+    public GetRequest(String url, String ... params) {
         this.url = url;
-        this.params = "";
+
+        if (params != null && params.length > 0){
+            for (String parameters : params) {
+                this.url = this.url + "/" + parameters;
+            }
+        }
     }
 
     @Override
     protected Boolean doInBackground(String... params) {
         final JSONParser jParser = new JSONParser();
 
-        for (int i = 0; i <= params.length - 1; i++) {
-            this.params += params[i] + "/";
-        }
-        if(this.params != null && !this.params.isEmpty())
-            this.params = this.params.substring(0, this.params.length() - 1);
-
         ObjectMapper mapper = new ObjectMapper();
         JSONObject json = null;
 
         try {
-            json = jParser.getJSONFromUrl(this.url + this.params);
+            json = jParser.getJSONFromUrl(this.url);
             this.message = mapper.readValue(json.toString(), Message.class);
         } catch (Exception e) {
             e.printStackTrace();

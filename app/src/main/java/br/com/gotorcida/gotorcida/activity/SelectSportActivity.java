@@ -1,19 +1,13 @@
 package br.com.gotorcida.gotorcida.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
@@ -34,7 +27,6 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SP
 public class SelectSportActivity extends AppCompatActivity {
 
     RecyclerView listSports;
-    SportsListAdapter adapter;
     Button buttonOK;
 
     @Override
@@ -42,11 +34,10 @@ public class SelectSportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
 
-        listSports = (RecyclerView) findViewById(R.id.list_select_sports);
+        listSports = (RecyclerView) findViewById(R.id.selectsports_listview_sports);
+        buttonOK = (Button) findViewById(R.id.selectsports_button_ok);
 
-        buttonOK = (Button) findViewById(R.id.button_sports_ok);
-
-        GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
+        GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
         try {
             getRequest.execute().get();
         } catch (InterruptedException e) {
@@ -77,12 +68,36 @@ public class SelectSportActivity extends AppCompatActivity {
 
         listSports.setAdapter(new SportsListAdapter(sportsList, this));
 
-        RecyclerView.LayoutManager layout = new GridLayoutManager(this, GridLayoutManager.DEFAULT_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layout = new GridLayoutManager(SelectSportActivity.this, 4);
         listSports.setLayoutManager(layout);
 
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                JSONArray selectedSports = new JSONArray();
+
+                for (int i = 0; i < listSports.getChildCount(); i++){
+                    View row = listSports.getChildAt(i);
+
+                    CheckBox cbSport = (CheckBox) row.findViewById(R.id.selectsport_checkbox_sportname);
+
+                    if (cbSport.isChecked()){
+                        TextView sportID = (TextView) row.findViewById(R.id.selectsport_textview_sportid);
+                        selectedSports.put(sportID.getText());
+                    }
+
+                }
+
+                if (selectedSports.length() > 0){
+                    Intent intent = new Intent(SelectSportActivity.this, SelectTeamActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("selectedSports", selectedSports.toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(SelectSportActivity.this, "É necessário escolher ao menos um esporte.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

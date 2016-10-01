@@ -21,4 +21,5 @@
     </string>
     <string name="title_activity_select_sports">SelectSports</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_register">Novo usuário</string>
 </resources>

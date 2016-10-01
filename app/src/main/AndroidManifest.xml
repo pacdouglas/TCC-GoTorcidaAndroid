@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -29,7 +28,9 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".activity.SelectSportActivity"></activity>
+        <activity android:name=".activity.SelectSportActivity" />
+        <activity android:name=".activity.SelectTeamActivity" />
+        <activity android:name=".activity.RegisterActivity" />
     </application>
 
 </manifest>

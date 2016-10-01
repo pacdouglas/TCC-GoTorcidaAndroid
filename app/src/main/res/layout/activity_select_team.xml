@@ -7,12 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.gotorcida.gotorcida.activity.SelectLeagueActivity">
+    tools:context="br.com.gotorcida.gotorcida.activity.SelectTeamActivity">
 
-    <ListView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
         android:layout_height="437dp"
-        android:id="@+id/list_select_sports"
+        android:id="@+id/selectteams_listview_teams"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         />
@@ -21,6 +21,6 @@
         android:text="OK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_sports_ok"
+        android:id="@+id/selectteams_button_ok"
         android:layout_gravity="bottom|right"/>
 </FrameLayout>
