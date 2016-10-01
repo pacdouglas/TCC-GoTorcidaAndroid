@@ -29,6 +29,7 @@ public class JSONParser {
 
         in = new BufferedInputStream(conn.getInputStream());
         response = IOUtils.toString(in, "UTF-8");
+
         JSONObject json = new JSONObject(response);
 
         return json;

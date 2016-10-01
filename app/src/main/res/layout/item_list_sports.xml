@@ -8,7 +8,7 @@
         android:text="CheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/name_sport"
+        android:id="@+id/selectsport_checkbox_sportname"
         android:layout_weight="1" />
 
     <ImageView
@@ -16,6 +16,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/img_sport"
         android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/selectsport_textview_sportid" />
+
+
 
 
 </LinearLayout>
