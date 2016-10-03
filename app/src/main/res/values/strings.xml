@@ -22,4 +22,14 @@
     <string name="title_activity_select_sports">SelectSports</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_register">Novo usuário</string>
+
+    <string name="hint_name">Nome Completo</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Senha</string>
+    <string name="btn_sign_up">Cadastrar</string>
+    <string name="err_msg_name">Utilize seu nome Completo</string>
+    <string name="err_msg_email">Utilize um email válido</string>
+    <string name="err_msg_password">Insira sua senha</string>
+    <string name="hint_date_of_birth">Aniversário</string>
+
 </resources>
