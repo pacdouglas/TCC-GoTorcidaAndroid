@@ -6,12 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
 public class TeamsListAdapter extends RecyclerView.Adapter {
 
@@ -36,8 +40,10 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
 
         TeamsListHolder holder = (TeamsListHolder) viewHolder;
         try {
-            holder.leagueID.setText(data.getString("id"));
-            holder.leagueName.setText(data.getString("name"));
+            holder.teamID.setText(data.getString("id"));
+            holder.teamName.setText(data.getString("name"));
+
+            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.teamImg);
         } catch (JSONException e) {
             e.printStackTrace();
         }

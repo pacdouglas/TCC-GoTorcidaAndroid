@@ -31,6 +31,7 @@
             android:label="Selecione seus esportes"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.SelectTeamActivity"
+            android:label="Selecione suas equipes"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"/>
