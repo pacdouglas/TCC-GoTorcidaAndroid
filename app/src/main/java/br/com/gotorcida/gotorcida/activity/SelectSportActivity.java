@@ -3,9 +3,12 @@ package br.com.gotorcida.gotorcida.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,15 +32,15 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SP
 public class SelectSportActivity extends AppCompatActivity {
 
     RecyclerView listSports;
-    Button buttonOK;
 
+    CardView cardItem[];
+    CheckBox checkBoxItem[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
 
         listSports = (RecyclerView) findViewById(R.id.selectsports_listview_sports);
-        buttonOK = (Button) findViewById(R.id.selectsports_button_ok);
 
         GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
         try {
@@ -72,27 +75,49 @@ public class SelectSportActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
         listSports.setLayoutManager(layout);
-        listSports.setHasFixedSize(true);
 
-        buttonOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        for(int i = 0; i < listSports.getChildCount(); i++) {
+            View row = listSports.getChildAt(i);
+            cardItem[i] = (CardView) row.findViewById(R.id.cardView_sports);
+            checkBoxItem[i] = (CheckBox) row.findViewById(R.id.selectsport_checkbox_sportname);
 
+            final int finalI = i;
+            cardItem[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(checkBoxItem[finalI].isChecked()){
+                        checkBoxItem[finalI].setChecked(false);
+                    }else{
+                        checkBoxItem[finalI].setChecked(true);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sports, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.next_button_sports_to_teams:
                 JSONArray selectedSports = new JSONArray();
 
-                for (int i = 0; i < listSports.getChildCount(); i++){
+                for (int i = 0; i < listSports.getChildCount(); i++) {
                     View row = listSports.getChildAt(i);
 
                     CheckBox cbSport = (CheckBox) row.findViewById(R.id.selectsport_checkbox_sportname);
 
-                    if (cbSport.isChecked()){
+                    if (cbSport.isChecked()) {
                         TextView sportID = (TextView) row.findViewById(R.id.selectsport_textview_sportid);
                         selectedSports.put(sportID.getText());
                     }
-
                 }
-
-                if (selectedSports.length() > 0){
+                if (selectedSports.length() > 0) {
                     Intent intent = new Intent(SelectSportActivity.this, SelectTeamActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("selectedSports", selectedSports.toString());
@@ -101,8 +126,7 @@ public class SelectSportActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(SelectSportActivity.this, "É necessário escolher ao menos um esporte.", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+        }
+        return super.onOptionsItemSelected(item);
     }
-
 }

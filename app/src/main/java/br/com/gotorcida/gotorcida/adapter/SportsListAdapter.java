@@ -6,11 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.activity.SelectSportActivity;
+
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
 public class SportsListAdapter extends RecyclerView.Adapter {
 
@@ -37,6 +42,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
         try {
             holder.sportID.setText(data.getString("id"));
             holder.sportName.setText(data.getString("name"));
+            Glide.with(context).load(URL_IMAGES_BASE + data.getString("description")+".png").into(holder.iconSport);
         } catch (JSONException e) {
             e.printStackTrace();
         }

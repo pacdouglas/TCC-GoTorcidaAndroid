@@ -13,14 +13,5 @@
         android:id="@+id/selectsports_listview_sports"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="OK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/selectsports_button_ok"
-        android:layout_gravity="bottom|right"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="465dp" />
 </RelativeLayout>
+
