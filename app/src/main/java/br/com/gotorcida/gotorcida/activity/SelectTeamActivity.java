@@ -2,10 +2,11 @@ package br.com.gotorcida.gotorcida.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +24,6 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TE
 public class SelectTeamActivity extends AppCompatActivity {
 
     RecyclerView listTeams;
-    Button buttonOK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,6 @@ public class SelectTeamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_team);
 
         listTeams = (RecyclerView) findViewById(R.id.selectteams_listview_teams);
-        buttonOK = (Button) findViewById(R.id.selectteams_button_ok);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -69,14 +68,23 @@ public class SelectTeamActivity extends AppCompatActivity {
 
         listTeams.setAdapter(new TeamsListAdapter(teamsList, this));
 
-        RecyclerView.LayoutManager layout = new GridLayoutManager(SelectTeamActivity.this, 2);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
         listTeams.setLayoutManager(layout);
 
-        buttonOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.button_next_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.next_button_toolbar:
+                Toast.makeText(SelectTeamActivity.this, "Faz ae sua bixa.", Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

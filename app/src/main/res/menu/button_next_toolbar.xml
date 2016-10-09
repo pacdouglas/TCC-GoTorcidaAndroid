@@ -5,7 +5,7 @@
     tools:context="br.com.gotorcida.gotorcida.activity.SelectSportActivity">
 
     <item
-        android:id="@+id/next_button_sports_to_teams"
+        android:id="@+id/next_button_toolbar"
         android:icon="@drawable/ic_menu_send"
         android:title="@string/next"
         app:showAsAction="always"/>

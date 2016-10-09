@@ -69,8 +69,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="Login"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/main_button_signup"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Cadastrar"
+                android:layout_below="@+id/email_sign_in_button"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>

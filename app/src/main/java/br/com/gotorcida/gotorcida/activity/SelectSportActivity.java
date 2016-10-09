@@ -3,7 +3,6 @@ package br.com.gotorcida.gotorcida.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -30,9 +29,6 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SP
 public class SelectSportActivity extends AppCompatActivity {
 
     RecyclerView listSports;
-
-    CardView cardItem[];
-    CheckBox checkBoxItem[];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,36 +69,18 @@ public class SelectSportActivity extends AppCompatActivity {
 
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
         listSports.setLayoutManager(layout);
-
-        for(int i = 0; i < listSports.getChildCount(); i++) {
-            View row = listSports.getChildAt(i);
-            cardItem[i] = (CardView) row.findViewById(R.id.cardView_sports);
-            checkBoxItem[i] = (CheckBox) row.findViewById(R.id.selectsport_checkbox_sportname);
-
-            final int finalI = i;
-            cardItem[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(checkBoxItem[finalI].isChecked()){
-                        checkBoxItem[finalI].setChecked(false);
-                    }else{
-                        checkBoxItem[finalI].setChecked(true);
-                    }
-                }
-            });
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_sports, menu);
+        getMenuInflater().inflate(R.menu.button_next_toolbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.next_button_sports_to_teams:
+            case R.id.next_button_toolbar:
                 JSONArray selectedSports = new JSONArray();
 
                 for (int i = 0; i < listSports.getChildCount(); i++) {

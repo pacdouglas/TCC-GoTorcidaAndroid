@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
-    app:cardCornerRadius="@dimen/activity_vertical_margin"
-    app:cardElevation="@dimen/activity_vertical_margin"
     app:cardBackgroundColor="@color/greenLight"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -37,6 +35,17 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:id="@+id/selectsport_textview_sportid" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4 equipes ativas"
+        android:textSize="10dp"
+        android:paddingTop="15dp"
+        android:id="@+id/selectsport_textview_sport_count"
+        android:layout_below="@+id/selectsport_checkbox_sportname"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>
 

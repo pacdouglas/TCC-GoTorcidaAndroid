@@ -43,6 +43,16 @@ public class SportsListAdapter extends RecyclerView.Adapter {
             holder.sportID.setText(data.getString("id"));
             holder.sportName.setText(data.getString("name"));
             Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.iconSport);
+
+            int auxCountTeams = data.getInt("activeTeams");
+
+            if(auxCountTeams >= 2){
+                holder.teamCount.setText(auxCountTeams+" equipes ativas");
+            }else if(auxCountTeams == 1){
+                holder.teamCount.setText(auxCountTeams+" equipe ativa");
+            }else{
+                holder.teamCount.setText("Nenhuma equipe ativa :(");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
