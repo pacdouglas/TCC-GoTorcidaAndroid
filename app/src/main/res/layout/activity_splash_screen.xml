@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:backgroundTint="@color/colorPrimaryDark"
     android:background="@android:color/white"
-    tools:context="br.com.gotorcida.gotorcida.activity.SplashScreen">
+    tools:context="br.com.gotorcida.gotorcida.activity.SplashScreenActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -26,8 +26,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/logo"
+        android:id="@+id/letra_logo"
         android:paddingTop="45dp"
         android:src="@drawable/letra_gotorcida"
         android:contentDescription="GoTorcida" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Erro de Conexão com o Servidor. Tente novamente mais tarde."
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:id="@+id/error_connection"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
