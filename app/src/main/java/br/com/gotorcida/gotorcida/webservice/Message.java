@@ -13,9 +13,6 @@ public class Message extends JSONObject {
     }
 
     public String getData(String key) {
-        if (!data.has(key)) {
-            //throw new MessageKeyNotFoundException("Specified value not found at message.");
-        }
         String value = null;
 
         try {

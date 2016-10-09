@@ -42,7 +42,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
         try {
             holder.sportID.setText(data.getString("id"));
             holder.sportName.setText(data.getString("name"));
-            Glide.with(context).load(URL_IMAGES_BASE + data.getString("description")+".png").into(holder.iconSport);
+            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.iconSport);
         } catch (JSONException e) {
             e.printStackTrace();
         }
