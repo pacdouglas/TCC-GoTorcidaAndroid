@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.ButtonBarLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,8 +20,9 @@ import br.com.gotorcida.gotorcida.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Button btnRegiser;
+    Button btnLogin;
     Button btnSportSelect;
+    Button btnRegister;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +49,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        btnRegiser = (Button) findViewById(R.id.btnLogin);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
 
-        btnRegiser.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent it = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(it);
             }
         });
@@ -63,6 +65,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(MainActivity.this, SelectSportActivity.class);
+                startActivity(it);
+            }
+        });
+
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(it);
             }
         });

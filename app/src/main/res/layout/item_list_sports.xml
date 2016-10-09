@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    app:cardCornerRadius="@dimen/activity_vertical_margin"
+    app:cardElevation="@dimen/activity_vertical_margin"
+    app:cardBackgroundColor="@color/colorAccent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/selectsport_checkbox_sportname"
-        android:layout_weight="1" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/img_sport"
-        android:layout_weight="1" />
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +20,24 @@
         android:visibility="gone"
         android:id="@+id/selectsport_textview_sportid" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:id="@+id/img_sport"
+        android:src="@drawable/icon_mook"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
+    <CheckBox
+        android:text="CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/selectsport_checkbox_sportname"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/img_sport" />
 
+</RelativeLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

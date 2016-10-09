@@ -1,4 +1,4 @@
-package br.com.gotorcida.gotorcida.activity;
+package br.com.gotorcida.gotorcida.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

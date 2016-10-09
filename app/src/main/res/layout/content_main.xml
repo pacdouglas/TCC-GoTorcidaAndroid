@@ -29,8 +29,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Registrar"
+        android:id="@+id/btnRegister"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Seleção Esportes"
         android:id="@+id/btnSportSelect"
-        android:layout_below="@+id/btnLogin"
+        android:layout_below="@+id/btnRegister"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

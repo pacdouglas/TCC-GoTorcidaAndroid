@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.adapter.SportsListAdapter;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
@@ -68,8 +70,9 @@ public class SelectSportActivity extends AppCompatActivity {
 
         listSports.setAdapter(new SportsListAdapter(sportsList, this));
 
-        RecyclerView.LayoutManager layout = new GridLayoutManager(SelectSportActivity.this, 4);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
         listSports.setLayoutManager(layout);
+        listSports.setHasFixedSize(true);
 
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override

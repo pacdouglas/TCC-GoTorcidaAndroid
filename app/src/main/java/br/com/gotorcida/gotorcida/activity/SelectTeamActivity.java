@@ -1,7 +1,6 @@
 package br.com.gotorcida.gotorcida.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.adapter.TeamsListAdapter;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
