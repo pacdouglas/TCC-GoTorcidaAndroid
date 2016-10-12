@@ -20,9 +20,11 @@ import br.com.gotorcida.gotorcida.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     Button btnLogin;
     Button btnSportSelect;
     Button btnRegister;
+    Button btnListSports;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,32 +51,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnListSports = (Button) findViewById(R.id.btnListSports);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnListSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(it);
-            }
-        });
-
-        btnSportSelect = (Button) findViewById(R.id.btnSportSelect);
-
-        btnSportSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(MainActivity.this, SelectSportActivity.class);
-                startActivity(it);
-            }
-        });
-
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent it = new Intent(MainActivity.this, UserTeamsActivity.class);
                 startActivity(it);
             }
         });

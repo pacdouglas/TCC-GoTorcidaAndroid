@@ -93,6 +93,7 @@ public class SelectSportActivity extends AppCompatActivity {
                         selectedSports.put(sportID.getText());
                     }
                 }
+
                 if (selectedSports.length() > 0) {
                     Intent intent = new Intent(SelectSportActivity.this, SelectTeamActivity.class);
                     Bundle bundle = new Bundle();

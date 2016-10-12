@@ -29,7 +29,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_teams, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_select_team_list_item, parent, false);
         TeamsListHolder holder = new TeamsListHolder(view);
         return holder;
     }

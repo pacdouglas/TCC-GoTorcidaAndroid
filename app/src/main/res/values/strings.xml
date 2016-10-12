@@ -32,5 +32,6 @@
     <string name="err_msg_password">Insira sua senha</string>
     <string name="hint_date_of_birth">Aniversário</string>
     <string name="next">next</string>
+    <string name="title_activity_teams">TeamsActivity</string>
 
 </resources>

@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.activity.SelectSportActivity;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
@@ -29,7 +28,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_list_sports, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_select_sport_list_item, parent, false);
         SportsListHolder holder = new SportsListHolder(view);
         return holder;
     }

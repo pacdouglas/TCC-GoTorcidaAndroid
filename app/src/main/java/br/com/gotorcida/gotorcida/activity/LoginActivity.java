@@ -54,32 +54,18 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
     private UserLoginTask mAuthTask = null;
 
-    // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
 
     @Override
@@ -385,11 +371,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         startActivity(it);
                         finish();
                     } else {
-                        //Intent it = new Intent(MainActivity.this, DashboardActivity.class);
-                        //startActivity(it);
+                        Intent it = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(it);
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, mGetRequest.getMessage().getSystem().getString("message"), Toast.LENGTH_SHORT).show();
+                    return;
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
