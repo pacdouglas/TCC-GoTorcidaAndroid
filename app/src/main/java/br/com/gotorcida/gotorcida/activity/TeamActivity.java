@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.TeamAthletesListAdapter;
 import br.com.gotorcida.gotorcida.adapter.UserTeamsListAdapter;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM;
@@ -68,7 +69,7 @@ public class TeamActivity extends AppCompatActivity {
             teamWebsite.setText(team.getString("website"));
             teamEmail.setText(team.getString("emailAddress"));
 
-            getRequest = new GetRequest(URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM, "1", teamId);
+            getRequest = new GetRequest(URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM, SaveSharedPreference.getUserName(this), teamId);
             try {
                 getRequest.execute().get();
             } catch (InterruptedException e) {

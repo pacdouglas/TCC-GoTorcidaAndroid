@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.TeamsListAdapter;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
@@ -30,7 +31,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TE
 public class SelectTeamActivity extends AppCompatActivity {
 
     RecyclerView listTeams;
-
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class SelectTeamActivity extends AppCompatActivity {
 
         listTeams = (RecyclerView) findViewById(R.id.selectteams_listview_teams);
 
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
 
         GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_TEAMS, "1", bundle.getString("selectedSports"));
         try {
@@ -89,8 +90,8 @@ public class SelectTeamActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.next_button_toolbar:
-                String userId = "1";
-                String selectedSports = getIntent().getExtras().getString("selectedSports");
+                String userId = SaveSharedPreference.getUserName(this);
+                String selectedSports = bundle.getString("selectedSports");
 
                 JSONArray selectedTeams = new JSONArray();
 
@@ -117,8 +118,11 @@ public class SelectTeamActivity extends AppCompatActivity {
                         postRequest.execute(postParameters.toString()).get();
 
                         if (postRequest.getMessage().getSystem().get("code").equals(200)) {
+                            SaveSharedPreference.setUserName(SelectTeamActivity.this, userId);
                             Intent intent = new Intent(SelectTeamActivity.this, DashboardActivity.class);
                             startActivity(intent);
+                            setResult(RESULT_OK, null);
+                            finish();
                         } else {
                             Toast.makeText(SelectTeamActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
                         }

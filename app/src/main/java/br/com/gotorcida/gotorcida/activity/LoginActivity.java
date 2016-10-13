@@ -3,24 +3,21 @@ package br.com.gotorcida.gotorcida.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,12 +32,6 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
@@ -376,11 +367,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
 
                     if (userData.getString("firstAccess").equals("S")){
+                        SaveSharedPreference.setUserName(LoginActivity.this, userData.getString("id")); //todo: lembrar de alterar p bundle
                         Intent it = new Intent(LoginActivity.this, SelectSportActivity.class);
                         startActivity(it);
-                        finish();
                     } else {
-                        SaveSharedPreference.setUserName(LoginActivity.this, email);
+                        SaveSharedPreference.setUserName(LoginActivity.this, userData.getString("id"));
                         Intent it = new Intent(LoginActivity.this, DashboardActivity.class);
                         startActivity(it);
                     }

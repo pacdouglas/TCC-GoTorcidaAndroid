@@ -28,12 +28,15 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SP
 
 public class SelectSportActivity extends AppCompatActivity {
 
+    private static final int REQUEST_EXIT = 99;
     RecyclerView listSports;
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
 
+        bundle = getIntent().getExtras();
         listSports = (RecyclerView) findViewById(R.id.selectsports_listview_sports);
 
         GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
@@ -99,11 +102,20 @@ public class SelectSportActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("selectedSports", selectedSports.toString());
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_EXIT);
                 } else {
                     Toast.makeText(SelectSportActivity.this, "É necessário escolher ao menos um esporte.", Toast.LENGTH_SHORT).show();
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_EXIT) {
+            if (resultCode == RESULT_OK) {
+                this.finish();
+
+            }
+        }
     }
 }

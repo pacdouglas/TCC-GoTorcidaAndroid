@@ -30,6 +30,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SelectTeamActivity"
+            android:parentActivityName=".activity.SelectSportActivity"
             android:label="Selecione suas equipes"
             android:screenOrientation="portrait" />
         <activity

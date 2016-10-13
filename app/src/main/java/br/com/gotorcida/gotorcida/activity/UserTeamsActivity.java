@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.TeamsListAdapter;
 import br.com.gotorcida.gotorcida.adapter.UserTeamsListAdapter;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_TEAM;
@@ -43,7 +44,7 @@ public class UserTeamsActivity extends AppCompatActivity {
 
         listTeams = (ListView) findViewById(R.id.userteams_listview_teams);
 
-        GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_TEAM, "1", "user");
+        GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_TEAM, SaveSharedPreference.getUserName(this), "user");
         try {
             getRequest.execute().get();
         } catch (InterruptedException e) {
