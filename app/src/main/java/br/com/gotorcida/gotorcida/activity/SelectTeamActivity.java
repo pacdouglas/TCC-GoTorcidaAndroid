@@ -25,9 +25,7 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_DASHBOARD_SAVECONFIG;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_LOGIN;
 
 public class SelectTeamActivity extends AppCompatActivity {
 
@@ -119,7 +117,7 @@ public class SelectTeamActivity extends AppCompatActivity {
                         postRequest.execute(postParameters.toString()).get();
 
                         if (postRequest.getMessage().getSystem().get("code").equals(200)) {
-                            Intent intent = new Intent(SelectTeamActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SelectTeamActivity.this, DashboardActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(SelectTeamActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();

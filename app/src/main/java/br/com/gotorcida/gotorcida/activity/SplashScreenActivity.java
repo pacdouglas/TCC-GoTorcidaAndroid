@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
@@ -48,7 +49,11 @@ public class SplashScreenActivity extends AppCompatActivity {
                     }
 
                     if(serverOn){
-                        startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                        if(SaveSharedPreference.getUserName(SplashScreenActivity.this).length() == 0){
+                            startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                        }else{
+                            startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class));
+                        }
                         finish();
                     }
                     else{

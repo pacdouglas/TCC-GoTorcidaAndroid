@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +35,12 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
@@ -45,6 +52,7 @@ import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.utils.Constants;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -52,7 +60,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>{
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
@@ -111,7 +119,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
+
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -333,7 +343,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         client.disconnect();
     }
 
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -371,7 +380,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         startActivity(it);
                         finish();
                     } else {
-                        Intent it = new Intent(LoginActivity.this, MainActivity.class);
+                        SaveSharedPreference.setUserName(LoginActivity.this, email);
+                        Intent it = new Intent(LoginActivity.this, DashboardActivity.class);
                         startActivity(it);
                     }
                 } else {
