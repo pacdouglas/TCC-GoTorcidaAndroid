@@ -28,4 +28,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abrir lista de eventos"
+        android:id="@+id/btnEvents"
+        android:layout_below="@+id/btnListSports"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
 </RelativeLayout>

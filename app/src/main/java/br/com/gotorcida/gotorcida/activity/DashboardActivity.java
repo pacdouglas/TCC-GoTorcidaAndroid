@@ -21,10 +21,8 @@ import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button btnLogin;
-    Button btnSportSelect;
-    Button btnRegister;
     Button btnListSports;
+    Button btnEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +55,16 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(DashboardActivity.this, UserTeamsActivity.class);
+                startActivity(it);
+            }
+        });
+
+        btnEvents = (Button) findViewById(R.id.btnEvents);
+
+        btnEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(DashboardActivity.this, EventsActivity.class);
                 startActivity(it);
             }
         });

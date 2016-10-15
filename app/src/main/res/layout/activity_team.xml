@@ -10,77 +10,98 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.com.gotorcida.gotorcida.activity.TeamActivity">
 
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
-
-    <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/team_imageview_teamlogo"
-        android:src="@drawable/icon_mook"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_alignTop="@id/team_imageview_teamlogo"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/team_imageview_teamlogo"
-        android:id="@+id/team_textview_teamname"
-        android:layout_weight="1" />
-
-    <TextView
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_below="@+id/team_textview_teamname"
-        android:layout_toEndOf="@id/team_imageview_teamlogo"
-        android:id="@+id/team_textview_teamwebsite"
-        android:layout_weight="1" />
-
-    <TextView
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_below="@+id/team_textview_teamwebsite"
-        android:layout_toEndOf="@id/team_imageview_teamlogo"
-        android:id="@+id/team_textview_teamemail"
-        android:layout_weight="1" />
-
-    <TextView
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_below="@+id/team_textview_teamemail"
-        android:layout_toEndOf="@id/team_imageview_teamlogo"
-        android:id="@+id/team_textview_teamregistrationdate"
-        android:layout_weight="1" />
-
-    <TextView
-        android:text="Atletas (toque para detalhes):"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_below="@+id/team_textview_teamregistrationdate"
-        android:layout_marginTop="10sp"
-        android:id="@+id/team_textview_athleteDescription"
-        android:layout_weight="1" />
-
-    <ListView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_below="@id/team_textview_athleteDescription"
-        android:id="@+id/team_listview_athletes"
-        />
+        android:layout_height="match_parent">
 
-    </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/team_imageview_teamlogo"
+            android:src="@drawable/icon_mook"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_alignTop="@id/team_imageview_teamlogo"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/team_imageview_teamlogo"
+            android:id="@+id/team_textview_teamname"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@+id/team_textview_teamname"
+            android:layout_toEndOf="@id/team_imageview_teamlogo"
+            android:id="@+id/team_textview_teamwebsite"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@+id/team_textview_teamwebsite"
+            android:layout_toEndOf="@id/team_imageview_teamlogo"
+            android:id="@+id/team_textview_teamemail"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@+id/team_textview_teamemail"
+            android:layout_toEndOf="@id/team_imageview_teamlogo"
+            android:id="@+id/team_textview_teamregistrationdate"
+            android:layout_weight="1" />
+
+        <TextView
+            android:text="Atletas (toque para detalhes):"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@+id/team_textview_teamregistrationdate"
+            android:layout_marginTop="10sp"
+            android:id="@+id/team_textview_athleteCaption"
+            android:layout_weight="1" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/team_textview_athleteCaption"
+            android:id="@+id/team_listview_athletes"
+            />
+
+        <TextView
+            android:text="Últimas notícias:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_below="@+id/team_listview_athletes"
+            android:layout_marginTop="20sp"
+            android:id="@+id/team_textview_newsCaption"
+            android:layout_weight="1" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/team_textview_newsCaption"
+            android:id="@+id/team_listview_news"
+            />
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
