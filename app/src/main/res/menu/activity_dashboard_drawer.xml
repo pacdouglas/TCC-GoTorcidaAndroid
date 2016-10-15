@@ -3,35 +3,32 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_my_teams"
+            android:icon="@drawable/ic_menu_teams"
+            android:title="Meus Times" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_menu_calendar"
+            android:title="Eventos" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+            android:id="@+id/nav_matches_table"
+            android:icon="@drawable/ic_menu_table_matches"
+            android:title="Tabela de Jogos" />
 
     <item android:title="Contato">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:id="@+id/nav_my_team_here"
+                android:icon="@drawable/ic_menu_send"
                 android:title="Minha Equipe Aqui" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Enviar Mensagem" />
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="Quem somos" />
         </menu>
     </item>
+
+    </group>
 
     <item android:title="Sair">
         <menu>

@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.activity;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,14 +17,16 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.fragment.AboutFragment;
+import br.com.gotorcida.gotorcida.fragment.EventsFragment;
+import br.com.gotorcida.gotorcida.fragment.MatchesTableFragment;
+import br.com.gotorcida.gotorcida.fragment.MyTeamHereFragment;
+import br.com.gotorcida.gotorcida.fragment.UserTeamsFragment;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    Button btnListSports;
     Button btnEvents;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,26 +51,6 @@ public class DashboardActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        btnListSports = (Button) findViewById(R.id.btnListSports);
-
-        btnListSports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(DashboardActivity.this, UserTeamsActivity.class);
-                startActivity(it);
-            }
-        });
-
-        btnEvents = (Button) findViewById(R.id.btnEvents);
-
-        btnEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(DashboardActivity.this, EventsActivity.class);
-                startActivity(it);
-            }
-        });
     }
 
     @Override
@@ -105,21 +88,28 @@ public class DashboardActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        FragmentManager fragmentManager = getFragmentManager();
+        if (id == R.id.nav_my_teams) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.dashboard_frame_fragment, new UserTeamsFragment())
+                    .commit();
+        } else if (id == R.id.nav_events) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.dashboard_frame_fragment, new EventsFragment())
+                    .commit();
+        } else if (id == R.id.nav_matches_table) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.dashboard_frame_fragment, new MatchesTableFragment())
+                    .commit();
+        } else if (id == R.id.nav_my_team_here) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.dashboard_frame_fragment, new MyTeamHereFragment())
+                    .commit();
+        } else if (id == R.id.nav_about) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.dashboard_frame_fragment, new AboutFragment())
+                    .commit();
         } else if (id == R.id.nav_logout) {
             SaveSharedPreference.clearUserName(DashboardActivity.this);
             startActivity(new Intent(DashboardActivity.this, LoginActivity.class));

@@ -33,5 +33,44 @@
     <string name="hint_date_of_birth">Aniversário</string>
     <string name="next">next</string>
     <string name="title_activity_teams">TeamsActivity</string>
+    <string name="modalidade_de_esporte">Modalidade de Esporte</string>
+    <string name="nome_do_seu_time">Nome do seu Time</string>
+    <string name="telefone">Telefone</string>
+    <string name="observacoes">Observacoes</string>
+    <string name="cidade">Cidade</string>
+    <string name="enviar">Enviar</string>
+    <string name="mensagem_enviada_com_sucesso">Mensagem enviada com sucesso.</string>
+    <string name="aguarde_nosso_retorno">Aguarde nosso retorno.</string>
+
+    <string-array name="states_array">
+        <item>Estado</item>
+        <item>AC</item>
+        <item>AL</item>
+        <item>AP</item>
+        <item>AM</item>
+        <item>BA</item>
+        <item>CE</item>
+        <item>DF</item>
+        <item>ES</item>
+        <item>GO</item>
+        <item>MA</item>
+        <item>MT</item>
+        <item>MS</item>
+        <item>MG</item>
+        <item>PA</item>
+        <item>PB</item>
+        <item>PR</item>
+        <item>PE</item>
+        <item>PI</item>
+        <item>RJ</item>
+        <item>RN</item>
+        <item>RS</item>
+        <item>RO</item>
+        <item>RR</item>
+        <item>SC</item>
+        <item>SP</item>
+        <item>SE</item>
+        <item>TO</item>
+    </string-array>
 
 </resources>

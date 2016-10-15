@@ -53,10 +53,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.EventsActivity" android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.UserTeamsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.TeamActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TeamActivity" android:screenOrientation="portrait"
+            android:parentActivityName=".activity.DashboardActivity"/>
         <activity android:name=".activity.AthleteActivity" android:screenOrientation="portrait"></activity>
     </application>
 
