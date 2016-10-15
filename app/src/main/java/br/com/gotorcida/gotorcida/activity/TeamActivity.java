@@ -1,7 +1,10 @@
 package br.com.gotorcida.gotorcida.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ public class TeamActivity extends AppCompatActivity {
     TextView teamName;
     TextView teamWebsite;
     TextView teamEmail;
+    TextView teamRegistrationDate;
     ListView athletesList;
     ArrayAdapter<JSONObject> adapter;
 
@@ -63,11 +67,14 @@ public class TeamActivity extends AppCompatActivity {
             teamName = (TextView) findViewById(R.id.team_textview_teamname);
             teamWebsite = (TextView) findViewById(R.id.team_textview_teamwebsite);
             teamEmail = (TextView) findViewById(R.id.team_textview_teamemail);
+            teamRegistrationDate = (TextView) findViewById(R.id.team_textview_teamregistrationdate);
+
             athletesList = (ListView) findViewById(R.id.team_listview_athletes);
 
             teamName.setText(team.getString("name"));
             teamWebsite.setText(team.getString("website"));
             teamEmail.setText(team.getString("emailAddress"));
+            teamRegistrationDate.setText(team.getString("formatedRegistrationDate"));
 
             getRequest = new GetRequest(URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM, SaveSharedPreference.getUserName(this), teamId);
             try {
@@ -101,6 +108,19 @@ public class TeamActivity extends AppCompatActivity {
 
             adapter = new TeamAthletesListAdapter(this, list);
             athletesList.setAdapter(adapter);
+
+            athletesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    TextView athleteId = (TextView) view.findViewById(R.id.team_textview_athleteid);
+
+                    if (athleteId != null && !athleteId.getText().toString().equals("")) {
+                        Intent it = new Intent(TeamActivity.this, AthleteActivity.class);
+                        it.putExtra("athleteId", athleteId.getText().toString());
+                        startActivity(it);
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
