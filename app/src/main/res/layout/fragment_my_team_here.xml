@@ -128,14 +128,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity = "center_vertical|center_horizontal"
-            android:text="@string/mensagem_enviada_com_sucesso"
+            android:text="@string/mensagem_com_sucesso"
+            android:id="@+id/my_team_here_text_view_final_msg"
             />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/aguarde_nosso_retorno"
-            />
     </LinearLayout>
 
 </RelativeLayout>

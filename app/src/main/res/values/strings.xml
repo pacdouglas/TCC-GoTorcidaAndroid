@@ -39,8 +39,7 @@
     <string name="observacoes">Observacoes</string>
     <string name="cidade">Cidade</string>
     <string name="enviar">Enviar</string>
-    <string name="mensagem_enviada_com_sucesso">Mensagem enviada com sucesso.</string>
-    <string name="aguarde_nosso_retorno">Aguarde nosso retorno.</string>
+    <string name="mensagem_com_sucesso">Mensagem enviada com sucesso! Aguarde nosso contato.</string>
 
     <string-array name="states_array">
         <item>Estado</item>

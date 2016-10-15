@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.gotorcida.gotorcida.R;
@@ -49,8 +50,10 @@ public class MyTeamHereFragment extends Fragment{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnState.setAdapter(adapter);
 
-        btnSend = (Button) mView.findViewById(R.id.my_team_here_button_send);
 
+
+
+        btnSend = (Button) mView.findViewById(R.id.my_team_here_button_send);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +66,7 @@ public class MyTeamHereFragment extends Fragment{
     }
 
     public class SendMailTask extends AsyncTask {
+        boolean send = true;
         protected void onPreExecute() {
             form.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
@@ -80,7 +84,7 @@ public class MyTeamHereFragment extends Fragment{
                         "ricardo.zanardo@yahoo.com");
             } catch (Exception e) {
                 Log.e("SendMail", e.getMessage(), e);
-                System.out.println("NEM FOI!(&@¨#@*!&(#¨!*@&(#¨!@*(&#¨!@#");
+                send = false;
             }
             return null;
         }
@@ -94,6 +98,11 @@ public class MyTeamHereFragment extends Fragment{
         public void onPostExecute(Object result) {
             progressBar.setVisibility(View.GONE);
             msgSuccess.setVisibility(View.VISIBLE);
+            if(!send){
+                TextView txtFinalMsg = (TextView) msgSuccess.findViewById(R.id.my_team_here_text_view_final_msg);
+                String msg = "Ocorreu um erro no envio da mensagem. Tente novamente mais tarde ou acesse www.gotorcida.com.br";
+                txtFinalMsg.setText(msg);
+            }
         }
 
     }

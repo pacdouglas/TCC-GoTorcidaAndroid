@@ -33,6 +33,4 @@ public class SaveSharedPreference {
         editor.clear(); //clear all stored data
         editor.commit();
     }
-
-
 }

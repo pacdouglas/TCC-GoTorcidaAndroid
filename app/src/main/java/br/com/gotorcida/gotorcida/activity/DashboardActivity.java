@@ -15,6 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.fragment.AboutFragment;
@@ -22,11 +26,19 @@ import br.com.gotorcida.gotorcida.fragment.EventsFragment;
 import br.com.gotorcida.gotorcida.fragment.MatchesTableFragment;
 import br.com.gotorcida.gotorcida.fragment.MyTeamHereFragment;
 import br.com.gotorcida.gotorcida.fragment.UserTeamsFragment;
+import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
+import br.com.gotorcida.gotorcida.webservice.GetRequest;
+
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Button btnEvents;
+
+    NavigationView navigationView;
+    TextView username;
+    TextView userEmail;
+    ImageView userImgProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +61,16 @@ public class DashboardActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_username);
+        userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_email);
+        userImgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_image_view_profile);
+
+        username.setText("Douglas Martins");
+        userEmail.setText("douglas.pac@gmail.com");
+
     }
 
     @Override
