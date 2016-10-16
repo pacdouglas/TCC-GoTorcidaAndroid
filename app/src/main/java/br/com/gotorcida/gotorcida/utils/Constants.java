@@ -12,4 +12,5 @@ public class Constants {
     public static final String URL_SERVER_NEW_USER = URL_SERVER + "user";
     public static final String URL_SERVER_LOGIN = URL_SERVER + "login";
     public static final String URL_IMAGES_BASE = "http://gotorcida.com.br/img/";
+    public static final int SLEEP_THREAD = 1000;
 }

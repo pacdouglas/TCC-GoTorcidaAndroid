@@ -1,6 +1,7 @@
 package br.com.gotorcida.gotorcida.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.SportsListAdapter;
@@ -31,6 +32,7 @@ public class SelectSportActivity extends AppCompatActivity {
     private static final int REQUEST_EXIT = 99;
     RecyclerView listSports;
     Bundle bundle;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,40 +40,58 @@ public class SelectSportActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         listSports = (RecyclerView) findViewById(R.id.selectsports_listview_sports);
+        progressBar = (ProgressBar) findViewById(R.id.select_sport_progress);
 
-        GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
-        try {
-            getRequest.execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        MakeListSportsTask makeListSportsTask = new MakeListSportsTask();
+        makeListSportsTask.execute();
+    }
+
+
+    public class MakeListSportsTask extends AsyncTask {
+
+        ArrayList<JSONObject> sportsList;
+        protected void onPreExecute() {
+            listSports.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
         }
 
-        JSONObject json = getRequest.getMessage().getData();
+        @Override
+        protected Object doInBackground(Object... args) {
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
 
-        JSONArray sports = null;
-        try {
-            sports = json.getJSONArray("sports");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            getRequest.execute();
 
-        final ArrayList<JSONObject> sportsList = new ArrayList<>();
+            JSONObject json = getRequest.getMessage().getData();
 
-        for(int i=0; i < sports.length(); i++)
-        {
+            JSONArray sports = null;
             try {
-                sportsList.add((JSONObject) sports.get(i));
+                sports = json.getJSONArray("sports");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            sportsList = new ArrayList<>();
+
+            for(int i=0; i < sports.length(); i++)
+            {
+                try {
+                    sportsList.add((JSONObject) sports.get(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
         }
 
-        listSports.setAdapter(new SportsListAdapter(sportsList, this));
+        @Override
+        public void onPostExecute(Object result) {
+            listSports.setAdapter(new SportsListAdapter(sportsList, getBaseContext()));
 
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this);
-        listSports.setLayoutManager(layout);
+            RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
+            listSports.setLayoutManager(layout);
+            progressBar.setVisibility(View.GONE);
+            listSports.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

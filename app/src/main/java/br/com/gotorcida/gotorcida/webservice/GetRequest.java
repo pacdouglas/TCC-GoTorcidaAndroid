@@ -1,11 +1,9 @@
 package br.com.gotorcida.gotorcida.webservice;
 
-import android.os.AsyncTask;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
-public class GetRequest extends AsyncTask<String, Void, Boolean> {
+public class GetRequest {
 
     private String url;
     private Message message;
@@ -20,8 +18,7 @@ public class GetRequest extends AsyncTask<String, Void, Boolean> {
         }
     }
 
-    @Override
-    protected Boolean doInBackground(String... params) {
+    public boolean execute(String... params) {
         final JSONParser jParser = new JSONParser();
 
         ObjectMapper mapper = new ObjectMapper();

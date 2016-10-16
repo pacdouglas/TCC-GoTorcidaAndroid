@@ -3,6 +3,7 @@ package br.com.gotorcida.gotorcida.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -47,13 +48,14 @@ public class RegisterActivity extends AppCompatActivity {
     private int year;
     private int month;
     private int day;
-
+    boolean register;
     static final int DATE_DIALOG_ID = 999;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        register = false;
 
         dpResult = (DatePicker) findViewById(R.id.dpResult);
         edtDateOfBirth = (EditText) findViewById(R.id.input_dateOfBirth);
@@ -85,6 +87,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (service.getMessage().getSystem().get("code").equals(200)) {
                         Toast.makeText(RegisterActivity.this, service.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                        register = true;
+                        Intent it = new Intent();
+                        Bundle bundle = new Bundle();
+
+                        bundle.putString("user", email.getText().toString());
+                        bundle.putString("password", edtPassword.getEditText().getText().toString());
+                        it.putExtras(bundle);
+                        setResult(RESULT_OK, it);
                         finish();
                     } else {
                         Toast.makeText(RegisterActivity.this, service.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
@@ -100,6 +110,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     public void addListenerOnButton() {

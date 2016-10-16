@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.concurrent.ExecutionException;
-
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
@@ -38,17 +36,10 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
 
                 try{
-                    GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
-                    try {
-                        getRequest.execute().get();
-                        serverOn = true;
-                    }  catch (InterruptedException e) {
-                        serverOn = false;
-                    } catch (ExecutionException e) {
-                        serverOn = false;
-                    }
+                    GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
+                    serverOn = getRequest.execute();
 
-                    if(serverOn){
+                    if(true){
                         if(SaveSharedPreference.getUserName(SplashScreenActivity.this).length() == 0){
                             startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
                         }else{

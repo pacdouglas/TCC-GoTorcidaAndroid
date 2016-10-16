@@ -1,9 +1,9 @@
 package br.com.gotorcida.gotorcida.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,11 +24,11 @@ import java.util.concurrent.ExecutionException;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.TeamAthletesListAdapter;
 import br.com.gotorcida.gotorcida.adapter.TeamNewsListAdapter;
-import br.com.gotorcida.gotorcida.adapter.UserTeamsListAdapter;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_ATHLETE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
@@ -56,16 +56,18 @@ public class TeamActivity extends AppCompatActivity {
             finish();
             return;
         }
+        teamName = (TextView) findViewById(R.id.team_textview_teamname);
+        teamLogo = (ImageView) findViewById(R.id.team_imageview_teamlogo);
+        teamWebsite = (TextView) findViewById(R.id.team_textview_teamwebsite);
+        teamEmail = (TextView) findViewById(R.id.team_textview_teamemail);
+        teamRegistrationDate = (TextView) findViewById(R.id.team_textview_teamregistrationdate);
+
+        athletesList = (ListView) findViewById(R.id.team_listview_athletes);
+        newsList = (ListView) findViewById(R.id.team_listview_news);
 
         GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_TEAMS, teamId);
-        try {
-            getRequest.execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
 
+        getRequest.execute();
         try {
             if (getRequest.getMessage().getSystem().getInt("code") == 500) {
                 Toast.makeText(TeamActivity.this, getRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
@@ -73,15 +75,6 @@ public class TeamActivity extends AppCompatActivity {
             }
 
             JSONObject team = new JSONObject(getRequest.getMessage().getData().getString("team"));
-
-            teamName = (TextView) findViewById(R.id.team_textview_teamname);
-            teamLogo = (ImageView) findViewById(R.id.team_imageview_teamlogo);
-            teamWebsite = (TextView) findViewById(R.id.team_textview_teamwebsite);
-            teamEmail = (TextView) findViewById(R.id.team_textview_teamemail);
-            teamRegistrationDate = (TextView) findViewById(R.id.team_textview_teamregistrationdate);
-
-            athletesList = (ListView) findViewById(R.id.team_listview_athletes);
-            newsList = (ListView) findViewById(R.id.team_listview_news);
 
             teamName.setText(team.getString("name"));
             teamWebsite.setText(team.getString("website"));
@@ -91,13 +84,8 @@ public class TeamActivity extends AppCompatActivity {
             Glide.with(this).load(URL_IMAGES_BASE + team.getString("urlImage")+".png").into(teamLogo);
 
             getRequest = new GetRequest(URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM, SaveSharedPreference.getUserName(this), teamId);
-            try {
-                getRequest.execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+
+            getRequest.execute();
 
             JSONObject json = getRequest.getMessage().getData();
 
@@ -124,13 +112,9 @@ public class TeamActivity extends AppCompatActivity {
             athletesList.setAdapter(athleteAdapter);
 
             getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS, SaveSharedPreference.getUserName(this), "team", teamId);
-            try {
-                getRequest.execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+
+            getRequest.execute();
+
 
             json = getRequest.getMessage().getData();
 
@@ -171,5 +155,19 @@ public class TeamActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public class TeamInfoTask extends AsyncTask {
+        @Override
+        protected void onPreExecute() {
+        }
+        @Override
+        protected Object doInBackground(Object... args) {
+            return true;
+        }
+        @Override
+        public void onPostExecute(Object result) {
+        }
+
     }
 }
