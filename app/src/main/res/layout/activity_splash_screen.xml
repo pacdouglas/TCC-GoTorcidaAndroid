@@ -31,14 +31,22 @@
         android:src="@drawable/letra_gotorcida"
         android:contentDescription="GoTorcida" />
 
-    <TextView
+   <ProgressBar
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="110dp"
+       style="@android:style/Widget.ProgressBar.Horizontal"
+       android:layout_alignBottom="@id/letra_logo"
+       android:id="@+id/splash_progress"/>
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleSmallInverse"
+        android:layout_alignBottom="@id/splash_progress"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:paddingBottom="70dp"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Erro de Conexão com o Servidor. Tente novamente mais tarde."
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textAlignment="center"
-        android:id="@+id/error_connection"
-        android:layout_alignParentEnd="true" />
+        android:layout_height="wrap_content"
+        />
 
 </RelativeLayout>

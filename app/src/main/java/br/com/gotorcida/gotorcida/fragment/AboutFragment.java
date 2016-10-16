@@ -19,7 +19,6 @@ import br.com.gotorcida.gotorcida.R;
 public class AboutFragment extends Fragment {
     View mView;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

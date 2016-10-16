@@ -1,74 +1,108 @@
 package br.com.gotorcida.gotorcida.activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.ProgressBar;
+
+import junit.framework.Test;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
+import br.com.gotorcida.gotorcida.utils.TestInternetConnectionAndClose;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private Handler mHandler;
-    private Runnable mRunnable;
-    private TextView txtError;
+    ProgressBar progressBar;
     boolean serverOn;
-    private static final long SPLASH_DURATION = 2500L;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         getSupportActionBar().hide();
 
-        txtError = (TextView) findViewById(R.id.error_connection);
-        txtError.setVisibility(View.GONE);
+        progressBar = (ProgressBar) findViewById(R.id.splash_progress);
+
         serverOn = false;
-        mHandler = new Handler();
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
+        ConnectionTestTask connectionTestTask = new ConnectionTestTask();
+        connectionTestTask.execute();
+    }
 
-                try{
-                    GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
-                    serverOn = getRequest.execute();
 
-                    if(true){
-                        if(SaveSharedPreference.getUserName(SplashScreenActivity.this).length() == 0){
-                            startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
-                        }else{
-                            startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class));
-                        }
-                        finish();
-                    }
-                    else{
-                        txtError.setVisibility(View.VISIBLE);
-                    }
+    public class ConnectionTestTask extends AsyncTask<Void, Integer, Void> {
+        int progressStatus;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressStatus = 0;
+            progressBar.setProgress(0);
+        }
 
-                }catch(Exception e) {
-                    txtError.setVisibility(View.VISIBLE);
-                }
+        @Override
+        protected Void doInBackground(Void... params) {
+            progressStatus = 10;
+            publishProgress(progressStatus);
 
+            if(connectionInternetTest()){
+                GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
+                serverOn = getRequest.execute();
             }
-        };
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mHandler.postDelayed(mRunnable, SPLASH_DURATION);
-    }
+            progressStatus = 20;
+            publishProgress(progressStatus);
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mHandler.removeCallbacks(mRunnable);
+            while (progressStatus < 100){
+                progressStatus +=2;
+                publishProgress(progressStatus);
+                SystemClock.sleep(20);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            if (progressBar != null) {
+                progressBar.setProgress(values[0]);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(serverOn){
+                if(SaveSharedPreference.getUserName(SplashScreenActivity.this).length() == 0){
+                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                }else{
+                    startActivity(new Intent(SplashScreenActivity.this, DashboardActivity.class));
+                }
+                finish();
+            }
+            else{
+                TestInternetConnectionAndClose.execute(SplashScreenActivity.this);
+            }
+        }
+
+        public  boolean connectionInternetTest() {
+            boolean ret;
+            ConnectivityManager conectivtyManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (conectivtyManager.getActiveNetworkInfo() != null
+                    && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                    && conectivtyManager.getActiveNetworkInfo().isConnected()) {
+                ret = true;
+            } else {
+                ret = false;
+            }
+            return ret;
+        }
     }
 
 }

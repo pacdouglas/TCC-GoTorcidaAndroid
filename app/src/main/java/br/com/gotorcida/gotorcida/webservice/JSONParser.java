@@ -21,17 +21,21 @@ public class JSONParser {
         InputStream in;
         JSONArray jsonArray;
         String response;
+        JSONObject json;
 
         url = new URL(urlString);
         conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Accept", "*/*");
 
-        in = new BufferedInputStream(conn.getInputStream());
-        response = IOUtils.toString(in, "UTF-8");
+        try{
 
-        JSONObject json = new JSONObject(response);
-
+            in = new BufferedInputStream(conn.getInputStream());
+            response = IOUtils.toString(in, "UTF-8");
+            json = new JSONObject(response);
+        }catch(Exception e){
+            return null;
+        }
         return json;
     }
 
