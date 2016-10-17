@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <RelativeLayout
+        android:id="@+id/team_relative_header"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/team_imageview_teamlogo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/icon_mook" />
+
+        <TextView
+            android:id="@+id/team_textview_teamname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/team_imageview_teamlogo"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/team_imageview_teamlogo"
+            android:layout_weight="1"
+            android:text="CheckBox"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/team_textview_teamwebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/team_textview_teamname"
+            android:layout_toEndOf="@id/team_imageview_teamlogo"
+            android:layout_weight="1"
+            android:text="CheckBox"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/team_textview_teamemail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/team_textview_teamwebsite"
+            android:layout_toEndOf="@id/team_imageview_teamlogo"
+            android:layout_weight="1"
+            android:text="CheckBox"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/team_textview_teamregistrationdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/team_textview_teamemail"
+            android:layout_toEndOf="@id/team_imageview_teamlogo"
+            android:layout_weight="1"
+            android:text="CheckBox"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>

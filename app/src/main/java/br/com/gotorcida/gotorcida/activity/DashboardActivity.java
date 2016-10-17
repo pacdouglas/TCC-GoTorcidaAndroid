@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.activity;
 
+
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;

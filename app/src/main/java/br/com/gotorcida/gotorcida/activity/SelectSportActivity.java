@@ -57,7 +57,7 @@ public class SelectSportActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object... args) {
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS, null);
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
 
             getRequest.execute();
 

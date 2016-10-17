@@ -31,7 +31,7 @@ public class UserTeamsListAdapter extends ArrayAdapter<JSONObject> {
         JSONObject json = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_user_teams_list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_user_teams, parent, false);
         }
 
         TextView teamId = (TextView) convertView.findViewById(R.id.userteams_textview_teamid);

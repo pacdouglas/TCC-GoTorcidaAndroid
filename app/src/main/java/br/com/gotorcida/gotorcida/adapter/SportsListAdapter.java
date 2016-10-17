@@ -28,7 +28,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.activity_select_sport_list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_select_sport, parent, false);
         SportsListHolder holder = new SportsListHolder(view);
         return holder;
     }
