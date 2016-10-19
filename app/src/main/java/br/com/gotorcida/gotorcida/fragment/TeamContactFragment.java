@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 
 import br.com.gotorcida.gotorcida.R;
 
-public class TeamHistoryFragment extends Fragment {
+public class TeamContactFragment extends Fragment {
     View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_team_history, container, false);
+        mView = inflater.inflate(R.layout.fragment_team_contact, container, false);
         return mView;
     }
 

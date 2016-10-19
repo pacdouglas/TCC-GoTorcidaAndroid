@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import br.com.gotorcida.gotorcida.fragment.TeamHistoryFragment;
+import br.com.gotorcida.gotorcida.fragment.TeamContactFragment;
+import br.com.gotorcida.gotorcida.fragment.TeamMatchesFragment;
+import br.com.gotorcida.gotorcida.fragment.TeamNewsFragment;
 import br.com.gotorcida.gotorcida.fragment.TeamRosterFragment;
 
 /**
@@ -23,9 +25,13 @@ public class TeamTabAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new TeamHistoryFragment();
+                return new TeamMatchesFragment();
             case 1:
                 return new TeamRosterFragment();
+            case 2:
+                return new TeamNewsFragment();
+            case 3:
+                return new TeamContactFragment();
             default:
                 return null;
         }

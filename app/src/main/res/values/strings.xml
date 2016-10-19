@@ -42,8 +42,10 @@
     <string name="mensagem_com_sucesso">Mensagem enviada com sucesso! Aguarde nosso contato.</string>
 
     <string-array name="titles_tabs">
-        <item>História</item>
+        <item>Jogos</item>
         <item>Elenco</item>
+        <item>News</item>
+        <item>Contato</item>
     </string-array>
     
     <string-array name="states_array">
