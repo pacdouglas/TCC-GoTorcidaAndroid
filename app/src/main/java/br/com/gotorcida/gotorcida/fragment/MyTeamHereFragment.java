@@ -1,40 +1,33 @@
 package br.com.gotorcida.gotorcida.fragment;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.activity.DashboardActivity;
 import br.com.gotorcida.gotorcida.utils.MailSender;
 
 /**
  * Created by dougl on 15/10/2016.
  */
 
-public class MyTeamHereFragment extends Fragment{
+public class MyTeamHereFragment extends Fragment {
     View mView;
     Spinner spnState;
     Button btnSend;
     LinearLayout form;
     LinearLayout msgSuccess;
     ProgressBar progressBar;
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_my_team_here, container, false);
@@ -75,7 +68,6 @@ public class MyTeamHereFragment extends Fragment{
 
         @Override
         protected Object doInBackground(Object... args) {
-            SystemClock.sleep(2000);
             try {
                 MailSender sender = new MailSender("gotorcida8cco@gmail.com", "equipegotorcida321");
                 sender.sendMail("EMAIL DO APP",
@@ -106,5 +98,4 @@ public class MyTeamHereFragment extends Fragment{
         }
 
     }
-
 }

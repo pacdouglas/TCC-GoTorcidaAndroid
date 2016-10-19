@@ -1,10 +1,13 @@
 package br.com.gotorcida.gotorcida.fragment;
 
-import android.app.Fragment;
+
+
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +31,13 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import static br.com.gotorcida.gotorcida.utils.Constants.SLEEP_THREAD;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_TEAM;
 
-
 public class UserTeamsFragment extends Fragment {
     View mView;
 
     ListView listTeams;
     ArrayAdapter<JSONObject> adapter;
     ProgressBar progressBar;
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_user_teams, container, false);
@@ -60,10 +62,10 @@ public class UserTeamsFragment extends Fragment {
         @Override
         protected Object doInBackground(Object... args) {
             SystemClock.sleep(SLEEP_THREAD);
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_TEAM, SaveSharedPreference.getUserName(getActivity()), "user");
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_TEAM,
+                    SaveSharedPreference.getUserName(getActivity()), "user");
 
             getRequest.execute();
-
             JSONObject json = getRequest.getMessage().getData();
 
             JSONArray teams = null;
@@ -104,15 +106,8 @@ public class UserTeamsFragment extends Fragment {
             listTeams.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    getActivity().getFragmentManager().beginTransaction()
-                            .replace(R.id.dashboard_frame_fragment, new TeamFragment())
-                            .commit();
-                    //TextView teamId = (TextView) view.findViewById(R.id.userteams_textview_teamid);
-                    //if (teamId != null && !teamId.getText().toString().equals("")) {
-                    //    Intent it = new Intent(getActivity(), TeamActivity.class);
-                    //    it.putExtra("teamId", teamId.getText().toString());
-                    //    startActivity(it);
-                    //}
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.dashboard_frame_fragment, new TeamFragment()).commit();
                 }
             });
             progressBar.setVisibility(View.GONE);

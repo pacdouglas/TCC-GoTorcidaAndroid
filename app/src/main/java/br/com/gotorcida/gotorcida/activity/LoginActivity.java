@@ -26,8 +26,6 @@ public class LoginActivity extends AppCompatActivity{
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
     private ScrollView formView;
     private ProgressBar progressBar;
 
@@ -61,9 +59,6 @@ public class LoginActivity extends AppCompatActivity{
                 startActivityForResult(it, 1);
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
