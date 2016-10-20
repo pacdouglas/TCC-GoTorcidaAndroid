@@ -1,8 +1,5 @@
 package br.com.gotorcida.gotorcida.fragment;
 
-
-
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -15,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -107,7 +105,15 @@ public class UserTeamsFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.dashboard_frame_fragment, new TeamFragment()).commit();
+                    TeamFragment fragment = new TeamFragment();
+
+                    TextView teamId = (TextView) view.findViewById(R.id.userteams_textview_teamid);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("teamId", teamId.getText().toString());
+                    fragment.setArguments(bundle);
+
+                    ft.replace(R.id.dashboard_frame_fragment, fragment).commit();
                 }
             });
             progressBar.setVisibility(View.GONE);
@@ -116,3 +122,4 @@ public class UserTeamsFragment extends Fragment {
 
     }
 }
+
