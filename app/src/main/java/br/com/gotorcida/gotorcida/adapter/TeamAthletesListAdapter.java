@@ -37,7 +37,6 @@ public class TeamAthletesListAdapter extends ArrayAdapter<JSONObject> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return convertView;
     }
 

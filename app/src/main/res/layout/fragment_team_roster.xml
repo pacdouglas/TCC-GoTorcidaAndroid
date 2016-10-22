@@ -9,10 +9,27 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/team_roster_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/team_roster_layout">
+
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Elenco do time"
-        android:gravity="center"/>
+        android:layout_height="200dp"
+        android:layout_below="@id/team_textview_athleteCaption"
+        android:id="@+id/team_roster_listview_athletes"
+        />
+
+</RelativeLayout>
 
 </RelativeLayout>

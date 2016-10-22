@@ -3,9 +3,7 @@ package br.com.gotorcida.gotorcida.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -67,7 +65,7 @@ public class DashboardActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -95,6 +93,7 @@ public class DashboardActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
         if (id == R.id.nav_my_teams) {
             ft.replace(R.id.dashboard_frame_fragment, new UserTeamsFragment()).commit();
         } else if (id == R.id.nav_events) {

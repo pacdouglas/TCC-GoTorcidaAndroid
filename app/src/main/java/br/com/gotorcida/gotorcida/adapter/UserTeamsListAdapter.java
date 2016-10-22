@@ -48,5 +48,4 @@ public class UserTeamsListAdapter extends ArrayAdapter<JSONObject> {
 
         return convertView;
     }
-
 }
