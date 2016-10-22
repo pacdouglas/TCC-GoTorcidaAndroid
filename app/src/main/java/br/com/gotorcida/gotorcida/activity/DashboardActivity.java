@@ -2,9 +2,9 @@ package br.com.gotorcida.gotorcida.activity;
 
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.fragment.AboutFragment;
@@ -22,15 +26,19 @@ import br.com.gotorcida.gotorcida.fragment.EventsFragment;
 import br.com.gotorcida.gotorcida.fragment.MatchesTableFragment;
 import br.com.gotorcida.gotorcida.fragment.MyTeamHereFragment;
 import br.com.gotorcida.gotorcida.fragment.UserTeamsFragment;
+import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
+import br.com.gotorcida.gotorcida.webservice.GetRequest;
+
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_TEAM;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView;
-    TextView username;
-    TextView userEmail;
-    ImageView userImgProfile;
+    TextView mUserName;
+    TextView mUserEmail;
+    ImageView mUserImgProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +55,12 @@ public class DashboardActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_username);
-        userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_email);
-        userImgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_image_view_profile);
+        mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_username);
+        mUserEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_email);
+        mUserImgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_image_view_profile);
 
-        username.setText("Douglas Martins");
-        userEmail.setText("douglas.pac@gmail.com");
-
+        UserConfigTask userConfigTask = new UserConfigTask();
+        userConfigTask.execute();
     }
 
     @Override
@@ -113,5 +120,40 @@ public class DashboardActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public class UserConfigTask extends AsyncTask<Void, Void, Boolean> {
+        String userName;
+        String userEmail;
+        private GetRequest mGetRequest;
+        UserConfigTask() {
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            userName = "userName";
+            userEmail = "email";
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                mGetRequest = new GetRequest(Constants.URL_SERVER_NEW_USER + "/" +SaveSharedPreference.getUserName(DashboardActivity.this));
+                mGetRequest.execute();
+                JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
+                userName = userData.getString("fullName");
+                userEmail = userData.getString("emailAddress");
+            } catch (Exception e) {
+                Toast.makeText(DashboardActivity.this, "Erro em carregar os dados do usuário", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            mUserName.setText(userName);
+            mUserEmail.setText(userEmail);
+        }
     }
 }

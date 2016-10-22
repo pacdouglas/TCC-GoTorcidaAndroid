@@ -59,7 +59,6 @@ public class UserTeamsFragment extends Fragment {
 
         @Override
         protected Object doInBackground(Object... args) {
-            SystemClock.sleep(SLEEP_THREAD);
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_TEAM,
                     SaveSharedPreference.getUserName(getActivity()), "user");
 

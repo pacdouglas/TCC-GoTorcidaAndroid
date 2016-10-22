@@ -43,9 +43,6 @@ public class MyTeamHereFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnState.setAdapter(adapter);
 
-
-
-
         btnSend = (Button) mView.findViewById(R.id.my_team_here_button_send);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override

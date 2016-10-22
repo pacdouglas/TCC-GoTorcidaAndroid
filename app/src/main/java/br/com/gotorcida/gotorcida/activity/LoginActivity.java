@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity{
                     JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
 
                     if (userData.getString("firstAccess").equals("S")){
-                        SaveSharedPreference.setUserName(LoginActivity.this, userData.getString("id")); //todo: lembrar de alterar p bundle
+                        SaveSharedPreference.setUserName(LoginActivity.this, userData.getString("id"));
                         Intent it = new Intent(LoginActivity.this, SelectSportActivity.class);
                         startActivity(it);
                     } else {

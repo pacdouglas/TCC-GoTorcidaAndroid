@@ -3,17 +3,14 @@ package br.com.gotorcida.gotorcida.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -23,7 +20,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.adapter.TeamAthletesListAdapter;
+import br.com.gotorcida.gotorcida.adapter.TeamRosterListAdapter;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
@@ -31,11 +28,10 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_AT
 
 public class TeamRosterFragment extends Fragment {
     View mView;
-    ListView athletesList;
+    RecyclerView athletesList;
     private String teamId;
 
     ProgressBar progressBar;
-    RelativeLayout listLayout;
     public TeamRosterFragment(String teamId) {
         this.teamId = teamId;
 
@@ -45,9 +41,8 @@ public class TeamRosterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_team_roster, container, false);
 
-        athletesList = (ListView) mView.findViewById(R.id.team_roster_listview_athletes);
+        athletesList = (RecyclerView) mView.findViewById(R.id.team_roster_listview_athletes);
         progressBar = (ProgressBar) mView.findViewById(R.id.team_roster_progress);
-        listLayout = (RelativeLayout) mView.findViewById(R.id.team_roster_layout);
 
         MakeListTeamRosterTask makeListTeamRosterTask = new MakeListTeamRosterTask();
         makeListTeamRosterTask.execute();
@@ -55,12 +50,11 @@ public class TeamRosterFragment extends Fragment {
     }
 
     public class MakeListTeamRosterTask extends AsyncTask {
-        ArrayAdapter<JSONObject> athleteAdapter;
+        ArrayList<JSONObject> listAthlete;
         protected void onPreExecute() {
-            listLayout.setVisibility(View.GONE);
+            athletesList.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }
-
         @Override
         protected Object doInBackground(Object[] params) {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM,
@@ -79,32 +73,28 @@ public class TeamRosterFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            ArrayList<JSONObject> list = new ArrayList<>();
+            listAthlete = new ArrayList<>();
             for(int i = 0; i < athletes.length(); i++){
                 try {
-                    list.add(athletes.getJSONObject(i));
+                    listAthlete.add(athletes.getJSONObject(i));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            athleteAdapter = new TeamAthletesListAdapter(getActivity(), list);
             return null;
         }
         @Override
         public void onPostExecute(Object result) {
-            athletesList.setAdapter(athleteAdapter);
+            athletesList.setHasFixedSize(true);
+            TeamRosterListAdapter adapter = new TeamRosterListAdapter(listAthlete, getActivity().getBaseContext());
 
-            athletesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    TextView athleteId = (TextView) mView.findViewById(R.id.team_textview_athleteid);
-                    Toast.makeText(getActivity(), athleteId.getText(), Toast.LENGTH_SHORT).show();
-                    if (athleteId != null && !athleteId.getText().toString().equals("")) {
-                    }
-                }
-            });
+            RecyclerView.LayoutManager layout = new StaggeredGridLayoutManager(2, 1);
+            athletesList.setLayoutManager(layout);
+
+            athletesList.setAdapter(adapter);
+
             progressBar.setVisibility(View.GONE);
-            listLayout.setVisibility(View.VISIBLE);
+            athletesList.setVisibility(View.VISIBLE);
         }
     }
 }
