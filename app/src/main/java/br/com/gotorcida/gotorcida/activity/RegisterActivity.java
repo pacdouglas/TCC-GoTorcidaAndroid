@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 try {
-                    service.execute(userData.toString()).get();
+                    service.execute(userData.toString());
 
                     if (service.getMessage().getSystem().get("code").equals(200)) {
                         Toast.makeText(RegisterActivity.this, service.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
@@ -89,10 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(RegisterActivity.this, service.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

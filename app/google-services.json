@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "581094464408",
+    "project_id": "firebase-gotorcida"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581094464408:android:c99642d3c39300c7",
+        "android_client_info": {
+          "package_name": "br.com.gotorcida.gotorcida"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "581094464408-k1groc90l0clgsbl0h71r10mj1518je6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.gotorcida.gotorcida",
+            "certificate_hash": "FFAC987851CA60C4FDA67ECF3B941DBF8BE370B6"
+          }
+        },
+        {
+          "client_id": "581094464408-1jc6kvbcvsg5uqf15hkd2j9844urqpjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUPibUGm_5QjFoClV48-UaFlOfPNrtAV4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

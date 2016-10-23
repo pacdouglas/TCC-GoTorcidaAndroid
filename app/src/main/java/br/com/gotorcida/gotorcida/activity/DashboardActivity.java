@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import br.com.gotorcida.gotorcida.dialog.AboutDialog;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.fragment.EventsFragment;
 import br.com.gotorcida.gotorcida.fragment.MatchesTableFragment;
@@ -111,7 +110,7 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_my_team_here) {
             ft.replace(R.id.dashboard_frame_fragment, new MyTeamHereFragment()).commit();
         } else if (id == R.id.nav_about) {
-            AboutDialog aboutDialog = new AboutDialog();
+            br.com.gotorcida.gotorcida.dialog.AboutDialog aboutDialog = new br.com.gotorcida.gotorcida.dialog.AboutDialog();
             aboutDialog.show(getSupportFragmentManager(), "TAG");
         } else if (id == R.id.nav_logout) {
             SaveSharedPreference.clearUserName(DashboardActivity.this);

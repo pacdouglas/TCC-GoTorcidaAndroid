@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
-public class PostRequest extends AsyncTask<String, Void, Boolean> {
+public class PostRequest {
 
     private String url;
     private Message message;
@@ -14,14 +14,16 @@ public class PostRequest extends AsyncTask<String, Void, Boolean> {
         this.url = url + "/";
     }
 
-    @Override
-    protected Boolean doInBackground(String... params) {
+    public boolean execute(String... params) {
         final JSONParser jParser = new JSONParser();
 
         ObjectMapper mapper = new ObjectMapper();
         JSONObject json = null;
 
         try {
+            System.out.println("**************************************");
+            System.out.println("[POST] CALLED URL : " + this.url);
+            System.out.println("**************************************");
             json = jParser.postJSONToURL(this.url, params[0]);
             this.message = mapper.readValue(json.toString(), Message.class);
         } catch (Exception e) {

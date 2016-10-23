@@ -133,28 +133,47 @@ public class SelectTeamActivity extends AppCompatActivity {
                         postParameters.put("sports", selectedSports);
                         postParameters.put("teams", selectedTeams.toString());
 
-                        postRequest.execute(postParameters.toString()).get();
+                        SaveDashboardOptionsTask saveDashboardOptionsTask = new SaveDashboardOptionsTask(postParameters);
+                        saveDashboardOptionsTask.execute();
 
-                        if (postRequest.getMessage().getSystem().get("code").equals(200)) {
-                            SaveSharedPreference.setUserName(SelectTeamActivity.this, userId);
-                            Intent intent = new Intent(SelectTeamActivity.this, DashboardActivity.class);
-                            startActivity(intent);
-                            setResult(RESULT_OK, null);
-                            finish();
-                        } else {
-                            Toast.makeText(SelectTeamActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
-                        }
                     } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
                 } else {
                     Toast.makeText(SelectTeamActivity.this, "É necessário escolher ao menos um time.", Toast.LENGTH_SHORT).show();
                 }
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public class SaveDashboardOptionsTask extends AsyncTask {
+
+        private final JSONObject postParameters;
+
+        public SaveDashboardOptionsTask(JSONObject postParameters){
+            this.postParameters = postParameters;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            PostRequest postRequest = new PostRequest(URL_SERVER_DASHBOARD_SAVECONFIG);
+            postRequest.execute(postParameters.toString());
+
+            try {
+                if (postRequest.getMessage().getSystem().get("code").equals(200)) {
+                    SaveSharedPreference.setUserName(SelectTeamActivity.this, postParameters.getString("userId"));
+                    Intent intent = new Intent(SelectTeamActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+                    setResult(RESULT_OK, null);
+                    finish();
+                } else {
+                    Toast.makeText(SelectTeamActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException ex) {
+
+            }
+            return null;
+        }
     }
 }

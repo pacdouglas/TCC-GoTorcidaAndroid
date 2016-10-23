@@ -26,7 +26,7 @@ public class GetRequest {
 
         try {
             System.out.println("**************************************");
-            System.out.println("CALLED URL : " + this.url);
+            System.out.println("[GET] CALLED URL : " + this.url);
             System.out.println("**************************************");
             json = jParser.getJSONFromUrl(this.url);
             this.message = mapper.readValue(json.toString(), Message.class);
