@@ -3,6 +3,7 @@ package br.com.gotorcida.gotorcida.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -25,6 +26,7 @@ import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.TeamTabAdapter;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
+import static br.com.gotorcida.gotorcida.utils.Constants.SLEEP_THREAD;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 
@@ -107,6 +109,7 @@ public class TeamFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            SystemClock.sleep(SLEEP_THREAD);
             return null;
         }
         @Override

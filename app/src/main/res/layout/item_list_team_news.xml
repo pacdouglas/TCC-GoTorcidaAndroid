@@ -15,8 +15,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:id="@+id/team_textview_newsid" />
+            android:id="@+id/team_textview_teamid" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/team_textview_newsid" />
         <TextView
             android:text="Data da noticia"
             android:layout_width="wrap_content"
@@ -49,17 +54,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
                 android:maxLines="4"
                 android:layout_marginLeft="30dp"
                 android:id="@+id/team_textview_newsbody" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:text="Ver mais..."
-                android:id="@+id/textView2" />
         </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 public class TeamNewsListAdapter extends RecyclerView.Adapter {
 
@@ -27,7 +28,7 @@ public class TeamNewsListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_team_news, parent, false);
-        holder = new TeamNewsListHolder(view);
+        holder = new TeamNewsListHolder(view, "team");
         return holder;
     }
 
@@ -39,12 +40,18 @@ public class TeamNewsListAdapter extends RecyclerView.Adapter {
             holder.newsDate.setText(data.getString("formatedRegistrationDate"));
             holder.newsTitle.setText(data.getString("title"));
             holder.newsBody.setText(data.getString("description"));
-
-
-
+            holder.teamId.setText(data.getString("teamId"));
+            holder.newsId.setText(data.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+
+            }
+        });
     }
 
     @Override

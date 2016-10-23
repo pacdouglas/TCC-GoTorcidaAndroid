@@ -53,8 +53,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.AthleteInfoActivity"
-                    android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.AthleteInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.NewsDetailsActivity"></activity>
     </application>
 
 </manifest>

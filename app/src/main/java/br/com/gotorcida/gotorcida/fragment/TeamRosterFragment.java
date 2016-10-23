@@ -94,7 +94,6 @@ public class TeamRosterFragment extends Fragment {
 
             RecyclerView.LayoutManager layout = new StaggeredGridLayoutManager(2, 1);
             athletesList.setLayoutManager(layout);
-
             athletesList.setAdapter(adapter);
 
             progressBar.setVisibility(View.GONE);

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -39,7 +40,6 @@ public class TeamNewsFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_team_news, container, false);
         newsList = (RecyclerView) mView.findViewById(R.id.team_news_listview_news);
         progressBar = (ProgressBar) mView.findViewById(R.id.team_news_progress);
-
         newsList.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         MakeListNewsTask makeListNewsTask = new MakeListNewsTask();
@@ -54,8 +54,8 @@ public class TeamNewsFragment extends Fragment {
         }
         @Override
         protected Object doInBackground(Object[] params) {
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS+"/"
-                    +SaveSharedPreference.getUserName(getActivity().getBaseContext())+"/team/"+teamId);
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS
+                    , SaveSharedPreference.getUserName(getActivity().getBaseContext()),"team",teamId);
 
             getRequest.execute();
             JSONObject json = getRequest.getMessage().getData();
