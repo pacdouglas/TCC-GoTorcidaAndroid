@@ -1,6 +1,7 @@
 package br.com.gotorcida.gotorcida.fragment;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -44,12 +46,14 @@ public class TeamRosterFragment extends Fragment {
         athletesList = (RecyclerView) mView.findViewById(R.id.team_roster_listview_athletes);
         progressBar = (ProgressBar) mView.findViewById(R.id.team_roster_progress);
 
+        athletesList.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         MakeListTeamRosterTask makeListTeamRosterTask = new MakeListTeamRosterTask();
         makeListTeamRosterTask.execute();
         return mView;
     }
 
-    public class MakeListTeamRosterTask extends AsyncTask {
+    public class MakeListTeamRosterTask extends AsyncTask  {
         ArrayList<JSONObject> listAthlete;
         protected void onPreExecute() {
             athletesList.setVisibility(View.GONE);

@@ -5,18 +5,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 public class TeamRosterListAdapter extends RecyclerView.Adapter {
 
     List<JSONObject> athlete;
     Context context;
     JSONObject data;
+
     public TeamRosterListAdapter(List<JSONObject> athlete, Context context){
         this.athlete = athlete;
         this.context = context;
@@ -30,16 +34,24 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         data = athlete.get(position);
 
-        TeamRosterListHolder holder = (TeamRosterListHolder) viewHolder;
+        final TeamRosterListHolder holder = (TeamRosterListHolder) viewHolder;
         try {
             holder.nameAthlete.setText(data.getString("name"));
-
+            holder.athletePosition.setText(data.getString("website")); //TODO: MUDAR AE O CAMPO NO BANCO PRA POSIÇÃO DO CABRA
+            holder.athleteId.setText(data.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+                Toast.makeText(context, holder.athleteId.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

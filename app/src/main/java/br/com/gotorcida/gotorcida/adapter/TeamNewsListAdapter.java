@@ -1,46 +1,55 @@
 package br.com.gotorcida.gotorcida.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
 
-public class TeamNewsListAdapter extends ArrayAdapter<JSONObject> {
+public class TeamNewsListAdapter extends RecyclerView.Adapter {
 
-    public TeamNewsListAdapter(Context context, ArrayList<JSONObject> objects) {
-        super(context, 0, objects);
+    List<JSONObject> news;
+    Context context;
+    JSONObject data;
+    TeamNewsListHolder holder;
+    public TeamNewsListAdapter(List<JSONObject> news, Context context){
+        this.news = news;
+        this.context = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        JSONObject json = getItem(position);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_team_news, parent, false);
+        holder = new TeamNewsListHolder(view);
+        return holder;
+    }
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_team_news_list_item, parent, false);
-        }
-
-        TextView newsId = (TextView) convertView.findViewById(R.id.team_textview_newsid);
-        TextView newsDate = (TextView) convertView.findViewById(R.id.team_textview_newsdate);
-        TextView newsTitle = (TextView) convertView.findViewById(R.id.team_textview_newstitle);
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        data = news.get(position);
 
         try {
-            newsId.setText(json.getString("id"));
-            newsDate.setText(json.getString("formatedRegistrationDate"));
-            newsTitle.setText(json.getString("title"));
+            holder.newsDate.setText(data.getString("formatedRegistrationDate"));
+            holder.newsTitle.setText(data.getString("title"));
+            holder.newsBody.setText(data.getString("description"));
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return news.size();
     }
 
 }

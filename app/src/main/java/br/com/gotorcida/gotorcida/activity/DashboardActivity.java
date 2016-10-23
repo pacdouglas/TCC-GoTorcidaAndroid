@@ -13,11 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.gotorcida.gotorcida.R;
@@ -30,8 +31,6 @@ import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_TEAM;
-
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,6 +38,7 @@ public class DashboardActivity extends AppCompatActivity
     TextView mUserName;
     TextView mUserEmail;
     ImageView mUserImgProfile;
+    Spinner mSpinnerSelectPerfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,7 @@ public class DashboardActivity extends AppCompatActivity
         mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_username);
         mUserEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_email);
         mUserImgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_image_view_profile);
+        mSpinnerSelectPerfil = (Spinner) navigationView.getHeaderView(0).findViewById(R.id.nav_header_spinner_select_perfil);
 
         UserConfigTask userConfigTask = new UserConfigTask();
         userConfigTask.execute();
@@ -125,6 +126,7 @@ public class DashboardActivity extends AppCompatActivity
     public class UserConfigTask extends AsyncTask<Void, Void, Boolean> {
         String userName;
         String userEmail;
+        boolean userTeamAdm;
         private GetRequest mGetRequest;
         UserConfigTask() {
 
@@ -134,6 +136,7 @@ public class DashboardActivity extends AppCompatActivity
         protected void onPreExecute() {
             userName = "userName";
             userEmail = "email";
+            userTeamAdm = false;
         }
 
         @Override
@@ -144,6 +147,12 @@ public class DashboardActivity extends AppCompatActivity
                 JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
                 userName = userData.getString("fullName");
                 userEmail = userData.getString("emailAddress");
+
+                if(userData.getString("userType").equals("Team")){
+                    userTeamAdm = true;
+
+                    //TODO: adicionar ao spinner as opções
+                }
             } catch (Exception e) {
                 Toast.makeText(DashboardActivity.this, "Erro em carregar os dados do usuário", Toast.LENGTH_SHORT).show();
             }
@@ -154,6 +163,9 @@ public class DashboardActivity extends AppCompatActivity
         protected void onPostExecute(final Boolean success) {
             mUserName.setText(userName);
             mUserEmail.setText(userEmail);
+            if(userTeamAdm){
+                mSpinnerSelectPerfil.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
