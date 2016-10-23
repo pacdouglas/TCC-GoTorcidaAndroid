@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-import br.com.gotorcida.gotorcida.Dialog.AboutDialog;
+import br.com.gotorcida.gotorcida.dialog.AboutDialog;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.fragment.EventsFragment;
 import br.com.gotorcida.gotorcida.fragment.MatchesTableFragment;
