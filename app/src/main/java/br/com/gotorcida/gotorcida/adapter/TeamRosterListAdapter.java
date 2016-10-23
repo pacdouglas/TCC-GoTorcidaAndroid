@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +36,7 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         data = athlete.get(position);
 
-        final TeamRosterListHolder holder = (TeamRosterListHolder) viewHolder;
+         TeamRosterListHolder holder = (TeamRosterListHolder) viewHolder;
         try {
             holder.nameAthlete.setText(data.getString("name"));
             holder.athletePosition.setText(data.getString("website")); //TODO: MUDAR AE O CAMPO NO BANCO PRA POSIÇÃO DO CABRA
@@ -49,7 +48,7 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(int pos) {
-                Toast.makeText(context, holder.athleteId.getText().toString(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }

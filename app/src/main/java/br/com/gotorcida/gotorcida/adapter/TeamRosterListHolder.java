@@ -1,11 +1,13 @@
 package br.com.gotorcida.gotorcida.adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.activity.AthleteInfoActivity;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 public class TeamRosterListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -30,5 +32,10 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
     @Override
     public void onClick(View v) {
         this.itemClickListener.onItemClick(this.getLayoutPosition());
+        Bundle bundle = new Bundle();
+        bundle.putString("athleteId", athleteId.getText().toString());
+        Intent it = new Intent(itemView.getContext(), AthleteInfoActivity.class);
+        it.putExtras(bundle);
+        itemView.getContext().startActivity(it);
     }
 }
