@@ -119,21 +119,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                                    if (object.getString("birthday").toString() != null || !object.getString("birthday").toString().equals("")){
-                                        Date dateOfBith = null;
-                                        try {
-                                            dateOfBith = new SimpleDateFormat("MM/dd/yyyy").parse(object.getString("birthday").toString());
-                                            birthdate = simpleDateFormat.format(dateOfBith);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                    } else {
+                                    if (!object.has("birthday")) {
                                         birthdate = simpleDateFormat.format(new Date());
+                                    } else {
+                                        if (object.getString("birthday") != null || !object.getString("birthday").toString().equals("")) {
+                                            Date dateOfBith = null;
+                                            try {
+                                                dateOfBith = new SimpleDateFormat("MM/dd/yyyy").parse(object.getString("birthday").toString());
+                                                birthdate = simpleDateFormat.format(dateOfBith);
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+                                            birthdate = simpleDateFormat.format(new Date());
+                                        }
                                     }
 
                                     UserLoginTask userLoginTask = new UserLoginTask(email, "", fullname, birthdate, "FACEBOOK");
                                     userLoginTask.execute();
                                 } catch (JSONException e) {
+                                    e.printStackTrace();
                                     Toast.makeText(LoginActivity.this, "Erro ao obter informações facebook", Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -155,7 +160,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(LoginActivity.this, "Erro ao reailzar login com Facebook.", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+                Toast.makeText(LoginActivity.this, "Erro ao reailzar login com Facebook.", Toast.LENGTH_LONG).show();
             }
         });
     }

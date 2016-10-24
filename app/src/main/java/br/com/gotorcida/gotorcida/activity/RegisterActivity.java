@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +21,10 @@ import org.json.JSONObject;
 import java.util.concurrent.ExecutionException;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_DASHBOARD_SAVECONFIG;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_NEW_USER;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -54,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.input_email);
         addListenerOnButton();
 
-
         btnSignup = (Button) findViewById(R.id.btn_signup);
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
@@ -68,29 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
                     userData.put("password", edtPassword.getEditText().getText().toString());
                     userData.put("fullName", edtFullname.getText().toString());
                     userData.put("dateOfBirth", edtDateOfBirth.getText().toString());
+
+                    RegisterUserTask saveDashboardOptionsTask = new RegisterUserTask(userData);
+                    saveDashboardOptionsTask.execute();
                 } catch (JSONException ex) {
                     ex.printStackTrace();
-                }
-
-                try {
-                    service.execute(userData.toString());
-
-                    if (service.getMessage().getSystem().get("code").equals(200)) {
-                        Toast.makeText(RegisterActivity.this, service.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
-                        register = true;
-                        Intent it = new Intent();
-                        Bundle bundle = new Bundle();
-
-                        bundle.putString("user", email.getText().toString());
-                        bundle.putString("password", edtPassword.getEditText().getText().toString());
-                        it.putExtras(bundle);
-                        setResult(RESULT_OK, it);
-                        finish();
-                    } else {
-                        Toast.makeText(RegisterActivity.this, service.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
             }
@@ -149,5 +133,40 @@ public class RegisterActivity extends AppCompatActivity {
     public static void hideKeyboard(Context context, View editText) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    public class RegisterUserTask extends AsyncTask {
+
+        private final JSONObject postParameters;
+
+        public RegisterUserTask(JSONObject postParameters){
+            this.postParameters = postParameters;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            PostRequest postRequest = new PostRequest(URL_SERVER_NEW_USER);
+            postRequest.execute(postParameters.toString());
+
+            try {
+                if (postRequest.getMessage().getSystem().get("code").equals(200)) {
+                    register = true;
+                    Intent it = new Intent();
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("user", postParameters.getString("emailAddress"));
+                    bundle.putString("password", postParameters.getString("passwod"));
+                    it.putExtras(bundle);
+                    setResult(RESULT_OK, it);
+                    finish();
+                } else {
+                    Toast.makeText(RegisterActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }
