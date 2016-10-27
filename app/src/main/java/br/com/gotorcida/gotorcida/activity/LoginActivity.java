@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivityForResult(it, 1);
+                startActivityForResult(it, 99);
             }
         });
 
@@ -382,7 +382,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 UserLoginTask userLoginTask = new UserLoginTask(email, "", fullname, "", "GOOGLE");
                 userLoginTask.execute();
             }
-        } else {
+        }
+        else if(data != null && resultCode == 99){
+                 UserLoginTask userLoginTask = new UserLoginTask(data.getExtras().getString("user"),
+                    data.getExtras().getString("password"), null, null, "NORMAL");
+
+            userLoginTask.execute();
+        }
+        else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }

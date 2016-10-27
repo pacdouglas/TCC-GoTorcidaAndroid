@@ -43,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
     private int day;
     boolean register;
     static final int DATE_DIALOG_ID = 999;
+    Intent it;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
         addListenerOnButton();
 
         btnSignup = (Button) findViewById(R.id.btn_signup);
-
+        it = new Intent();
+        bundle = new Bundle();
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,22 +154,24 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 if (postRequest.getMessage().getSystem().get("code").equals(200)) {
                     register = true;
-                    Intent it = new Intent();
-                    Bundle bundle = new Bundle();
-
                     bundle.putString("user", postParameters.getString("emailAddress"));
-                    bundle.putString("password", postParameters.getString("passwod"));
+                    bundle.putString("password", postParameters.getString("password"));
                     it.putExtras(bundle);
-                    setResult(RESULT_OK, it);
-                    finish();
+                    setResult(99, it);
+
                 } else {
                     Toast.makeText(RegisterActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            if(register)
+            finish();
         }
     }
 }
