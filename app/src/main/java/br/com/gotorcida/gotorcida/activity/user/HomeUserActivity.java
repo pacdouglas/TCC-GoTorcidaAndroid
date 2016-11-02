@@ -29,9 +29,9 @@ import java.util.List;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.adm.HomeAdmActivity;
 import br.com.gotorcida.gotorcida.dialog.AboutDialog;
+import br.com.gotorcida.gotorcida.dialog.MyTeamHereDialog;
 import br.com.gotorcida.gotorcida.fragment.user.EventsFragment;
 import br.com.gotorcida.gotorcida.fragment.user.MatchesTableFragment;
-import br.com.gotorcida.gotorcida.fragment.user.MyTeamHereFragment;
 import br.com.gotorcida.gotorcida.fragment.user.UserTeamsFragment;
 import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
@@ -116,7 +116,8 @@ public class HomeUserActivity extends AppCompatActivity
         } else if (id == R.id.nav_matches_table) {
             ft.replace(R.id.home_user_frame_fragment, new MatchesTableFragment()).commit();
         } else if (id == R.id.nav_my_team_here) {
-            ft.replace(R.id.home_user_frame_fragment, new MyTeamHereFragment()).commit();
+            MyTeamHereDialog myTeamHereDialog = new MyTeamHereDialog();
+            myTeamHereDialog.show(getSupportFragmentManager(), "TAG");
         } else if (id == R.id.nav_about) {
             AboutDialog aboutDialog = new AboutDialog();
             aboutDialog.show(getSupportFragmentManager(), "TAG");
