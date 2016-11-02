@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_adm_matches"
+            android:icon="@drawable/ic_menu_table_matches"
+            android:title="Jogos" />
+        <item
+            android:id="@+id/nav_adm_news"
+            android:icon="@drawable/ic_menu_news"
+            android:title="Notícias" />
+        <item
+            android:id="@+id/nav_adm_roster"
+            android:icon="@drawable/ic_menu_roster"
+            android:title="Elenco" />
+        <item
+            android:id="@+id/nav_adm_contact"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Editar Informações" />
+    </group>
+
+</menu>

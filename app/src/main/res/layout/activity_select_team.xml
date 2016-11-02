@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.gotorcida.gotorcida.activity.SelectTeamActivity">
+    tools:context="br.com.gotorcida.gotorcida.activity.user.SelectTeamActivity">
     <ProgressBar
         android:id="@+id/select_teams_progress"
         style="?android:attr/progressBarStyleLarge"

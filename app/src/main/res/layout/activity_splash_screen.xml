@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:backgroundTint="@color/colorPrimaryDark"
     android:background="@android:color/white"
-    tools:context="br.com.gotorcida.gotorcida.activity.SplashScreenActivity">
+    tools:context="br.com.gotorcida.gotorcida.activity.user.SplashScreenActivity">
 
     <ImageView
         android:layout_width="wrap_content"

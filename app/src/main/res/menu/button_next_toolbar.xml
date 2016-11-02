@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="br.com.gotorcida.gotorcida.activity.SelectSportActivity">
+    tools:context="br.com.gotorcida.gotorcida.activity.user.SelectSportActivity">
 
     <item
         android:id="@+id/next_button_toolbar"
