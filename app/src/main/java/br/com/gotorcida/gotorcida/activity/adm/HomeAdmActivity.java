@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +27,10 @@ import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.user.HomeUserActivity;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmEditInfoFragment;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmMachesFragment;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmNewsFragment;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmRosterFragment;
 import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.utils.StringWithTag;
@@ -109,15 +114,16 @@ public class HomeAdmActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_adm_matches) {
-            // Handle the camera action
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmMachesFragment()).commit();
         } else if (id == R.id.nav_adm_news) {
-
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmNewsFragment()).commit();
         } else if (id == R.id.nav_adm_roster) {
-
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmRosterFragment()).commit();
         } else if (id == R.id.nav_adm_contact) {
-
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmEditInfoFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -145,9 +151,9 @@ public class HomeAdmActivity extends AppCompatActivity
                 if(userData.getString("userType").equals("Team")){
 
                     List<StringWithTag> spinnerArray =  new ArrayList<>();
+                    spinnerArray.add(new StringWithTag("Paulínia Mavericks", 1)); //TODO: ID do time criar ciclo
                     spinnerArray.add(new StringWithTag(userName,
                             Integer.getInteger(SaveSharedPreference.getUserName(HomeAdmActivity.this))));
-                    spinnerArray.add(new StringWithTag("Paulínia Mavericks", 1)); //TODO: ID do time criar ciclo
                     spinnerArray.add(new StringWithTag("Basquete", 22)); //TODO: ID do time criar ciclo
                     spinnerArray.add(new StringWithTag("Voley", 13)); //TODO: ID do time criar ciclo
                     spinnerArray.add(new StringWithTag("Ha", 12)); //TODO: ID do time criar ciclo

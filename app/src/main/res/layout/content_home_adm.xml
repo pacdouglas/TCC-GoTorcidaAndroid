@@ -13,4 +13,10 @@
     tools:context="br.com.gotorcida.gotorcida.activity.adm.HomeAdmActivity"
     tools:showIn="@layout/app_bar_home_adm">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/home_adm_frame_fragment">
+    </FrameLayout>
+
 </RelativeLayout>

@@ -110,7 +110,7 @@ public class UserTeamsFragment extends Fragment {
                     bundle.putString("teamId", teamId.getText().toString());
                     fragment.setArguments(bundle);
 
-                    ft.replace(R.id.dashboard_frame_fragment, fragment).commit();
+                    ft.replace(R.id.home_user_frame_fragment, fragment).commit();
                 }
             });
             progressBar.setVisibility(View.GONE);

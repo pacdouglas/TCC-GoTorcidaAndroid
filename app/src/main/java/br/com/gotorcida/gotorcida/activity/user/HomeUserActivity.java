@@ -110,13 +110,13 @@ public class HomeUserActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_my_teams) {
-            ft.replace(R.id.dashboard_frame_fragment, new UserTeamsFragment()).commit();
+            ft.replace(R.id.home_user_frame_fragment, new UserTeamsFragment()).commit();
         } else if (id == R.id.nav_events) {
-            ft.replace(R.id.dashboard_frame_fragment, new EventsFragment()).commit();
+            ft.replace(R.id.home_user_frame_fragment, new EventsFragment()).commit();
         } else if (id == R.id.nav_matches_table) {
-            ft.replace(R.id.dashboard_frame_fragment, new MatchesTableFragment()).commit();
+            ft.replace(R.id.home_user_frame_fragment, new MatchesTableFragment()).commit();
         } else if (id == R.id.nav_my_team_here) {
-            ft.replace(R.id.dashboard_frame_fragment, new MyTeamHereFragment()).commit();
+            ft.replace(R.id.home_user_frame_fragment, new MyTeamHereFragment()).commit();
         } else if (id == R.id.nav_about) {
             AboutDialog aboutDialog = new AboutDialog();
             aboutDialog.show(getSupportFragmentManager(), "TAG");
