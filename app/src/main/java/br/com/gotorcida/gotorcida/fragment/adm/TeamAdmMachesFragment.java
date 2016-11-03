@@ -11,6 +11,10 @@ import br.com.gotorcida.gotorcida.R;
 
 public class TeamAdmMachesFragment extends Fragment{
     View mView;
+    String mTeamId;
+    public TeamAdmMachesFragment(String teamId) {
+        this.mTeamId = teamId;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

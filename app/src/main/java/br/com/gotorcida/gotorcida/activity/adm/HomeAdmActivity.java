@@ -118,13 +118,13 @@ public class HomeAdmActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_adm_matches) {
-            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmMachesFragment()).commit();
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmMachesFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_news) {
-            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmNewsFragment()).commit();
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmNewsFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_roster) {
-            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmRosterFragment()).commit();
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmRosterFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_contact) {
-            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmEditInfoFragment()).commit();
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmEditInfoFragment(mTeamId)).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

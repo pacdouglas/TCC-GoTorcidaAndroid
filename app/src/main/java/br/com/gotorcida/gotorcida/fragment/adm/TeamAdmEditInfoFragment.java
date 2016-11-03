@@ -11,7 +11,10 @@ import br.com.gotorcida.gotorcida.R;
 
 public class TeamAdmEditInfoFragment extends Fragment{
     View mView;
-
+    String mTeamId;
+    public TeamAdmEditInfoFragment(String teamId) {
+        this.mTeamId = teamId;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_adm_edit_info, container, false);
