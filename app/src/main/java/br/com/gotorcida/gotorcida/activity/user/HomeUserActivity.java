@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -161,13 +162,17 @@ public class HomeUserActivity extends AppCompatActivity
                 if(userData.getString("userType").equals("Team")){
                     userTeamAdm = true;
 
+                    JSONArray teamsManaged = userData.getJSONArray("managedTeams");
+
                     List<StringWithTag> spinnerArray =  new ArrayList<>();
                     spinnerArray.add(new StringWithTag(userName,
                             Integer.getInteger(SaveSharedPreference.getUserName(HomeUserActivity.this))));
-                    spinnerArray.add(new StringWithTag("Paulínia Mavericks", 1)); //TODO: ID do time criar ciclo
-                    spinnerArray.add(new StringWithTag("Basquete", 22)); //TODO: ID do time criar ciclo
-                    spinnerArray.add(new StringWithTag("Voley", 13)); //TODO: ID do time criar ciclo
-                    spinnerArray.add(new StringWithTag("Ha", 12)); //TODO: ID do time criar ciclo
+
+                    JSONObject jsonAux = null;
+                    for(int i = 0; i < teamsManaged.length(); i++){
+                        jsonAux = teamsManaged.getJSONObject(i);
+                        spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
+                    }
 
                     adapter = new ArrayAdapter<>(
                             HomeUserActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class HomeAdmActivity extends AppCompatActivity
     public class AdmConfigTask extends AsyncTask<Void, Void, Boolean> {
         private GetRequest mGetRequest;
         ArrayAdapter<StringWithTag> adapter;
-
+        int positionSelected = 0;
         @Override
         protected void onPreExecute() {
 
@@ -150,14 +151,19 @@ public class HomeAdmActivity extends AppCompatActivity
 
                 if(userData.getString("userType").equals("Team")){
 
+                    JSONArray teamsManaged = userData.getJSONArray("managedTeams");
                     List<StringWithTag> spinnerArray =  new ArrayList<>();
-                    spinnerArray.add(new StringWithTag("Paulínia Mavericks", 1)); //TODO: ID do time criar ciclo
                     spinnerArray.add(new StringWithTag(userName,
                             Integer.getInteger(SaveSharedPreference.getUserName(HomeAdmActivity.this))));
-                    spinnerArray.add(new StringWithTag("Basquete", 22)); //TODO: ID do time criar ciclo
-                    spinnerArray.add(new StringWithTag("Voley", 13)); //TODO: ID do time criar ciclo
-                    spinnerArray.add(new StringWithTag("Ha", 12)); //TODO: ID do time criar ciclo
 
+                    JSONObject jsonAux = null;
+                    for(int i = 0; i < teamsManaged.length(); i++){
+                        jsonAux = teamsManaged.getJSONObject(i);
+                        spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
+                        if(jsonAux.getString("id").compareTo(mTeamId) == 0){
+                            positionSelected = i+1;
+                        }
+                    }
                     adapter = new ArrayAdapter<>(
                             HomeAdmActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -171,12 +177,17 @@ public class HomeAdmActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(final Boolean success) {
             mSpinnerSelectPerfil.setAdapter(adapter);
+            mSpinnerSelectPerfil.setSelection(positionSelected);
+
             mSpinnerSelectPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(position != 0) {
+                    if(position == 0) {
                         startActivity(new Intent(HomeAdmActivity.this, HomeUserActivity.class));
                         finish();
+                    }else{
+                        StringWithTag aux = (StringWithTag) mSpinnerSelectPerfil.getItemAtPosition(position);
+                        mTeamId = aux.getTag().toString();
                     }
                 }
                 @Override
@@ -184,7 +195,6 @@ public class HomeAdmActivity extends AppCompatActivity
 
                 }
             });
-
         }
     }
 }

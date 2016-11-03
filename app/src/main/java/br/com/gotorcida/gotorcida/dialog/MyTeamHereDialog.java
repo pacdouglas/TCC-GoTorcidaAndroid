@@ -71,11 +71,6 @@ public class MyTeamHereDialog extends DialogFragment {
         }
 
         @Override
-        public void onProgressUpdate(Object... values) {
-
-        }
-
-        @Override
         public void onPostExecute(Object result) {
             if(!send){
                 Toast.makeText(mView.getContext(), "Mensagem Enviada Com Sucesso! Aguarde nosso retorno", Toast.LENGTH_LONG).show();
