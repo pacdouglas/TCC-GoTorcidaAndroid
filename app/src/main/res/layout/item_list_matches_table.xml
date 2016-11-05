@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/cardView_sports"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    app:cardCornerRadius="@dimen/activity_vertical_margin"
+    app:cardElevation="@dimen/activity_vertical_margin"
+    app:cardBackgroundColor="@color/greenLight"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_firstTeamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Primeiro Time"
+                android:layout_below="@+id/item_matches_table_imageview_firstTeam"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/item_matches_table_imageview_firstTeam"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_mook"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="173sp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_eventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25/05/2012"
+                android:textSize="10sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/item_matches_table_textview_x"
+                />
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_scoreSecondTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textSize="40sp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" x "
+                android:textSize="40sp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_scoreFirstTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:text="00"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_secondTeamName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Segundo Time"
+                android:layout_below="@+id/item_matches_table_imageview_secondTeam"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/item_matches_table_imageview_secondTeam"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_mook"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

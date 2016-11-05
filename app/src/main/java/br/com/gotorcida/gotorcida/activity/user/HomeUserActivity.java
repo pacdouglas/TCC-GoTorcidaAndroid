@@ -115,7 +115,7 @@ public class HomeUserActivity extends AppCompatActivity
         } else if (id == R.id.nav_events) {
             ft.replace(R.id.home_user_frame_fragment, new EventsFragment()).commit();
         } else if (id == R.id.nav_matches_table) {
-            ft.replace(R.id.home_user_frame_fragment, new MatchesTableFragment()).commit();
+            ft.replace(R.id.home_user_frame_fragment, new MatchesTableFragment(true, null)).commit();
         } else if (id == R.id.nav_my_team_here) {
             MyTeamHereDialog myTeamHereDialog = new MyTeamHereDialog();
             myTeamHereDialog.show(getSupportFragmentManager(), "TAG");
