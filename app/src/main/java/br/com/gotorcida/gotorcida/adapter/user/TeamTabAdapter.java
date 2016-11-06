@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import br.com.gotorcida.gotorcida.fragment.user.MatchesTableFragment;
 import br.com.gotorcida.gotorcida.fragment.user.TeamContactFragment;
-import br.com.gotorcida.gotorcida.fragment.user.TeamMatchesFragment;
 import br.com.gotorcida.gotorcida.fragment.user.TeamNewsFragment;
 import br.com.gotorcida.gotorcida.fragment.user.TeamRosterFragment;
 

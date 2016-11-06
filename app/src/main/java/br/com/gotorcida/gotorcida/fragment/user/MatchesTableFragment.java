@@ -25,9 +25,7 @@ import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
-/**
- * Created by dougl on 15/10/2016.
- */
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_EVENTS_BY_SPORT;
 
 public class MatchesTableFragment extends Fragment {
 
@@ -36,11 +34,19 @@ public class MatchesTableFragment extends Fragment {
     ProgressBar mProgressBar;
     private String mTeamId;
     boolean mFilterByUser; //true = user false = team
+    boolean mNextEvents = false;
+
+    public MatchesTableFragment(){
+        mNextEvents = true;
+    }
 
     public MatchesTableFragment(boolean team, String teamId){
         this.mFilterByUser = team;
         this.mTeamId = teamId;
     }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_matches_table, container, false);
@@ -67,11 +73,16 @@ public class MatchesTableFragment extends Fragment {
         @Override
         protected Object doInBackground(Object[] params) {
             GetRequest getRequest;
-            if(mFilterByUser){
-                getRequest = new GetRequest(Constants.URL_SERVER_JSON_LIST_EVENTS_BY_USER, SaveSharedPreference.getUserName(getActivity().getBaseContext()));
+            if(!mNextEvents){
+                if(mFilterByUser){
+                    getRequest = new GetRequest(Constants.URL_SERVER_JSON_LIST_EVENTS_BY_USER, SaveSharedPreference.getUserName(getActivity().getBaseContext()));
+                }else{
+                    getRequest = new GetRequest(Constants.URL_SERVER_JSON_LIST_EVENTS_BY_TEAM, mTeamId);
+                }
             }else{
-                getRequest = new GetRequest(Constants.URL_SERVER_JSON_LIST_EVENTS_BY_TEAM, mTeamId);
+                getRequest = new GetRequest(URL_SERVER_JSON_LIST_EVENTS_BY_SPORT, SaveSharedPreference.getUserName(getActivity().getBaseContext()));
             }
+
 
 
             getRequest.execute();
@@ -104,6 +115,7 @@ public class MatchesTableFragment extends Fragment {
                     card.put("secondTeamName", secondTeam.getString("name"));
                     card.put("secondTeamScore", eventResult.getString("secondTeamScore"));
                     card.put("secondTeamImageURL", secondTeam.getString("urlImage"));
+                    card.put("id", eventsArray.getJSONObject(i).getString("id"));
                     eventsList.add(card);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,7 +126,6 @@ public class MatchesTableFragment extends Fragment {
 
         @Override
         public void onPostExecute(Object result) {
-            mMatchesList.setHasFixedSize(true);
             MatchesTableListAdapter adapter = new MatchesTableListAdapter(eventsList, getActivity().getBaseContext());
 
             RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity().getBaseContext());
