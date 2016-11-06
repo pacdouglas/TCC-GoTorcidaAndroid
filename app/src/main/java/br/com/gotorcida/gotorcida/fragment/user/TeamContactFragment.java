@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import br.com.gotorcida.gotorcida.R;
 
 public class TeamContactFragment extends Fragment {
+
     View mView;
     private String teamId;
+
     public TeamContactFragment(String teamId) {
         this.teamId = teamId;
     }

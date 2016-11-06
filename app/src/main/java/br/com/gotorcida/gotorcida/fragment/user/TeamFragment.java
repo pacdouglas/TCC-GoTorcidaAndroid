@@ -65,6 +65,8 @@ public class TeamFragment extends Fragment {
         mViewPager.setAdapter(new TeamTabAdapter(getActivity().getSupportFragmentManager(),
                 getActivity().getResources().getStringArray(R.array.titles_tabs), teamId));
 
+        mViewPager.setOffscreenPageLimit(1000); // <---- ESSA LINHA EVITA QUE AS FRAGMENTS EXECUTEM (ONDESTROYVIEW, QUE POR SUA VEZ FAZ EXECUTAR ONCREATEVIEW TODA HORA)
+
         mViewPager.setCurrentItem(0);
         mTabLayout.setSelectedTabIndicatorColor(Color.GREEN);
         mTabLayout.setupWithViewPager(mViewPager, true);
@@ -75,8 +77,9 @@ public class TeamFragment extends Fragment {
         teamEmail = (TextView) mView.findViewById(R.id.team_textview_teamemail);
         teamRegistrationDate = (TextView) mView.findViewById(R.id.team_textview_teamregistrationdate);
 
-        //LoadTeamData loadTeamData = new LoadTeamData();
-        //loadTeamData.execute(teamId);
+        LoadTeamData loadTeamData = new LoadTeamData();
+        loadTeamData.execute(teamId);
+
         return mView;
     }
 

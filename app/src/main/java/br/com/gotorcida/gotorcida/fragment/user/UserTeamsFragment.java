@@ -3,6 +3,7 @@ package br.com.gotorcida.gotorcida.fragment.user;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +43,23 @@ public class UserTeamsFragment extends Fragment {
         listTeams = (ListView) mView.findViewById(R.id.userteams_listview_teams);
 
         MakeListViewTeams makeListViewTeams = new MakeListViewTeams();
-
         makeListViewTeams.execute();
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment != null) {
+                if (fragment.getClass().equals(TeamNewsFragment.class)) {
+                    fragmentManager.beginTransaction().remove(fragment).commit();
+                } else if (fragment.getClass().equals(TeamRosterFragment.class)) {
+                    fragmentManager.beginTransaction().remove(fragment).commit();
+                } else if (fragment.getClass().equals(MatchesTableFragment.class)) {
+                    fragmentManager.beginTransaction().remove(fragment).commit();
+                } else if (fragment.getClass().equals(TeamContactFragment.class)) {
+                    fragmentManager.beginTransaction().remove(fragment).commit();
+                }
+            }
+        }
+
         return mView;
     }
 

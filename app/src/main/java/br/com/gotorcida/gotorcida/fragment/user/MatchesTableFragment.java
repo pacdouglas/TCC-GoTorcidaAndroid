@@ -4,6 +4,7 @@ package br.com.gotorcida.gotorcida.fragment.user;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,8 +46,6 @@ public class MatchesTableFragment extends Fragment {
         this.mTeamId = teamId;
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_matches_table, container, false);
@@ -82,8 +81,6 @@ public class MatchesTableFragment extends Fragment {
             }else{
                 getRequest = new GetRequest(URL_SERVER_JSON_LIST_EVENTS_BY_SPORT, SaveSharedPreference.getUserName(getActivity().getBaseContext()));
             }
-
-
 
             getRequest.execute();
             JSONObject requestResult = getRequest.getMessage().getData();

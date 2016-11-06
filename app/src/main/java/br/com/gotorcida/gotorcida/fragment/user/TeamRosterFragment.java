@@ -3,6 +3,7 @@ package br.com.gotorcida.gotorcida.fragment.user;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -26,14 +27,14 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM;
 
 public class TeamRosterFragment extends Fragment {
+
     View mView;
     RecyclerView athletesList;
     private String teamId;
-
     ProgressBar progressBar;
+
     public TeamRosterFragment(String teamId) {
         this.teamId = teamId;
-
     }
 
     @Override
@@ -43,19 +44,20 @@ public class TeamRosterFragment extends Fragment {
         athletesList = (RecyclerView) mView.findViewById(R.id.team_roster_listview_athletes);
         progressBar = (ProgressBar) mView.findViewById(R.id.team_roster_progress);
 
-        athletesList.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
         MakeListTeamRosterTask makeListTeamRosterTask = new MakeListTeamRosterTask();
         makeListTeamRosterTask.execute();
+
         return mView;
     }
 
     public class MakeListTeamRosterTask extends AsyncTask  {
         ArrayList<JSONObject> listAthlete;
+
         protected void onPreExecute() {
             athletesList.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
         }
+
         @Override
         protected Object doInBackground(Object[] params) {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM,
@@ -97,4 +99,5 @@ public class TeamRosterFragment extends Fragment {
             athletesList.setVisibility(View.VISIBLE);
         }
     }
+
 }

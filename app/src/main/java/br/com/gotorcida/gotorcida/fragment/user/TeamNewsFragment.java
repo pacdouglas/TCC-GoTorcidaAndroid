@@ -3,6 +3,7 @@ package br.com.gotorcida.gotorcida.fragment.user;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,10 +27,12 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 
 public class TeamNewsFragment extends Fragment {
+
     View mView;
     private String teamId;
     RecyclerView newsList;
     ProgressBar progressBar;
+
     public TeamNewsFragment(String teamId) {
         this.teamId = teamId;
     }
@@ -39,18 +42,21 @@ public class TeamNewsFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_team_news, container, false);
         newsList = (RecyclerView) mView.findViewById(R.id.team_news_listview_news);
         progressBar = (ProgressBar) mView.findViewById(R.id.team_news_progress);
-        newsList.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
+
         MakeListNewsTask makeListNewsTask = new MakeListNewsTask();
         makeListNewsTask.execute();
+
         return mView;
     }
 
     public class MakeListNewsTask extends AsyncTask {
         ArrayList<JSONObject> listNews;
-        protected void onPreExecute() {
 
+        protected void onPreExecute() {
+            newsList.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
         }
+
         @Override
         protected Object doInBackground(Object[] params) {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS, "team", teamId);
@@ -79,6 +85,7 @@ public class TeamNewsFragment extends Fragment {
             }
             return null;
         }
+
         @Override
         public void onPostExecute(Object result) {
             newsList.setHasFixedSize(true);
