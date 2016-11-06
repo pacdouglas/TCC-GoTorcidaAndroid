@@ -89,6 +89,7 @@ public class SelectSportActivity extends AppCompatActivity {
 
             RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
             listSports.setLayoutManager(layout);
+
             progressBar.setVisibility(View.GONE);
             listSports.setVisibility(View.VISIBLE);
         }

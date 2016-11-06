@@ -67,7 +67,8 @@
         <activity
             android:name=".activity.user.AthleteInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.user.NewsDetailsActivity" />
+        <activity android:name=".activity.user.NewsDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.adm.HomeAdmActivity"
             android:label="@string/title_activity_home_adm"

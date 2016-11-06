@@ -30,6 +30,7 @@ import java.util.List;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.adm.HomeAdmActivity;
 import br.com.gotorcida.gotorcida.dialog.user.AboutDialog;
+import br.com.gotorcida.gotorcida.dialog.user.ConfirmExitDialog;
 import br.com.gotorcida.gotorcida.dialog.user.MyTeamHereDialog;
 import br.com.gotorcida.gotorcida.fragment.user.MatchesTableFragment;
 import br.com.gotorcida.gotorcida.fragment.user.UserTeamsFragment;
@@ -77,7 +78,8 @@ public class HomeUserActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            ConfirmExitDialog confirmExitDialog = new ConfirmExitDialog();
+            confirmExitDialog.show(getSupportFragmentManager(), "TAG");
         }
     }
 
