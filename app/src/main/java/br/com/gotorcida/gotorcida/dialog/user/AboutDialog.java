@@ -1,4 +1,4 @@
-package br.com.gotorcida.gotorcida.dialog;
+package br.com.gotorcida.gotorcida.dialog.user;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

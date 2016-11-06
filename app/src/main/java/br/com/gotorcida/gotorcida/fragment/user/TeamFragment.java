@@ -1,11 +1,13 @@
 package br.com.gotorcida.gotorcida.fragment.user;
 
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,8 @@ public class TeamFragment extends Fragment {
     TextView teamEmail;
     TextView teamRegistrationDate;
 
+    private String teamId;
+
     ProgressBar progressBar;
     RelativeLayout layoutHeader;
     @Override
@@ -49,7 +53,8 @@ public class TeamFragment extends Fragment {
         if (bundle != null) {
             getActivity().getFragmentManager().popBackStack();
         }
-        String teamId = (String) bundle.get("teamId");
+
+        teamId = (String) bundle.get("teamId");
 
         progressBar = (ProgressBar) mView.findViewById(R.id.team_progress);
         layoutHeader = (RelativeLayout) mView.findViewById(R.id.team_relative_header);
@@ -60,7 +65,9 @@ public class TeamFragment extends Fragment {
         mViewPager.setAdapter(new TeamTabAdapter(getActivity().getSupportFragmentManager(),
                 getActivity().getResources().getStringArray(R.array.titles_tabs), teamId));
 
-        mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(0);
+        mTabLayout.setSelectedTabIndicatorColor(Color.GREEN);
+        mTabLayout.setupWithViewPager(mViewPager, true);
 
         teamName = (TextView) mView.findViewById(R.id.team_textview_teamname);
         teamLogo = (ImageView) mView.findViewById(R.id.team_imageview_teamlogo);
@@ -68,9 +75,8 @@ public class TeamFragment extends Fragment {
         teamEmail = (TextView) mView.findViewById(R.id.team_textview_teamemail);
         teamRegistrationDate = (TextView) mView.findViewById(R.id.team_textview_teamregistrationdate);
 
-
-        LoadTeamData loadTeamData = new LoadTeamData();
-        loadTeamData.execute(teamId);
+        //LoadTeamData loadTeamData = new LoadTeamData();
+        //loadTeamData.execute(teamId);
         return mView;
     }
 
@@ -129,4 +135,9 @@ public class TeamFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Toast.makeText(getContext(), "SAIU", Toast.LENGTH_SHORT).show();
+    }
 }

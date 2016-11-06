@@ -21,6 +21,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
 
     List<JSONObject> leagues;
     Context context;
+    TeamsListHolder holder;
 
     public TeamsListAdapter(List<JSONObject> leagues, Context context){
         this.leagues = leagues;
@@ -30,13 +31,14 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_select_team, parent, false);
-        TeamsListHolder holder = new TeamsListHolder(view);
+        holder = new TeamsListHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         JSONObject data = leagues.get(position);
+        holder.setIsRecyclable(false);
 
         TeamsListHolder holder = (TeamsListHolder) viewHolder;
         try {

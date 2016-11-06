@@ -42,6 +42,7 @@ public class MatchesTableListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         data = events.get(position);
+        holder.setIsRecyclable(false);
         try {
             holder.firstTeamName.setText(data.getString("firstTeamName"));
             holder.firstTeamScore.setText(data.getString("firstTeamScore"));

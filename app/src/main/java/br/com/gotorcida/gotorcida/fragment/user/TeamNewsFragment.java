@@ -53,8 +53,7 @@ public class TeamNewsFragment extends Fragment {
         }
         @Override
         protected Object doInBackground(Object[] params) {
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS
-                    , SaveSharedPreference.getUserName(getActivity().getBaseContext()),"team",teamId);
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS, "team", teamId);
 
             getRequest.execute();
             JSONObject json = getRequest.getMessage().getData();

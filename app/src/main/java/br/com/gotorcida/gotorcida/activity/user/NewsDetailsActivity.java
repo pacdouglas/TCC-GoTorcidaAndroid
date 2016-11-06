@@ -60,8 +60,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS,
-                    SaveSharedPreference.getUserName(NewsDetailsActivity.this),newsType, teamId); //TODO: AJEITAR LINK AQUE
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS, newsType, teamId);
             getRequest.execute();
             JSONObject json = getRequest.getMessage().getData();
             JSONArray newsArray = null;

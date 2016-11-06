@@ -29,8 +29,8 @@ import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.adm.HomeAdmActivity;
-import br.com.gotorcida.gotorcida.dialog.AboutDialog;
-import br.com.gotorcida.gotorcida.dialog.MyTeamHereDialog;
+import br.com.gotorcida.gotorcida.dialog.user.AboutDialog;
+import br.com.gotorcida.gotorcida.dialog.user.MyTeamHereDialog;
 import br.com.gotorcida.gotorcida.fragment.user.MatchesTableFragment;
 import br.com.gotorcida.gotorcida.fragment.user.UserTeamsFragment;
 import br.com.gotorcida.gotorcida.utils.Constants;
@@ -80,7 +80,7 @@ public class HomeUserActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

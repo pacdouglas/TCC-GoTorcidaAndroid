@@ -9,39 +9,47 @@ import br.com.gotorcida.gotorcida.fragment.user.TeamContactFragment;
 import br.com.gotorcida.gotorcida.fragment.user.TeamNewsFragment;
 import br.com.gotorcida.gotorcida.fragment.user.TeamRosterFragment;
 
-/**
- * Created by dougl on 18/10/2016.
- */
-
 public class TeamTabAdapter extends FragmentPagerAdapter {
 
     private String[] tabTitles;
     private String teamId;
+    private FragmentManager fm;
+
     public TeamTabAdapter(FragmentManager fm, String[] tabTitles, String teamId) {
         super(fm);
+        this.fm = fm;
         this.tabTitles = tabTitles;
         this.teamId = teamId;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        Fragment fragment = null;
+
+        switch (position) {
             case 0:
-                return new MatchesTableFragment(false, teamId);
+                fragment = new MatchesTableFragment(false, teamId);
+                break;
+
             case 1:
-                return new TeamRosterFragment(teamId);
+                fragment = new TeamRosterFragment(teamId);
+                break;
+
             case 2:
-                return new TeamNewsFragment(teamId);
+                fragment = new TeamNewsFragment(teamId);
+                break;
+
             case 3:
-                return new TeamContactFragment(teamId);
-            default:
-                return null;
+                fragment = new TeamContactFragment(teamId);
+                break;
         }
+
+        return fragment;
     }
 
     @Override
     public int getCount() {
-        return tabTitles.length;
+        return this.tabTitles.length;
     }
 
     @Override

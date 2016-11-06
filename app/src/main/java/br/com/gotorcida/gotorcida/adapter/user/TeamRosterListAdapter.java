@@ -19,6 +19,7 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
     List<JSONObject> athlete;
     Context context;
     JSONObject data;
+    TeamRosterListHolder holder;
 
     public TeamRosterListAdapter(List<JSONObject> athlete, Context context){
         this.athlete = athlete;
@@ -28,13 +29,14 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_team_roster, parent, false);
-        TeamRosterListHolder holder = new TeamRosterListHolder(view);
+        holder = new TeamRosterListHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         data = athlete.get(position);
+        holder.setIsRecyclable(false);
 
          TeamRosterListHolder holder = (TeamRosterListHolder) viewHolder;
         try {
