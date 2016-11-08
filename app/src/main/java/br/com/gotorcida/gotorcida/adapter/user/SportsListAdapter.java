@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
@@ -39,10 +40,10 @@ public class SportsListAdapter extends RecyclerView.Adapter {
         JSONObject data = sports.get(position);
         holder.setIsRecyclable(false);
 
-        SportsListHolder holder = (SportsListHolder) viewHolder;
         try {
             holder.sportID.setText(data.getString("id"));
             holder.sportName.setText(data.getString("name"));
+
             Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.iconSport);
 
             int auxCountTeams = data.getInt("activeTeams");
@@ -54,6 +55,13 @@ public class SportsListAdapter extends RecyclerView.Adapter {
             }else{
                 holder.teamCount.setText("Nenhuma equipe ativa :(");
             }
+
+            holder.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemClick(int pos) {
+
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.user.SportsListAdapter;
@@ -86,7 +88,7 @@ public class SelectSportActivity extends AppCompatActivity {
         @Override
         public void onPostExecute(Object result) {
             listSports.setAdapter(new SportsListAdapter(sportsList, getBaseContext()));
-
+            listSports.setHasFixedSize(true);
             RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
             listSports.setLayoutManager(layout);
 
