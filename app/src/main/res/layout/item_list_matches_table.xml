@@ -1,113 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     android:id="@+id/cardView_sports"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     app:cardCornerRadius="@dimen/activity_vertical_margin"
-    app:cardElevation="@dimen/activity_vertical_margin"
     app:cardBackgroundColor="@color/greenLight"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView android:id="@+id/item_maches_table_textview_city"
+        android:text="Campinas, SP"
+        android:textSize="15sp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout android:id="@+id/relative_1"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-
-            <TextView
-                android:id="@+id/item_matches_table_textview_firstTeamName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Primeiro Time"
-                android:layout_below="@+id/item_matches_table_imageview_firstTeam"
-                android:layout_centerHorizontal="true" />
-
-            <ImageView
+            android:layout_toStartOf="@+id/item_matches_table_textview_x"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+             <ImageView
                 android:id="@+id/item_matches_table_imageview_firstTeam"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_mook"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="173sp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" >
-
-            <TextView
-                android:id="@+id/item_matches_table_textview_eventDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25/05/2012"
-                android:textSize="10sp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/item_matches_table_textview_x"
-                />
-
-            <TextView
-                android:id="@+id/item_matches_table_textview_scoreSecondTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textSize="40sp"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentEnd="true" />
-
-            <TextView
-                android:id="@+id/item_matches_table_textview_x"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" x "
-                android:textSize="40sp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:src="@drawable/icon_mook" />
 
             <TextView
                 android:id="@+id/item_matches_table_textview_scoreFirstTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40sp"
+                android:textSize="36sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
                 android:text="00"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/item_matches_table_textview_x"
+            android:text="x"
+            android:textSize="30sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            >
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/item_matches_table_textview_secondTeamName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Segundo Time"
-                android:layout_below="@+id/item_matches_table_imageview_secondTeam"
-                android:layout_centerHorizontal="true" />
+        <RelativeLayout
+            android:layout_toEndOf="@+id/item_matches_table_textview_x"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/item_matches_table_imageview_secondTeam"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
                 android:src="@drawable/icon_mook"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_scoreSecondTeam"
+                android:textSize="36sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:text="00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
-    <TextView
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_below="@+id/relative_1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/item_matches_table_textview_eventId"
-        android:text="ID"/>
-    </LinearLayout>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/item_matches_table_textview_firstTeamName"
+            android:text="Nome do time 1"
+            android:layout_toStartOf="@+id/relative_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout android:id="@+id/relative_2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_matches_table_textview_eventDate"
+                android:text="10/11/2016"
+                android:textSize="11sp"
+                android:layout_centerHorizontal="true"
+                android:gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/item_matches_table_textview_secondTeamName"
+            android:text="Nome do time 2"
+            android:gravity="end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/relative_2"/>
+
+    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/item_matches_table_textview_eventId"
+            android:text="ID"/>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>
