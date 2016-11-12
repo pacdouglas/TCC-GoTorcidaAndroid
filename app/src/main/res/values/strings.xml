@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">GoTorcida - Login</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -82,5 +82,7 @@
 
     <string name="facebook_app_id">1319081791438354</string>
     <string name="title_activity_home_adm">HomeAdmActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="como_chegar">Como Chegar</string>
 
 </resources>

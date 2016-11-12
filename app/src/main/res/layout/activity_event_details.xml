@@ -4,127 +4,216 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_news_details"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     >
 
     <ProgressBar
         android:id="@+id/event_details_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
+        android:paddingTop="150dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:layout_centerHorizontal="true"
+        android:visibility="visible" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/event_details_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout">
-
-        <RelativeLayout
+        android:orientation="vertical"
+        android:visibility="gone">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingTop="7dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/event_details_textview_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_centerInParent="true"
+            android:text="Chamada do Jogo"/>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/event_details_textview_firstTeamName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Primeiro Time"
-                android:layout_below="@+id/event_details_imageview_firstTeam"
-                android:layout_centerHorizontal="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/event_details_imageview_firstTeam"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/icon_mook"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
+        <RelativeLayout android:id="@+id/relative_1"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="173sp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" >
+            <RelativeLayout
+                android:layout_toStartOf="@+id/event_details_textview_x"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/event_details_imageview_firstTeam"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/icon_mook" />
 
-            <TextView
-                android:id="@+id/event_details_table_textview_eventDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25/05/2012"
-                android:textSize="10sp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/event_details_textview_x"
-                />
-
-            <TextView
-                android:id="@+id/event_details_textview_scoreSecondTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textSize="40sp"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentEnd="true" />
+                <TextView
+                    android:id="@+id/event_details_textview_scoreFirstTeam"
+                    android:textSize="36sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:text="00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/event_details_textview_x"
+                android:text="x"
+                android:textSize="30sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" x "
-                android:textSize="40sp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/event_details_textview_scoreFirstTeam"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:text="00"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+            <RelativeLayout
+                android:layout_toEndOf="@+id/event_details_textview_x"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/event_details_imageview_secondTeam"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/icon_mook"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"/>
+
+                <TextView
+                    android:id="@+id/event_details_textview_scoreSecondTeam"
+                    android:textSize="36sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:text="00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
         </RelativeLayout>
 
+
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            >
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_below="@+id/relative_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/event_details_textview_firstTeamName"
+                android:text="Nome do time 1"
+                android:layout_toStartOf="@+id/relative_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout android:id="@+id/relative_2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/event_details_textview_eventDate"
+                    android:text="10/11/2016"
+                    android:textSize="11sp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/event_details_textview_secondTeamName"
-                android:layout_width="wrap_content"
+                android:text="Nome do time 2"
+                android:gravity="end"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Segundo Time"
-                android:layout_below="@+id/event_details_imageview_secondTeam"
-                android:layout_centerHorizontal="true" />
+                android:layout_toRightOf="@id/relative_2"/>
 
-            <ImageView
-                android:id="@+id/event_details_imageview_secondTeam"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/icon_mook"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:paddingTop="20dp">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/event_details_textview_address"
+            android:paddingTop="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="Rua dos bobos número 0 - Hortoândia - SP"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/event_details_frame"
+            android:layout_width="match_parent"
+            android:layout_height="200sp">
+        </FrameLayout>
+        <Button
+            android:id="@+id/event_details_button_route"
+            android:layout_marginTop="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:padding="5dp"
+            style="@style/MessengerButton.White.Large"
+            android:text="@string/como_chegar"
+            />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="5sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16sp"
+            android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Entrada: "/>
+                <TextView
+                    android:paddingTop="5sp"
+                    android:id="@+id/event_details_textview_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor"/>
+
+                <TextView
+                    android:paddingTop="15sp"
+                    android:id="@+id/event_details_textview_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="15sp"
+                    android:textSize="17dp"
+                    android:text="Descrip"/>
+        </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
 </RelativeLayout>
+

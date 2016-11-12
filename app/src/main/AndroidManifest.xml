@@ -42,6 +42,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.user.RegisterActivity"
+            android:label="GoTorcida - Cadastro"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.user.SplashScreenActivity"
@@ -53,12 +54,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.user.EventDetailsActivity"
-            android:label="@string/title_activity_home_adm"
-            android:screenOrientation="portrait">
-        </activity>
+            android:label="Detalhes da Partida"
+            android:screenOrientation="portrait"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -66,14 +65,32 @@
 
         <activity
             android:name=".activity.user.AthleteInfoActivity"
+            android:label="Detalhes do Atleta"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.user.NewsDetailsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.user.NewsDetailsActivity"
+            android:label="Notícia"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.adm.HomeAdmActivity"
-            android:label="@string/title_activity_home_adm"
+            android:label="Administrador da Equipe"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".fragment.MapsFragment"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>
