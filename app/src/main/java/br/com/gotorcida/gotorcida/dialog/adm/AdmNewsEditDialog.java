@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -33,6 +34,7 @@ import br.com.gotorcida.gotorcida.activity.user.NewsDetailsActivity;
 import br.com.gotorcida.gotorcida.adapter.user.TeamNewsListAdapter;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmNewsFragment;
 import br.com.gotorcida.gotorcida.utils.MailSender;
+import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
@@ -47,7 +49,7 @@ public class AdmNewsEditDialog extends DialogFragment {
 
     TextView newsTitle;
     TextView newsDescription;
-    TextView newsDate;
+    EditText newsDate;
 
     ProgressBar progressBar;
     LinearLayout form;
@@ -72,7 +74,8 @@ public class AdmNewsEditDialog extends DialogFragment {
 
         newsTitle = (TextView) mView.findViewById(R.id.dialog_adm_news_title);
         newsDescription = (TextView) mView.findViewById(R.id.dialog_adm_news_news);
-        newsDate = (TextView) mView.findViewById(R.id.dialog_adm_news_date);
+        newsDate = (EditText) mView.findViewById(R.id.dialog_adm_news_date);
+        newsDate.addTextChangedListener(Mask.insert("##/##/####", newsDate));
 
         updating = !this.getTag().toString().equals("");
         newsID = this.getTag();
