@@ -4,38 +4,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.vision.text.Line;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.fragment.MapsFragment;
+import br.com.gotorcida.gotorcida.fragment.user.MapsFragment;
 import br.com.gotorcida.gotorcida.utils.Constants;
-import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
-import static br.com.gotorcida.gotorcida.utils.Constants.SLEEP_THREAD;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 
 public class EventDetailsActivity extends AppCompatActivity {
 

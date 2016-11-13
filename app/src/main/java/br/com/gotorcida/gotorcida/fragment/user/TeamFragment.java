@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,14 +39,12 @@ public class TeamFragment extends Fragment {
 
     ImageView teamLogo;
     TextView teamName;
-    TextView teamWebsite;
-    TextView teamEmail;
     TextView teamRegistrationDate;
 
     private String teamId;
 
     ProgressBar progressBar;
-    RelativeLayout layoutHeader;
+    LinearLayout layoutHeader;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_team, container, false);
@@ -53,11 +52,10 @@ public class TeamFragment extends Fragment {
         if (bundle != null) {
             getActivity().getFragmentManager().popBackStack();
         }
-
         teamId = (String) bundle.get("teamId");
 
         progressBar = (ProgressBar) mView.findViewById(R.id.team_progress);
-        layoutHeader = (RelativeLayout) mView.findViewById(R.id.team_relative_header);
+        layoutHeader = (LinearLayout) mView.findViewById(R.id.team_relative_header);
 
         mTabLayout = (TabLayout) mView.findViewById(R.id.team_tab_layout);
         mViewPager = (ViewPager) mView.findViewById(R.id.team_viwer_pager);
@@ -72,8 +70,6 @@ public class TeamFragment extends Fragment {
 
         teamName = (TextView) mView.findViewById(R.id.team_textview_teamname);
         teamLogo = (ImageView) mView.findViewById(R.id.team_imageview_teamlogo);
-        teamWebsite = (TextView) mView.findViewById(R.id.team_textview_teamwebsite);
-        teamEmail = (TextView) mView.findViewById(R.id.team_textview_teamemail);
         teamRegistrationDate = (TextView) mView.findViewById(R.id.team_textview_teamregistrationdate);
 
         LoadTeamData loadTeamData = new LoadTeamData();
@@ -84,8 +80,6 @@ public class TeamFragment extends Fragment {
 
     private class LoadTeamData extends AsyncTask {
         String sTeamName;
-        String sTeamWebsite;
-        String sTeamEmail;
         String sTeamRegistrationDate;
 
         JSONObject team;
@@ -110,8 +104,6 @@ public class TeamFragment extends Fragment {
                 team = new JSONObject(getRequest.getMessage().getData().getString("team"));
 
                 sTeamName = team.getString("name");
-                sTeamWebsite = team.getString("website");
-                sTeamEmail = team.getString("emailAddress");
                 sTeamRegistrationDate = team.getString("formatedRegistrationDate");
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -128,9 +120,7 @@ public class TeamFragment extends Fragment {
                 e.printStackTrace();
             }
             teamName.setText(sTeamName);
-            teamWebsite.setText(sTeamWebsite);
-            teamEmail.setText(sTeamEmail);
-            teamRegistrationDate.setText(sTeamRegistrationDate);
+            teamRegistrationDate.setText("Desde: "+sTeamRegistrationDate);
 
             progressBar.setVisibility(View.GONE);
             layoutHeader.setVisibility(View.VISIBLE);

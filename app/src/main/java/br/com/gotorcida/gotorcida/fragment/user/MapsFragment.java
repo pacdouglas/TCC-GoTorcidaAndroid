@@ -1,4 +1,4 @@
-package br.com.gotorcida.gotorcida.fragment;
+package br.com.gotorcida.gotorcida.fragment.user;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -48,14 +48,5 @@ public class MapsFragment extends SupportMapFragment implements OnMapReadyCallba
         mMap.moveCamera(cameraPosition);
         mMap.animateCamera(cameraPosition);
         mMap.getUiSettings().setAllGesturesEnabled(true);
-
-        //TODO: Vai ser Util p parte do Adm: !! ! ! ! ! !
-        //Uri gmmIntentUri = Uri.parse("google.navigation:q=Taronga+Zoo,+Sydney+Australia");
-        //ou google.navigation:q=a+street+address
-        //   google.navigation:q=latitude,longitude
-        //Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        //mapIntent.setPackage("com.google.android.apps.maps");
-        //startActivity(mapIntent);
-
     }
 }

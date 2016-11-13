@@ -204,7 +204,6 @@ public class AdmNewsEditDialog extends DialogFragment {
             }
 
             postRequest.execute(postParameters.toString());
-
             return null;
         }
 

@@ -12,6 +12,7 @@ public class Constants {
     public static final String URL_SERVER_JSON_FIND_ATHLETE = URL_SERVER + "athlete";
     public static final String URL_SERVER_JSON_LIST_SPORTS = URL_SERVER + "sport";
     public static final String URL_SERVER_JSON_FIND_TEAM = URL_SERVER + "team";
+    public static final String URL_SERVER_JSON_FIND_TEAM_UPDATE = URL_SERVER + "team/update";
     public static final String URL_SERVER_JSON_LIST_TEAMS = URL_SERVER + "team";
     public static final String URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM = URL_SERVER + "athlete";
     public static final String URL_SERVER_DASHBOARD_SAVECONFIG = URL_SERVER + "dashboardConfig";
