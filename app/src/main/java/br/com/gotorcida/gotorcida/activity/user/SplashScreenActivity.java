@@ -18,15 +18,13 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SP
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    ProgressBar progressBar;
+
     boolean serverOn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         getSupportActionBar().hide();
-
-        progressBar = (ProgressBar) findViewById(R.id.splash_progress);
 
         serverOn = false;
         ConnectionTestTask connectionTestTask = new ConnectionTestTask();
@@ -39,37 +37,15 @@ public class SplashScreenActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressStatus = 0;
-            progressBar.setProgress(0);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            progressStatus = 10;
-            publishProgress(progressStatus);
-
             if(connectionInternetTest()){
                 GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
                 serverOn = getRequest.execute();
             }
-
-            progressStatus = 20;
-            publishProgress(progressStatus);
-
-            while (progressStatus < 100){
-                progressStatus +=2;
-                publishProgress(progressStatus);
-                SystemClock.sleep(20);
-            }
             return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            if (progressBar != null) {
-                progressBar.setProgress(values[0]);
-            }
         }
 
         @Override

@@ -31,17 +31,11 @@
         android:src="@drawable/letra_gotorcida"
         android:contentDescription="GoTorcida" />
 
-   <ProgressBar
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:paddingBottom="110dp"
-       style="@android:style/Widget.ProgressBar.Horizontal"
-       android:layout_alignBottom="@id/letra_logo"
-       android:id="@+id/splash_progress"/>
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleSmallInverse"
-        android:layout_alignBottom="@id/splash_progress"
+        android:layout_alignBottom="@id/letra_logo"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:paddingBottom="70dp"
