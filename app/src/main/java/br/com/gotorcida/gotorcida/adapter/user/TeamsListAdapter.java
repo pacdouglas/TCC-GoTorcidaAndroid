@@ -20,12 +20,12 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
 public class TeamsListAdapter extends RecyclerView.Adapter {
 
-    List<JSONObject> leagues;
+    List<JSONObject> teams;
     Context context;
     TeamsListHolder holder;
 
-    public TeamsListAdapter(List<JSONObject> leagues, Context context){
-        this.leagues = leagues;
+    public TeamsListAdapter(List<JSONObject> teams, Context context){
+        this.teams = teams;
         this.context = context;
     }
 
@@ -38,7 +38,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        JSONObject data = leagues.get(position);
+        JSONObject data = teams.get(position);
         holder.setIsRecyclable(false);
         try {
             holder.teamID.setText(data.getString("id"));
@@ -58,7 +58,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return leagues.size();
+        return teams.size();
     }
 
 }

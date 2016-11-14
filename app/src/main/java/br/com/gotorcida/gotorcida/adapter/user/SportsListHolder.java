@@ -1,8 +1,5 @@
 package br.com.gotorcida.gotorcida.adapter.user;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -10,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.activity.user.NewsDetailsActivity;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 public class SportsListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

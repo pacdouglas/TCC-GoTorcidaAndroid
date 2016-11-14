@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
@@ -37,12 +41,25 @@ public class SportsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        JSONObject data = sports.get(position);
+        final int pos = position;
+
+        final JSONObject data = sports.get(position);
         holder.setIsRecyclable(false);
 
         try {
             holder.sportID.setText(data.getString("id"));
             holder.sportName.setText(data.getString("name"));
+            holder.sportName.setChecked(data.getBoolean("isChecked"));
+            holder.sportName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    try {
+                        data.put("isChecked", isChecked);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.iconSport);
 

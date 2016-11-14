@@ -75,6 +75,7 @@ public class SelectTeamActivity extends AppCompatActivity {
                     JSONArray array = teams.getJSONArray(i);
 
                     for (int j = 0; j < array.length(); j++) {
+                        array.getJSONObject(i).put("isChecked", false);
                         teamsList.add(array.getJSONObject(j));
                     }
                 } catch (JSONException e) {

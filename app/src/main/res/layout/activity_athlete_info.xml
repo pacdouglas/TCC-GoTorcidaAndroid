@@ -26,9 +26,9 @@
         android:id="@+id/athlete_body_layout">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_mook"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_user"
         android:id="@+id/athlete_imageview_perfil_photo"
         android:layout_centerHorizontal="true"/>
 

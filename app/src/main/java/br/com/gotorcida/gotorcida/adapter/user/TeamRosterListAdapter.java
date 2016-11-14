@@ -41,7 +41,9 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
          TeamRosterListHolder holder = (TeamRosterListHolder) viewHolder;
         try {
             holder.nameAthlete.setText(data.getString("name"));
-            holder.athletePosition.setText(data.getString("website")); //TODO: MUDAR AE O CAMPO NO BANCO PRA POSIÇÃO DO CABRA
+            String positionFull = data.getString("position");
+            String positionSig = positionFull.substring(positionFull.indexOf("-")+1, positionFull.length());
+            holder.athletePosition.setText(positionSig);
             holder.athleteId.setText(data.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
