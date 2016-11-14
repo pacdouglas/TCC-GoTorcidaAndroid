@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.bumptech.glide.Glide;
 
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.activity.user.SelectTeamActivity;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
@@ -38,19 +40,36 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        JSONObject data = teams.get(position);
+        final int pos = position;
+        final JSONObject data = teams.get(position);
         holder.setIsRecyclable(false);
         try {
             holder.teamID.setText(data.getString("id"));
             holder.teamName.setText(data.getString("name"));
 
-            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.teamImg);
-            holder.setItemClickListener(new ItemClickListener() {
+            holder.teamName.setChecked(data.getBoolean("isChecked"));
+            holder.teamName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onItemClick(int pos) {
-
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    try {
+                        data.put("isChecked", isChecked);
+                        SelectTeamActivity.setArrayListChecked(pos, isChecked);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(int pos) {
+
+            }
+        });
+        try {
+            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.teamImg);
         } catch (JSONException e) {
             e.printStackTrace();
         }

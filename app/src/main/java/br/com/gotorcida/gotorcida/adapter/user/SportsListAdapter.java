@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.activity.user.SelectSportActivity;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
@@ -55,6 +56,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     try {
                         data.put("isChecked", isChecked);
+                        SelectSportActivity.setArrayListChecked(pos, isChecked);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -34,10 +34,13 @@ public class SelectTeamActivity extends AppCompatActivity {
     RecyclerView listTeams;
     Bundle bundle;
     ProgressBar progressBar;
+    ArrayList<JSONObject> teamsList;
+    private static ArrayList<Boolean> arrayListChecked;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_team);
+        arrayListChecked = new ArrayList<>();
         listTeams = (RecyclerView) findViewById(R.id.selectteams_listview_teams);
         progressBar = (ProgressBar) findViewById(R.id.select_teams_progress);
         bundle = getIntent().getExtras();
@@ -46,8 +49,11 @@ public class SelectTeamActivity extends AppCompatActivity {
         makeListTeamsTask.execute();
     }
 
+    public static void setArrayListChecked(int pos, boolean isChecked) {
+        arrayListChecked.set(pos, isChecked);
+    }
+
     public class MakeListTeamsTask extends AsyncTask {
-        ArrayList<JSONObject> teamsList;
         protected void onPreExecute() {
             listTeams.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
@@ -75,8 +81,9 @@ public class SelectTeamActivity extends AppCompatActivity {
                     JSONArray array = teams.getJSONArray(i);
 
                     for (int j = 0; j < array.length(); j++) {
-                        array.getJSONObject(i).put("isChecked", false);
+                        array.getJSONObject(j).put("isChecked", false);
                         teamsList.add(array.getJSONObject(j));
+                        arrayListChecked.add(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -113,14 +120,17 @@ public class SelectTeamActivity extends AppCompatActivity {
 
                 JSONArray selectedTeams = new JSONArray();
 
-                for (int i = 0; i < listTeams.getChildCount(); i++) {
+                for (int i = 0; i < arrayListChecked.size(); i++) {
                     View row = listTeams.getChildAt(i);
 
-                    CheckBox cbTeam = (CheckBox) row.findViewById(R.id.selectteam_checkbox_teamname);
-
-                    if (cbTeam.isChecked()) {
-                        TextView teamId = (TextView) row.findViewById(R.id.selectteam_textview_teamid);
-                        selectedTeams.put(teamId.getText());
+                    if (arrayListChecked.get(i)) {
+                        String teamID = null;
+                        try {
+                            teamID = teamsList.get(i).getString("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        selectedTeams.put(teamID);
                     }
                 }
 

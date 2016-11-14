@@ -33,10 +33,13 @@ public class SelectSportActivity extends AppCompatActivity {
     RecyclerView listSports;
     Bundle bundle;
     ProgressBar progressBar;
+    JSONArray sports;
+    private static ArrayList<Boolean> arrayListChecked;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sport);
+        arrayListChecked = new ArrayList<>();
 
         bundle = getIntent().getExtras();
         listSports = (RecyclerView) findViewById(R.id.selectsports_listview_sports);
@@ -44,6 +47,10 @@ public class SelectSportActivity extends AppCompatActivity {
 
         MakeListSportsTask makeListSportsTask = new MakeListSportsTask();
         makeListSportsTask.execute();
+    }
+
+    public static void setArrayListChecked(int pos, boolean isChecked) {
+        arrayListChecked.set(pos, isChecked);
     }
 
 
@@ -63,7 +70,7 @@ public class SelectSportActivity extends AppCompatActivity {
 
             JSONObject json = getRequest.getMessage().getData();
 
-            JSONArray sports = null;
+            sports = null;
             try {
                 sports = json.getJSONArray("sports");
             } catch (JSONException e) {
@@ -78,6 +85,7 @@ public class SelectSportActivity extends AppCompatActivity {
                     JSONObject aux = (JSONObject)sports.get(i);
                     aux.put("isChecked", false);
                     sportsList.add(aux);
+                    arrayListChecked.add(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -109,14 +117,15 @@ public class SelectSportActivity extends AppCompatActivity {
             case R.id.next_button_toolbar:
                 JSONArray selectedSports = new JSONArray();
 
-                for (int i = 0; i < listSports.getChildCount(); i++) {
-                    View row = listSports.getChildAt(i);
-
-                    CheckBox cbSport = (CheckBox) row.findViewById(R.id.selectsport_checkbox_sportname);
-
-                    if (cbSport.isChecked()) {
-                        TextView sportID = (TextView) row.findViewById(R.id.selectsport_textview_sportid);
-                        selectedSports.put(sportID.getText());
+                for (int i = 0; i < arrayListChecked.size(); i++) {
+                    if (arrayListChecked.get(i)) {
+                        String sportID = null;
+                        try {
+                            sportID = sports.getJSONObject(i).getString("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        selectedSports.put(sportID);
                     }
                 }
 
