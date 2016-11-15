@@ -28,6 +28,7 @@ import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_DASHBOARD_SAVECONFIG;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_NEW_USER;
 
 public class SelectTeamActivity extends AppCompatActivity {
 
@@ -64,12 +65,26 @@ public class SelectTeamActivity extends AppCompatActivity {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_TEAMS, "1",
                                                         bundle.getString("selectedSports"));
             getRequest.execute();
-
             JSONObject json = getRequest.getMessage().getData();
+
+            GetRequest getRequestUser = new GetRequest(URL_SERVER_NEW_USER, SaveSharedPreference.getUserName(SelectTeamActivity.this));
+            getRequestUser.execute();
+            JSONObject jsonUser = getRequestUser.getMessage().getData();
 
             JSONArray teams = null;
             try {
                 teams = json.getJSONArray("teams");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            JSONArray arrayTeamsUser = null;
+            boolean edit = false;
+            try {
+                arrayTeamsUser = new JSONArray(jsonUser.getJSONObject("user").getString("teams"));
+                if(arrayTeamsUser.length() > 0){
+                    edit = true;
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -79,11 +94,29 @@ public class SelectTeamActivity extends AppCompatActivity {
             for (int i=0; i < teams.length(); i++) {
                 try {
                     JSONArray array = teams.getJSONArray(i);
-
                     for (int j = 0; j < array.length(); j++) {
-                        array.getJSONObject(j).put("isChecked", false);
-                        teamsList.add(array.getJSONObject(j));
-                        arrayListChecked.add(false);
+                        if(!edit){
+                            array.getJSONObject(j).put("isChecked", false);
+                            teamsList.add(array.getJSONObject(j));
+                            arrayListChecked.add(false);
+                        }else{
+                            String teamId = array.getJSONObject(j).getString("id");
+                            boolean test = false;
+                            for(int k = 0; k < arrayTeamsUser.length(); k++){
+                                if(teamId.compareTo(arrayTeamsUser.getJSONObject(k).getString("id")) == 0){
+                                    test = true;
+                                }
+                            }
+                            if(test){
+                                array.getJSONObject(j).put("isChecked", true);
+                                teamsList.add(array.getJSONObject(j));
+                                arrayListChecked.add(true);
+                            }else{
+                                array.getJSONObject(j).put("isChecked", false);
+                                teamsList.add(array.getJSONObject(j));
+                                arrayListChecked.add(false);
+                            }
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

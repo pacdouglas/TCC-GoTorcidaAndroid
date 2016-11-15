@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ProgressBar;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
@@ -33,7 +31,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
     public class ConnectionTestTask extends AsyncTask<Void, Integer, Void> {
-        int progressStatus;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

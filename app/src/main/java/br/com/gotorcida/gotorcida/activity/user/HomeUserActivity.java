@@ -104,6 +104,7 @@ public class HomeUserActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(HomeUserActivity.this, SelectSportActivity.class));
+            finish();
             return true;
         }
 

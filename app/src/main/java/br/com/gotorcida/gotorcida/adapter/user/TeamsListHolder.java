@@ -15,6 +15,7 @@ public class TeamsListHolder extends RecyclerView.ViewHolder implements View.OnC
     final TextView teamID;
     final CheckBox teamName;
     final ImageView teamImg;
+    final TextView sportName;
     ItemClickListener itemClickListener;
 
     public TeamsListHolder(View itemView) {
@@ -23,6 +24,7 @@ public class TeamsListHolder extends RecyclerView.ViewHolder implements View.OnC
         teamID = (TextView) itemView.findViewById(R.id.selectteam_textview_teamid);
         teamName = (CheckBox) itemView.findViewById(R.id.selectteam_checkbox_teamname);
         teamImg = (ImageView) itemView.findViewById(R.id.selectteam_imageview_imageteam);
+        sportName = (TextView) itemView.findViewById(R.id.selectteam_textview_sport_name);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener){

@@ -44,6 +44,9 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
         final JSONObject data = teams.get(position);
         holder.setIsRecyclable(false);
         try {
+            JSONObject sport = data.getJSONObject("sport");
+            holder.sportName.setText(sport.getString("name"));
+
             holder.teamID.setText(data.getString("id"));
             holder.teamName.setText(data.getString("name"));
 

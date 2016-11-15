@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.gotorcida.gotorcida.R;
@@ -15,6 +16,8 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
     TextView nameAthlete;
     TextView athleteId;
     TextView athletePosition;
+    ImageView athleteImagePernil;
+
     ItemClickListener itemClickListener;
 
     public TeamRosterListHolder(View itemView) {
@@ -23,6 +26,7 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
         nameAthlete = (TextView) itemView.findViewById(R.id.team_textview_athlete_name);
         athleteId = (TextView) itemView.findViewById(R.id.team_teamviwer_athlete_id);
         athletePosition = (TextView) itemView.findViewById(R.id.team_roster_athlete_position);
+        athleteImagePernil = (ImageView) itemView.findViewById(R.id.team_roster_athlete_photo);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener){

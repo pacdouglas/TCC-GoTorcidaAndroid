@@ -9,9 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -22,9 +20,11 @@ import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.adapter.user.SportsListAdapter;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_SPORTS;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_NEW_USER;
 
 
 public class SelectSportActivity extends AppCompatActivity {
@@ -65,10 +65,12 @@ public class SelectSportActivity extends AppCompatActivity {
         @Override
         protected Object doInBackground(Object... args) {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
-
             getRequest.execute();
-
             JSONObject json = getRequest.getMessage().getData();
+
+            GetRequest getRequestUser = new GetRequest(URL_SERVER_NEW_USER, SaveSharedPreference.getUserName(SelectSportActivity.this));
+            getRequestUser.execute();
+            JSONObject jsonUser = getRequestUser.getMessage().getData();
 
             sports = null;
             try {
@@ -79,13 +81,45 @@ public class SelectSportActivity extends AppCompatActivity {
 
             sportsList = new ArrayList<>();
 
+            JSONArray arraySportsUser = null;
+            boolean edit = false;
+            try {
+                arraySportsUser = new JSONArray(jsonUser.getJSONObject("user").getString("sports"));
+                if(arraySportsUser.length() > 0){
+                    edit = true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
             for(int i=0; i < sports.length(); i++)
             {
                 try {
                     JSONObject aux = (JSONObject)sports.get(i);
-                    aux.put("isChecked", false);
-                    sportsList.add(aux);
-                    arrayListChecked.add(false);
+                    if(!edit){
+                        aux.put("isChecked", false);
+                        sportsList.add(aux);
+                        arrayListChecked.add(false);
+                    }else{
+                        String sportIdAux = aux.getString("id");
+                        boolean test = false;
+                        for(int j = 0; j < arraySportsUser.length(); j++){
+                            if(sportIdAux.compareTo(arraySportsUser.getJSONObject(j).getString("id")) == 0){
+                                test = true;
+                            }
+                        }
+                        if(test){
+                            aux.put("isChecked", true);
+                            sportsList.add(aux);
+                            arrayListChecked.add(true);
+                        }else{
+                            aux.put("isChecked", false);
+                            sportsList.add(aux);
+                            arrayListChecked.add(false);
+                        }
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
