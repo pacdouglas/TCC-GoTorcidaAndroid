@@ -1,7 +1,7 @@
 package br.com.gotorcida.gotorcida.utils;
 
 public class Constants {
-    private static final String URL_SERVER = "http://192.168.25.109:8080/gotorcidaws/";
+    private static final String URL_SERVER = "http://gotorcida.com.br:8080/GoTorcidaWS/";
     public static final String URL_SERVER_JSON_FIND_EVENT = URL_SERVER + "event/find";
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_TEAM = URL_SERVER + "event/listByTeam";
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_USER = URL_SERVER + "event/listByUser";

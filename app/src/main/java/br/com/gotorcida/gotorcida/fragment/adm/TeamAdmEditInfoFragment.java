@@ -92,7 +92,7 @@ public class TeamAdmEditInfoFragment extends Fragment{
         return mView;
     }
     public class SaveInfoTask extends AsyncTask {
-
+        boolean resultPost;
         JSONObject mPostParameters;
 
         public SaveInfoTask(JSONObject postParameters){
@@ -100,20 +100,26 @@ public class TeamAdmEditInfoFragment extends Fragment{
         }
 
         protected void onPreExecute() {
-
+            progressBar.setVisibility(View.VISIBLE);
+            layout.setVisibility(View.GONE);
         }
 
         @Override
         protected Object doInBackground(Object[] params) {
             PostRequest postRequest;
             postRequest = new PostRequest(URL_SERVER_JSON_TEAM_UPDATE+"/"+mTeamId);
-            postRequest.execute(mPostParameters.toString());
+            resultPost = postRequest.execute(mPostParameters.toString());
             return null;
         }
 
         @Override
         public void onPostExecute(Object result) {
+            progressBar.setVisibility(View.GONE);
+            layout.setVisibility(View.GONE);
             mSucces.setVisibility(View.VISIBLE);
+            if(resultPost == false){
+                mSucces.setText("Ocorreu um erro de comunicação. Tente novamente mais tarde");
+            }
         }
     }
 

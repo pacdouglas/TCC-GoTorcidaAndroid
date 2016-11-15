@@ -121,8 +121,6 @@ public class SelectTeamActivity extends AppCompatActivity {
                 JSONArray selectedTeams = new JSONArray();
 
                 for (int i = 0; i < arrayListChecked.size(); i++) {
-                    View row = listTeams.getChildAt(i);
-
                     if (arrayListChecked.get(i)) {
                         String teamID = null;
                         try {
@@ -135,8 +133,6 @@ public class SelectTeamActivity extends AppCompatActivity {
                 }
 
                 if (selectedTeams.length() > 0) {
-                    PostRequest postRequest = new PostRequest(URL_SERVER_DASHBOARD_SAVECONFIG);
-
                     JSONObject postParameters = new JSONObject();
                     try {
                         postParameters.put("userId", userId);
