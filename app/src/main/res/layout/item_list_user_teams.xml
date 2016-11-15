@@ -37,6 +37,16 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:id="@+id/userteams_textview_teamid" />
+
+    <TextView
+        android:id="@+id/userteams_textview_sport_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modalidade"
+        android:textSize="10dp"
+        android:paddingTop="15dp"
+        android:layout_below="@+id/userteams_textview_teamname"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
 
 

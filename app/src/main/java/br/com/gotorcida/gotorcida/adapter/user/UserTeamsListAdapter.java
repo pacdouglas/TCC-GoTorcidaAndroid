@@ -37,8 +37,12 @@ public class UserTeamsListAdapter extends ArrayAdapter<JSONObject> {
         TextView teamId = (TextView) convertView.findViewById(R.id.userteams_textview_teamid);
         TextView teamName = (TextView) convertView.findViewById(R.id.userteams_textview_teamname);
         ImageView teamLogo = (ImageView) convertView.findViewById(R.id.userteams_imageview_imageteam);
+        TextView sportName = (TextView) convertView.findViewById(R.id.userteams_textview_sport_name);
 
         try {
+            JSONObject sport = json.getJSONObject("sport");
+            sportName.setText(sport.getString("name"));
+
             teamId.setText(json.getString("id"));
             teamName.setText(json.getString("name"));
             Glide.with(getContext()).load(URL_IMAGES_BASE + json.getString("urlImage")+".png").into(teamLogo);
