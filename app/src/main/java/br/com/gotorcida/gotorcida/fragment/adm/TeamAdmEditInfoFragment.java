@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -21,8 +22,8 @@ import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_TEAM_UPDATE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_TEAM_UPDATE;
 
 public class TeamAdmEditInfoFragment extends Fragment{
     View mView;
@@ -36,6 +37,9 @@ public class TeamAdmEditInfoFragment extends Fragment{
     EditText mTeamFacebook;
     EditText mTeamTwitter;
     EditText mTeamInstagram;
+    EditText mTeamCity;
+
+    TextView mSucces;
 
     ImageView mTeamLogo;
     Button mSendPost;
@@ -53,11 +57,14 @@ public class TeamAdmEditInfoFragment extends Fragment{
         mTeamFacebook = (EditText) mView.findViewById(R.id.adm_edit_info_edittext_team_facebook);
         mTeamTwitter = (EditText) mView.findViewById(R.id.adm_edit_info_edittext_team_twitter);
         mTeamInstagram = (EditText) mView.findViewById(R.id.adm_edit_info_edittext_team_instagram);
+        mTeamCity = (EditText) mView.findViewById(R.id.adm_edit_info_edittext_team_city);
         mTeamLogo = (ImageView) mView.findViewById(R.id.adm_edit_info_imageview_team_logo);
         mSendPost = (Button) mView.findViewById(R.id.adm_edit_info_button_send);
+        mSucces = (TextView) mView.findViewById(R.id.adm_edit_info_textview_sucess);
 
         progressBar.setVisibility(View.VISIBLE);
         layout.setVisibility(View.GONE);
+        mSucces.setVisibility(View.GONE);
 
         mSendPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +74,10 @@ public class TeamAdmEditInfoFragment extends Fragment{
                     postParameters.put("name", mTeamName.getText().toString());
                     postParameters.put("emailAddress", mTeamEmail.getText().toString());
                     postParameters.put("website", mTeamWebSite.getText().toString());
+                    postParameters.put("facebook", mTeamFacebook.getText().toString());
+                    postParameters.put("twitter", mTeamTwitter.getText().toString());
+                    postParameters.put("instagram", mTeamInstagram.getText().toString());
+                    postParameters.put("city", mTeamCity.getText().toString());
 
                     SaveInfoTask saveInfoTask = new SaveInfoTask(postParameters);
                     saveInfoTask.execute();
@@ -87,6 +98,7 @@ public class TeamAdmEditInfoFragment extends Fragment{
         public SaveInfoTask(JSONObject postParameters){
             this.mPostParameters = postParameters;
         }
+
         protected void onPreExecute() {
 
         }
@@ -94,19 +106,21 @@ public class TeamAdmEditInfoFragment extends Fragment{
         @Override
         protected Object doInBackground(Object[] params) {
             PostRequest postRequest;
-            postRequest = new PostRequest(URL_SERVER_JSON_FIND_TEAM_UPDATE+"/"+mTeamId);
+            postRequest = new PostRequest(URL_SERVER_JSON_TEAM_UPDATE+"/"+mTeamId);
             postRequest.execute(mPostParameters.toString());
             return null;
         }
 
         @Override
         public void onPostExecute(Object result) {
-
+            mSucces.setVisibility(View.VISIBLE);
         }
     }
 
     private class LoadTeamDataTask extends AsyncTask {
+
         JSONObject team;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -127,19 +141,23 @@ public class TeamAdmEditInfoFragment extends Fragment{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
             return null;
         }
+
         @Override
         public void onPostExecute(Object result) {
             try {
                 mTeamName.setText(team.getString("name"));
                 mTeamEmail.setText(team.getString("emailAddress"));
                 mTeamWebSite.setText(team.getString("website"));
+                mTeamFacebook.setText(team.getString("facebook"));
+                mTeamTwitter.setText(team.getString("twitter"));
+                mTeamInstagram.setText(team.getString("instagram"));
+                mTeamCity.setText(team.getString("city"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
             progressBar.setVisibility(View.GONE);
             layout.setVisibility(View.VISIBLE);
         }

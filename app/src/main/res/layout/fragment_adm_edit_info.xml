@@ -51,10 +51,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
             <EditText
+                android:id="@+id/adm_edit_info_edittext_team_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cidade" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <EditText
                 android:id="@+id/adm_edit_info_edittext_team_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email do Time" />
+                android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -65,7 +76,7 @@
                 android:id="@+id/adm_edit_info_edittext_team_website"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Site do Time" />
+                android:hint="Site" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -76,7 +87,7 @@
                 android:id="@+id/adm_edit_info_edittext_team_facebook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Facebook do Time" />
+                android:hint="Facebook" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -87,7 +98,7 @@
                 android:id="@+id/adm_edit_info_edittext_team_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Twitter do Time" />
+                android:hint="Twitter" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -98,7 +109,7 @@
                 android:id="@+id/adm_edit_info_edittext_team_instagram"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Instagram do Time" />
+                android:hint="Instagram" />
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
@@ -112,7 +123,7 @@
             android:id="@+id/adm_edit_info_button_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enviar"/>
+            android:text="@string/salvar"/>
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

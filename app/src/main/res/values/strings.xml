@@ -39,6 +39,7 @@
     <string name="observacoes">Observacoes</string>
     <string name="cidade">Cidade</string>
     <string name="enviar">Enviar</string>
+    <string name="salvar">Salvar</string>
     <string name="mensagem_com_sucesso">Mensagem enviada com sucesso! Aguarde nosso contato.</string>
     <string name="dialog_about_message">Projeto de Conclusão de Curso 8º CCO</string>
 
