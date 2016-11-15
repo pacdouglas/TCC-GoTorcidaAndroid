@@ -1,7 +1,5 @@
 package br.com.gotorcida.gotorcida.fragment.user;
 
-
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
