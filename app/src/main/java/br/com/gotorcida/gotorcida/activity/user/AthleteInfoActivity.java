@@ -68,7 +68,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String facebookAppLink;
                 PackageManager packageManager = getPackageManager();
-
+        //
                 try {
                     int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
                     if (versionCode >= 3002850) {
