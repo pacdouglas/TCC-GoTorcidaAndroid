@@ -116,7 +116,6 @@ public class SelectSportActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.next_button_toolbar:
                 JSONArray selectedSports = new JSONArray();
-
                 for (int i = 0; i < arrayListChecked.size(); i++) {
                     if (arrayListChecked.get(i)) {
                         String sportID = null;

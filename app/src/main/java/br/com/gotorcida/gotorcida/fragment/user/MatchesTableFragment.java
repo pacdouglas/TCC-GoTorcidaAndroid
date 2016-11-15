@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class MatchesTableFragment extends Fragment {
     View mView;
     RecyclerView mMatchesList;
     ProgressBar mProgressBar;
+    TextView mTitle;
     private String mTeamId;
     boolean mFilterByUser; //true = user false = team
     boolean mNextEvents = false;
@@ -50,6 +53,7 @@ public class MatchesTableFragment extends Fragment {
 
         mMatchesList = (RecyclerView) mView.findViewById(R.id.matches_table_listview_matches);
         mProgressBar = (ProgressBar) mView.findViewById(R.id.matches_table_progress);
+        mTitle = (TextView) mView.findViewById(R.id.matches_table_textview_title);
 
         ConstructMatchesListView constructMatchesListView = new ConstructMatchesListView();
         constructMatchesListView.execute();
@@ -61,7 +65,7 @@ public class MatchesTableFragment extends Fragment {
 
         ArrayList<JSONObject> eventsList;
         JSONArray eventsArray;
-
+        String title;
         protected void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
             mMatchesList.setVisibility(View.GONE);
@@ -73,11 +77,14 @@ public class MatchesTableFragment extends Fragment {
             if(!mNextEvents){
                 if(mFilterByUser){
                     getRequest = new GetRequest(Constants.URL_SERVER_JSON_LIST_EVENTS_BY_USER, SaveSharedPreference.getUserName(getActivity().getBaseContext()));
+                    title = "Partidas das suas equipes preferidas";
                 }else{
                     getRequest = new GetRequest(Constants.URL_SERVER_JSON_LIST_EVENTS_BY_TEAM, mTeamId);
+                    title = "";
                 }
             }else{
                 getRequest = new GetRequest(URL_SERVER_JSON_LIST_EVENTS_BY_SPORT, SaveSharedPreference.getUserName(getActivity().getBaseContext()));
+                title = "Partidas que possam te interessar";
             }
 
             getRequest.execute();
@@ -121,6 +128,7 @@ public class MatchesTableFragment extends Fragment {
 
         @Override
         public void onPostExecute(Object result) {
+            mTitle.setText(title);
             MatchesTableListAdapter adapter = new MatchesTableListAdapter(eventsList, getActivity().getBaseContext());
 
             RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity().getBaseContext());
@@ -130,6 +138,9 @@ public class MatchesTableFragment extends Fragment {
 
             mProgressBar.setVisibility(View.GONE);
             mMatchesList.setVisibility(View.VISIBLE);
+            if (!title.isEmpty()){
+                mTitle.setVisibility(View.VISIBLE);
+            }
         }
     }
 
