@@ -50,7 +50,6 @@ public class HomeAdmActivity extends AppCompatActivity
         setContentView(R.layout.activity_home_adm);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Bundle bundle = getIntent().getExtras();
         mTeamId = bundle.getString("teamId");
         mUserName = bundle.getString("userName");
