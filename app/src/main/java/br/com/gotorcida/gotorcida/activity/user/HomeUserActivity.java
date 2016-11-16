@@ -21,6 +21,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -132,6 +135,9 @@ public class HomeUserActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             SaveSharedPreference.clearUserName(HomeUserActivity.this);
             startActivity(new Intent(HomeUserActivity.this, LoginActivity.class));
+            if(AccessToken.getCurrentAccessToken() != null){
+                LoginManager.getInstance().logOut();
+            }
             finish();
         }
 
