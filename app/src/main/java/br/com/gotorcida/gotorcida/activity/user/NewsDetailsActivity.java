@@ -72,8 +72,8 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 }
 
                 for(int i = 0; i < newsArray.length(); i++){
-                    if(newsArray.getJSONObject(i).getString("id").equals(newsId)){
-                        news = newsArray.getJSONObject(i);
+                    if(new JSONObject(newsArray.getString(i)).getString("id").equals(newsId)){
+                        news = new JSONObject(newsArray.getString(i));
                     }
                 }
 

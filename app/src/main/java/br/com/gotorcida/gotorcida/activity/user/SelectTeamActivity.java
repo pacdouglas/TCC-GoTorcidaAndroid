@@ -81,7 +81,7 @@ public class SelectTeamActivity extends AppCompatActivity {
             JSONArray arrayTeamsUser = null;
             boolean edit = false;
             try {
-                arrayTeamsUser = new JSONArray(jsonUser.getJSONObject("user").getString("teams"));
+                arrayTeamsUser = new JSONArray(new JSONObject(jsonUser.getString("user")).getString("teams"));
                 if(arrayTeamsUser.length() > 0){
                     edit = true;
                 }
@@ -90,30 +90,35 @@ public class SelectTeamActivity extends AppCompatActivity {
             }
 
             teamsList = new ArrayList<>();
+            JSONObject object = null;
 
             for (int i=0; i < teams.length(); i++) {
                 try {
                     JSONArray array = teams.getJSONArray(i);
                     for (int j = 0; j < array.length(); j++) {
                         if(!edit){
-                            array.getJSONObject(j).put("isChecked", false);
-                            teamsList.add(array.getJSONObject(j));
+                            object = new JSONObject(array.getString(j));
+                            object.put("isChecked", false);
+                            teamsList.add(object);
                             arrayListChecked.add(false);
                         }else{
-                            String teamId = array.getJSONObject(j).getString("id");
+                            String teamId = new JSONObject(array.getString(j)).getString("id");
                             boolean test = false;
                             for(int k = 0; k < arrayTeamsUser.length(); k++){
                                 if(teamId.compareTo(arrayTeamsUser.getJSONObject(k).getString("id")) == 0){
                                     test = true;
                                 }
                             }
+
                             if(test){
-                                array.getJSONObject(j).put("isChecked", true);
-                                teamsList.add(array.getJSONObject(j));
+                                object = new JSONObject(array.getString(j));
+                                object.put("isChecked", true);
+                                teamsList.add(object);
                                 arrayListChecked.add(true);
                             }else{
-                                array.getJSONObject(j).put("isChecked", false);
-                                teamsList.add(array.getJSONObject(j));
+                                object = new JSONObject(array.getString(j));
+                                object.put("isChecked", false);
+                                teamsList.add(object);
                                 arrayListChecked.add(false);
                             }
                         }

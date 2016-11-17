@@ -78,7 +78,7 @@ public class TeamNewsFragment extends Fragment {
             listNews = new ArrayList<>();
             for(int i = 0; i < news.length(); i++){
                 try {
-                    listNews.add(news.getJSONObject(i));
+                    listNews.add(new JSONObject(news.getString(i)));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

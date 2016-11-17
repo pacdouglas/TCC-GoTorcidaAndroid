@@ -84,7 +84,7 @@ public class SelectSportActivity extends AppCompatActivity {
             JSONArray arraySportsUser = null;
             boolean edit = false;
             try {
-                arraySportsUser = new JSONArray(jsonUser.getJSONObject("user").getString("sports"));
+                arraySportsUser = new JSONArray(new JSONObject(jsonUser.getString("user")).getString("sports"));
                 if(arraySportsUser.length() > 0){
                     edit = true;
                 }

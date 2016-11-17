@@ -95,7 +95,7 @@ public class UserTeamsFragment extends Fragment {
 
             for (int i=0; i < teams.length(); i++) {
                 try {
-                    teamsList.add(teams.getJSONObject(i));
+                    teamsList.add(new JSONObject(teams.getString(i)));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

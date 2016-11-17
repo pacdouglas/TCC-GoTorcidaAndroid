@@ -1,32 +1,28 @@
-package br.com.gotorcida.gotorcida.adapter.user;
+package br.com.gotorcida.gotorcida.adapter.adm;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.user.AthleteInfoActivity;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
-public class TeamRosterListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class AdmTeamRosterListHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     TextView nameAthlete;
     TextView athleteId;
     TextView athletePosition;
-    ImageView athletImageProfile;
-
     ItemClickListener itemClickListener;
 
-    public TeamRosterListHolder(View itemView) {
+    public AdmTeamRosterListHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
         nameAthlete = (TextView) itemView.findViewById(R.id.team_textview_athlete_name);
         athleteId = (TextView) itemView.findViewById(R.id.team_teamviwer_athlete_id);
         athletePosition = (TextView) itemView.findViewById(R.id.team_roster_athlete_position);
-        athletImageProfile = (ImageView) itemView.findViewById(R.id.team_roster_athlete_photo);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener){

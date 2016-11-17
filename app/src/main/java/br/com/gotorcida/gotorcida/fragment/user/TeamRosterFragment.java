@@ -79,7 +79,7 @@ public class TeamRosterFragment extends Fragment {
             listAthlete = new ArrayList<>();
             for(int i = 0; i < athletes.length(); i++){
                 try {
-                    listAthlete.add(athletes.getJSONObject(i));
+                    listAthlete.add(new JSONObject(athletes.getString(i)));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

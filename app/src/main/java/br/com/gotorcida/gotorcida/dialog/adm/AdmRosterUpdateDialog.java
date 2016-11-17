@@ -9,42 +9,28 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.activity.user.NewsDetailsActivity;
-import br.com.gotorcida.gotorcida.adapter.user.TeamNewsListAdapter;
-import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmNewsFragment;
-import br.com.gotorcida.gotorcida.utils.MailSender;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
-import static android.R.attr.description;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_NEWS;
 
-public class AdmNewsEditDialog extends DialogFragment {
+public class AdmRosterUpdateDialog extends DialogFragment {
     View mView;
 
     TextView newsTitle;
@@ -58,7 +44,7 @@ public class AdmNewsEditDialog extends DialogFragment {
     private String newsID;
     private String teamID;
 
-    public AdmNewsEditDialog(String teamID){
+    public AdmRosterUpdateDialog(String teamID){
         super();
         this.teamID = teamID;
     }
@@ -67,7 +53,7 @@ public class AdmNewsEditDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        mView = inflater.inflate(R.layout.dialog_adm_news, null);
+        mView = inflater.inflate(R.layout.dialog_adm_roster_update, null);
 
         progressBar = (ProgressBar) mView.findViewById(R.id.dialog_adm_news_progressbar);
         form = (LinearLayout) mView.findViewById(R.id.dialog_adm_news_form);
@@ -156,7 +142,7 @@ public class AdmNewsEditDialog extends DialogFragment {
                 if(getRequest.getMessage().getSystem().getInt("code") == 500) {
                     Toast.makeText(getContext(), getRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
                 } else {
-                    this.news = new JSONObject(json.getString("news"));
+                    this.news = json.getJSONObject("news");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

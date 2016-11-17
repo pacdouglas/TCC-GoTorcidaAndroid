@@ -9,10 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,69 +26,55 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.activity.user.NewsDetailsActivity;
-import br.com.gotorcida.gotorcida.adapter.user.TeamNewsListAdapter;
-import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmNewsFragment;
-import br.com.gotorcida.gotorcida.utils.MailSender;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
-import static android.R.attr.description;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_NEWS;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_AVAILABLE_ATHLETES;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_NEWS;
+import static java.lang.System.in;
 
-public class AdmNewsEditDialog extends DialogFragment {
+public class AdmRosterInsertDialog extends DialogFragment {
     View mView;
 
-    TextView newsTitle;
-    TextView newsDescription;
-    EditText newsDate;
+    private Spinner spinnerAthlete;
+    private Spinner spinnerPosition;
+    private TextView textViewNumber;
+    private ProgressBar progressBar;
+    private LinearLayout form;
 
-    ProgressBar progressBar;
-    LinearLayout form;
+    private String mTeamId;
 
-    private boolean updating;
-    private String newsID;
-    private String teamID;
-
-    public AdmNewsEditDialog(String teamID){
+    public AdmRosterInsertDialog(String teamId){
         super();
-        this.teamID = teamID;
+        this.mTeamId = teamId;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        mView = inflater.inflate(R.layout.dialog_adm_news, null);
+        mView = inflater.inflate(R.layout.dialog_adm_roster_insert, null);
 
-        progressBar = (ProgressBar) mView.findViewById(R.id.dialog_adm_news_progressbar);
-        form = (LinearLayout) mView.findViewById(R.id.dialog_adm_news_form);
+        progressBar = (ProgressBar) mView.findViewById(R.id.dialog_adm_roster_insert_progressbar);
+        form = (LinearLayout) mView.findViewById(R.id.dialog_adm_roster_insert_form);
 
-        newsTitle = (TextView) mView.findViewById(R.id.dialog_adm_news_title);
-        newsDescription = (TextView) mView.findViewById(R.id.dialog_adm_news_news);
-        newsDate = (EditText) mView.findViewById(R.id.dialog_adm_news_date);
-        newsDate.addTextChangedListener(Mask.insert("##/##/####", newsDate));
+        spinnerAthlete = (Spinner) mView.findViewById(R.id.dialog_adm_roster_insert_spinner_athletes);
+        spinnerPosition = (Spinner) mView.findViewById(R.id.dialog_adm_roster_insert_spinner_position);
+        textViewNumber = (TextView) mView.findViewById(R.id.dialog_adm_roster_insert_textview_number);
 
-        updating = !this.getTag().toString().equals("");
-        newsID = this.getTag();
-
-        if (this.getTag().equals("")) {
-            builder.setTitle("Incluíndo notícia");
-        } else {
-            builder.setTitle("Alterando notícia");
-            LoadNewsTask loadNewsTask = new LoadNewsTask();
-            loadNewsTask.execute(newsID);
-        }
+        builder.setTitle("Novo atleta no time:");
+        LoadNewsTask loadNewsTask = new LoadNewsTask();
+        loadNewsTask.execute(mTeamId);
 
         builder.setView(mView);
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                JSONObject postParameters = new JSONObject();
+                /*JSONObject postParameters = new JSONObject();
                 try {
                     if (!newsID.equals("")){
                         postParameters.put("id", newsID);
@@ -110,6 +92,7 @@ public class AdmNewsEditDialog extends DialogFragment {
 
                 SaveNewsTask saveNewsTask = new SaveNewsTask(updating, postParameters);
                 saveNewsTask.execute();
+                */
 
                 Fragment fragment = getTargetFragment();
                 Integer targetRequestCode = getTargetRequestCode();
@@ -140,7 +123,7 @@ public class AdmNewsEditDialog extends DialogFragment {
 
     public class LoadNewsTask extends AsyncTask {
 
-        JSONObject news = null;
+        private JSONArray athletes;
 
         protected void onPreExecute() {
             form.setVisibility(View.GONE);
@@ -149,14 +132,14 @@ public class AdmNewsEditDialog extends DialogFragment {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_NEWS, params[0].toString());
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_AVAILABLE_ATHLETES, params[0].toString());
             getRequest.execute();
             JSONObject json = getRequest.getMessage().getData();
             try {
                 if(getRequest.getMessage().getSystem().getInt("code") == 500) {
                     Toast.makeText(getContext(), getRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
                 } else {
-                    this.news = new JSONObject(json.getString("news"));
+                    this.athletes = json.getJSONArray("athletes");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -166,11 +149,18 @@ public class AdmNewsEditDialog extends DialogFragment {
 
         @Override
         public void onPostExecute(Object result) {
-            if (news != null) {
+
+            ArrayList<String> athleteStringList = new ArrayList<String>();
+            if (athletes != null) {
                 try {
-                    newsTitle.setText(news.getString("title"));
-                    newsDescription.setText(news.getString("description"));
-                    newsDate.setText(news.getString("formatedRegistrationDate"));
+
+                    for (int i = 0; i < athletes.length(); i ++) {
+                        athleteStringList.add(new JSONObject(athletes.getString(i)).getString("name"));
+                    }
+
+                    spinnerAthlete.setAdapter(new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_dropdown_item,
+                                    athleteStringList));
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -181,13 +171,11 @@ public class AdmNewsEditDialog extends DialogFragment {
         }
     }
 
-    public class SaveNewsTask extends AsyncTask {
+    public class SaveAthleteTask extends AsyncTask {
 
-        private final boolean isUpdatingNews;
         private final JSONObject postParameters;
 
-        public SaveNewsTask(boolean isUpdatingNews, JSONObject postParameters) {
-            this.isUpdatingNews = isUpdatingNews;
+        public SaveAthleteTask(JSONObject postParameters) {
             this.postParameters = postParameters;
         }
 
@@ -199,13 +187,7 @@ public class AdmNewsEditDialog extends DialogFragment {
         protected Object doInBackground(Object[] params) {
 
             PostRequest postRequest;
-
-            if (isUpdatingNews) {
-                postRequest = new PostRequest(URL_SERVER_JSON_UPDATE_NEWS);
-            } else {
-                postRequest = new PostRequest(URL_SERVER_JSON_INSERT_NEWS);
-            }
-
+            postRequest = new PostRequest(URL_SERVER_JSON_UPDATE_NEWS);
             postRequest.execute(postParameters.toString());
             return null;
         }
