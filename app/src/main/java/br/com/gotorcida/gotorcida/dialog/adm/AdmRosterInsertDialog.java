@@ -34,6 +34,7 @@ import br.com.gotorcida.gotorcida.webservice.PostRequest;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_AVAILABLE_ATHLETES;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_NEWS;
 import static java.lang.System.in;
 
@@ -124,6 +125,7 @@ public class AdmRosterInsertDialog extends DialogFragment {
     public class LoadNewsTask extends AsyncTask {
 
         private JSONArray athletes;
+        private JSONArray positions;
 
         protected void onPreExecute() {
             form.setVisibility(View.GONE);
@@ -144,6 +146,20 @@ public class AdmRosterInsertDialog extends DialogFragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            getRequest = new GetRequest(URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT, params[0].toString());
+            getRequest.execute();
+            json = getRequest.getMessage().getData();
+            try {
+                if(getRequest.getMessage().getSystem().getInt("code") == 500) {
+                    Toast.makeText(getContext(), getRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                } else {
+                    this.positions = json.getJSONArray("positions");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
 
@@ -151,9 +167,10 @@ public class AdmRosterInsertDialog extends DialogFragment {
         public void onPostExecute(Object result) {
 
             ArrayList<String> athleteStringList = new ArrayList<String>();
-            if (athletes != null) {
-                try {
+            ArrayList<String> positionsStringList = new ArrayList<String>();
 
+            if (athletes != null && athletes.length() > 0) {
+                try {
                     for (int i = 0; i < athletes.length(); i ++) {
                         athleteStringList.add(new JSONObject(athletes.getString(i)).getString("name"));
                     }
@@ -161,6 +178,20 @@ public class AdmRosterInsertDialog extends DialogFragment {
                     spinnerAthlete.setAdapter(new ArrayAdapter<String>(getActivity(),
                                     android.R.layout.simple_spinner_dropdown_item,
                                     athleteStringList));
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            if (positions != null && athletes.length() > 0) {
+                try {
+                    for (int i = 0; i < positions.length(); i ++) {
+                        positionsStringList.add(new JSONObject(positions.getString(i)).getString("description"));
+                    }
+
+                    spinnerPosition.setAdapter(new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_dropdown_item,
+                            positionsStringList));
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
