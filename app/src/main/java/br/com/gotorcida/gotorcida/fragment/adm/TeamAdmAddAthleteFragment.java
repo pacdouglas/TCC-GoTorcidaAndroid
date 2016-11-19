@@ -98,7 +98,20 @@ public class TeamAdmAddAthleteFragment extends Fragment{
                     Toast.makeText(getActivity(), "Campos Nome e Data de Nascimento Obrigatório", Toast.LENGTH_LONG).show();
                 }else {
                     JSONObject jsonObject = null;
-                    
+
+                    try {
+                        jsonObject.put("name", mName.getText().toString());
+                        jsonObject.put("dateOfBirth", mDateOfBirth.getText().toString());
+                        jsonObject.put("city", mCity.getText().toString());
+                        jsonObject.put("email", mEmail.getText().toString());
+                        jsonObject.put("webSite", mWebSite.getText().toString());
+                        jsonObject.put("facebook", mFacebook.getText().toString());
+                        jsonObject.put("instagram", mInstagram.getText().toString());
+                        jsonObject.put("twitter", mTwitter.getText().toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
 
 
                     SendAthleteToServerTask sendAthleteToServerTask = new SendAthleteToServerTask(jsonObject);
