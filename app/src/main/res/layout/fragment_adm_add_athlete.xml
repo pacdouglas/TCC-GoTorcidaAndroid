@@ -9,7 +9,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="5dp">
 
+    <ProgressBar
+        android:id="@+id/adm_add_athlete_progressbar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/adm_add_athlete_textview_success"
+        android:text="Atleta cadastrado com sucesso"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
     <ScrollView
+        android:id="@+id/adm_add_athlete_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
