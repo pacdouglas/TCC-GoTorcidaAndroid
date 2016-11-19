@@ -1,8 +1,12 @@
 package br.com.gotorcida.gotorcida.fragment.adm;
 
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.adapter.adm.AdmTeamRosterListAdapter;
 import br.com.gotorcida.gotorcida.adapter.user.TeamRosterListAdapter;
 import br.com.gotorcida.gotorcida.dialog.adm.AdmNewsEditDialog;
 import br.com.gotorcida.gotorcida.dialog.adm.AdmRosterInsertDialog;
@@ -82,7 +87,6 @@ public class TeamAdmRosterFragment extends Fragment {
                 AdmRosterUpdateDialog admRosterUpdateDialog = new AdmRosterUpdateDialog(mTeamId);
                 admRosterUpdateDialog.setTargetFragment(this, DIALOG_FRAGMENT);
                 admRosterUpdateDialog.show(getActivity().getSupportFragmentManager().beginTransaction(),  "");
-
             break;
         }
     }
@@ -126,7 +130,7 @@ public class TeamAdmRosterFragment extends Fragment {
         @Override
         public void onPostExecute(Object result) {
             rosterList.setHasFixedSize(true);
-            TeamRosterListAdapter adapter = new TeamRosterListAdapter(listAthlete, getActivity().getBaseContext(), mTeamId);
+            AdmTeamRosterListAdapter adapter = new AdmTeamRosterListAdapter(listAthlete, getActivity().getBaseContext(), mTeamId, getActivity().getSupportFragmentManager(), TeamAdmRosterFragment.this);
 
             RecyclerView.LayoutManager layout = new StaggeredGridLayoutManager(2, 1);
             rosterList.setLayoutManager(layout);
@@ -134,6 +138,20 @@ public class TeamAdmRosterFragment extends Fragment {
 
             progressBar.setVisibility(View.GONE);
             rosterList.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case DIALOG_FRAGMENT:
+
+                if (resultCode == Activity.RESULT_OK) {
+                    CreateRosterListTask createRosterListTask = new CreateRosterListTask();
+                    createRosterListTask.execute();
+                }
+
+                break;
         }
     }
 }
