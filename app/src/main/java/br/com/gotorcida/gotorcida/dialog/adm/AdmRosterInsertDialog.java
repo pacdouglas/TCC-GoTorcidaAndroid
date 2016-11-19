@@ -24,17 +24,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
+import br.com.gotorcida.gotorcida.utils.StringWithTag;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.widget.ListPopupWindow.WRAP_CONTENT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_AVAILABLE_ATHLETES;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_SAVE_ATHLETE_ON_TEAM;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_TEAM_UPDATE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_NEWS;
 import static java.lang.System.in;
 
@@ -48,6 +55,9 @@ public class AdmRosterInsertDialog extends DialogFragment {
     private LinearLayout form;
 
     private String mTeamId;
+
+    private ArrayList<StringWithTag> athleteIds;
+    private ArrayList<StringWithTag> positionIds;
 
     public AdmRosterInsertDialog(String teamId){
         super();
@@ -68,32 +78,27 @@ public class AdmRosterInsertDialog extends DialogFragment {
         textViewNumber = (TextView) mView.findViewById(R.id.dialog_adm_roster_insert_textview_number);
 
         builder.setTitle("Novo atleta no time:");
-        LoadNewsTask loadNewsTask = new LoadNewsTask();
-        loadNewsTask.execute(mTeamId);
+        LoadAthleteInfoTask loadAthleteInfoTask = new LoadAthleteInfoTask();
+        loadAthleteInfoTask.execute(mTeamId);
+
 
         builder.setView(mView);
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                /*JSONObject postParameters = new JSONObject();
+                JSONObject postParameters = new JSONObject();
                 try {
-                    if (!newsID.equals("")){
-                        postParameters.put("id", newsID);
-                    }
-
-                    postParameters.put("title", newsTitle.getText().toString());
-                    postParameters.put("description", newsDescription.getText().toString());
-                    postParameters.put("date", newsDate.getText().toString());
-                    postParameters.put("user", SaveSharedPreference.getUserName(getContext()));
-                    postParameters.put("teamId", teamID);
-
+                    StringWithTag selectedAthlete = CollectionUtils.findByName(athleteIds, spinnerAthlete.getSelectedItem().toString());
+                    StringWithTag selectedPosition = CollectionUtils.findByName(positionIds, spinnerPosition.getSelectedItem().toString());
+                    postParameters.put("athlete", selectedAthlete.getTag());
+                    postParameters.put("position",  selectedPosition.getString()+ "-" + selectedPosition.getTag());
+                    postParameters.put("number", textViewNumber.getText().toString());
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
 
-                SaveNewsTask saveNewsTask = new SaveNewsTask(updating, postParameters);
-                saveNewsTask.execute();
-                */
+                SaveAthleteTask saveAthleteTask = new SaveAthleteTask(postParameters);
+                saveAthleteTask.execute();
 
                 Fragment fragment = getTargetFragment();
                 Integer targetRequestCode = getTargetRequestCode();
@@ -122,7 +127,7 @@ public class AdmRosterInsertDialog extends DialogFragment {
     }
 
 
-    public class LoadNewsTask extends AsyncTask {
+    public class LoadAthleteInfoTask extends AsyncTask {
 
         private JSONArray athletes;
         private JSONArray positions;
@@ -169,10 +174,15 @@ public class AdmRosterInsertDialog extends DialogFragment {
             ArrayList<String> athleteStringList = new ArrayList<String>();
             ArrayList<String> positionsStringList = new ArrayList<String>();
 
+            athleteIds = new ArrayList<StringWithTag>();
+            positionIds = new ArrayList<StringWithTag>();
+
             if (athletes != null && athletes.length() > 0) {
                 try {
                     for (int i = 0; i < athletes.length(); i ++) {
-                        athleteStringList.add(new JSONObject(athletes.getString(i)).getString("name"));
+                        JSONObject athlete = new JSONObject(athletes.getString(i));
+                        athleteStringList.add(athlete.getString("name"));
+                        athleteIds.add(new StringWithTag(athlete.getString("name"), athlete.getString("id")));
                     }
 
                     spinnerAthlete.setAdapter(new ArrayAdapter<String>(getActivity(),
@@ -186,7 +196,9 @@ public class AdmRosterInsertDialog extends DialogFragment {
             if (positions != null && athletes.length() > 0) {
                 try {
                     for (int i = 0; i < positions.length(); i ++) {
-                        positionsStringList.add(new JSONObject(positions.getString(i)).getString("description"));
+                        JSONObject position = new JSONObject(positions.getString(i));
+                        positionsStringList.add(position.getString("description"));
+                        positionIds.add(new StringWithTag(position.getString("description"), position.getString("initials")));
                     }
 
                     spinnerPosition.setAdapter(new ArrayAdapter<String>(getActivity(),
@@ -216,9 +228,8 @@ public class AdmRosterInsertDialog extends DialogFragment {
 
         @Override
         protected Object doInBackground(Object[] params) {
-
             PostRequest postRequest;
-            postRequest = new PostRequest(URL_SERVER_JSON_UPDATE_NEWS);
+            postRequest = new PostRequest(URL_SERVER_JSON_SAVE_ATHLETE_ON_TEAM+"/"+mTeamId);
             postRequest.execute(postParameters.toString());
             return null;
         }

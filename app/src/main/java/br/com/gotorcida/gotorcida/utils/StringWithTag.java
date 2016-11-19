@@ -21,4 +21,6 @@ public class StringWithTag {
     public Object getTag(){
         return tag;
     }
+
+    public String getString() { return string; }
 }

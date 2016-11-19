@@ -10,6 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ import br.com.gotorcida.gotorcida.dialog.adm.AdmRosterUpdateDialog;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.widget.ListPopupWindow.WRAP_CONTENT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_ATHLETES_FROM_TEAM;
 
 public class TeamAdmRosterFragment extends Fragment {
@@ -79,6 +82,7 @@ public class TeamAdmRosterFragment extends Fragment {
                 AdmRosterUpdateDialog admRosterUpdateDialog = new AdmRosterUpdateDialog(mTeamId);
                 admRosterUpdateDialog.setTargetFragment(this, DIALOG_FRAGMENT);
                 admRosterUpdateDialog.show(getActivity().getSupportFragmentManager().beginTransaction(),  "");
+
             break;
         }
     }
