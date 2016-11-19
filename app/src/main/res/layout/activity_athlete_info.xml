@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:textSize="20sp"
-            android:id="@+id/athlete_textview_name"
+            android:id="@+id/athlete_textview_name_and_age"
             />
 
         <TextView
@@ -50,15 +50,6 @@
             android:textSize="20sp"
             android:id="@+id/athlete_textview_position_number"
             android:gravity="center_horizontal" />
-
-        <TextView
-            android:text="Idade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:gravity="right"
-            android:id="@+id/athlete_textview_registrationdate"
-            />
 
         <TextView
             android:layout_marginTop="30dp"

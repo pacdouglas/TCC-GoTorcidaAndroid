@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +29,10 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_AT
 
 public class AthleteInfoActivity extends AppCompatActivity {
     ProgressBar progressBar;
-    TextView athleteName;
+    TextView athleteNameAndAge;
     TextView athletePositionNumber;
     TextView athleteWebsite;
     TextView athleteEmail;
-    TextView athleteRegistrationDate;
     String athleteId;
 
     ImageView athletePhoto;
@@ -53,11 +51,10 @@ public class AthleteInfoActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         athleteId = bundle.getString("athleteId");
         teamId = bundle.getString("teamId");
-        athleteName = (TextView) findViewById(R.id.athlete_textview_name);
+        athleteNameAndAge = (TextView) findViewById(R.id.athlete_textview_name_and_age);
         athleteEmail = (TextView) findViewById(R.id.athlete_textview_teamemail);
         athletePositionNumber = (TextView) findViewById(R.id.athlete_textview_position_number);
         athleteWebsite = (TextView) findViewById(R.id.athlete_textview_website);
-        athleteRegistrationDate = (TextView) findViewById(R.id.athlete_textview_registrationdate);
         athletePhoto = (ImageView) findViewById(R.id.athlete_imageview_perfil_photo);
         athleteFacebook = (ImageView) findViewById(R.id.athlete_imageview_facebook);
         athleteTwitter = (ImageView) findViewById(R.id.athlete_imageview_twitter);
@@ -123,8 +120,9 @@ public class AthleteInfoActivity extends AppCompatActivity {
 
 
     public class AthleteInfoTask extends AsyncTask{
+
         JSONObject athlete;
-        String idade;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -136,7 +134,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_ATHLETE, athleteId);
+            GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_ATHLETE, athleteId, teamId);
             getRequest.execute();
 
             try {
@@ -167,11 +165,14 @@ public class AthleteInfoActivity extends AppCompatActivity {
                         }
                     });
                 }
-                athleteName.setText(athlete.getString("name"));
-                athletePositionNumber.setText(athlete.getString("position") + athlete.getString("number"));
+                athleteNameAndAge.setText(athlete.getString("name") + ",  " + athlete.getString("age") + " anos");
+
+                String position = athlete.getString("position");
+                position = position.substring(0, position.indexOf("-"));
+
+                athletePositionNumber.setText(position + " #" + athlete.getString("number"));
                 athleteWebsite.setText(athlete.getString("website"));
                 athleteEmail.setText(athlete.getString("emailAddress"));
-                athleteRegistrationDate.setText(athlete.getString("formatedRegistrationDate"));
 
                 if (!athlete.getString("facebook").equals("")) {
                     athleteFacebook.setVisibility(View.VISIBLE);

@@ -1,7 +1,7 @@
 package br.com.gotorcida.gotorcida.utils;
 
 public class Constants {
-    private static final String URL_SERVER = "http://192.168.0.19:8080/gotorcidaws/";
+    private static final String URL_SERVER = "http://192.168.25.109:8080/gotorcidaws/";
     public static final String URL_SERVER_JSON_FIND_EVENT = URL_SERVER + "event/find";
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_TEAM = URL_SERVER + "event/listByTeam";
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_USER = URL_SERVER + "event/listByUser";
@@ -9,7 +9,7 @@ public class Constants {
     public static final String URL_SERVER_JSON_LIST_NEWS = URL_SERVER + "news/find";
     public static final String URL_SERVER_JSON_UPDATE_NEWS = URL_SERVER + "news/update";
     public static final String URL_SERVER_JSON_INSERT_NEWS = URL_SERVER + "news/save";
-    public static final String URL_SERVER_JSON_FIND_ATHLETE = URL_SERVER + "athlete";
+    public static final String URL_SERVER_JSON_FIND_ATHLETE = URL_SERVER + "athlete/findAthleteOnTeam";
     public static final String URL_SERVER_JSON_LIST_SPORTS = URL_SERVER + "sport";
     public static final String URL_SERVER_JSON_FIND_TEAM = URL_SERVER + "team";
     public static final String URL_SERVER_JSON_TEAM_UPDATE = URL_SERVER + "team/update";
