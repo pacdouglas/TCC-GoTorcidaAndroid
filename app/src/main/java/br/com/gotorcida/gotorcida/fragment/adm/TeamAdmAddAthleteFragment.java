@@ -32,6 +32,7 @@ import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 import static android.app.Activity.RESULT_OK;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_ADD_ATHLETE;
 
 public class TeamAdmAddAthleteFragment extends Fragment{
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -97,22 +98,22 @@ public class TeamAdmAddAthleteFragment extends Fragment{
                 if (mName.getText().toString().isEmpty() || mDateOfBirth.getText().toString().isEmpty()) {
                     Toast.makeText(getActivity(), "Campos Nome e Data de Nascimento Obrigatório", Toast.LENGTH_LONG).show();
                 }else {
-                    JSONObject jsonObject = null;
 
+                    JSONObject jsonObject = new JSONObject();
+                    JSONObject athleteData = new JSONObject();
                     try {
-                        jsonObject.put("name", mName.getText().toString());
-                        jsonObject.put("dateOfBirth", mDateOfBirth.getText().toString());
-                        jsonObject.put("city", mCity.getText().toString());
-                        jsonObject.put("email", mEmail.getText().toString());
-                        jsonObject.put("webSite", mWebSite.getText().toString());
-                        jsonObject.put("facebook", mFacebook.getText().toString());
-                        jsonObject.put("instagram", mInstagram.getText().toString());
-                        jsonObject.put("twitter", mTwitter.getText().toString());
+                        athleteData.put("name", mName.getText().toString());
+                        athleteData.put("birthDate", mDateOfBirth.getText().toString());
+                        athleteData.put("city", mCity.getText().toString());
+                        athleteData.put("emailAddress", mEmail.getText().toString());
+                        athleteData.put("website", mWebSite.getText().toString());
+                        athleteData.put("facebook", mFacebook.getText().toString());
+                        athleteData.put("instagram", mInstagram.getText().toString());
+                        athleteData.put("twitter", mTwitter.getText().toString());
+                        jsonObject.put("athleteData", athleteData);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
 
                     SendAthleteToServerTask sendAthleteToServerTask = new SendAthleteToServerTask(jsonObject);
                     sendAthleteToServerTask.execute();
@@ -148,17 +149,14 @@ public class TeamAdmAddAthleteFragment extends Fragment{
                     e.printStackTrace();
                 }
             }
-
-            // PostRequest postRequest;
-            //postRequest = new PostRequest("");
-            //resultPost = postRequest.execute(mPostParameters.toString());
+            PostRequest postRequest;
+            postRequest = new PostRequest(URL_SERVER_JSON_ADD_ATHLETE + "/" + mTeamId);
+            resultPost = postRequest.execute(mPostParameters.toString());
             return null;
         }
 
         @Override
         public void onPostExecute(Object result) {
-
-
             if(resultPost == false){
                 mSuccess.setText("Ocorreu um erro de comunicação. Tente novamente mais tarde");
             }
@@ -166,8 +164,6 @@ public class TeamAdmAddAthleteFragment extends Fragment{
             mSuccess.setVisibility(View.VISIBLE);
         }
     }
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
