@@ -59,7 +59,7 @@ public class TeamAdmAddAthleteFragment extends Fragment{
         this.mTeamId = teamId;
         mBitMap = null;
     }
-
+///
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_adm_add_athlete, container, false);

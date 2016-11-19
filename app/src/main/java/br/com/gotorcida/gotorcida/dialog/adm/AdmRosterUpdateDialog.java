@@ -12,9 +12,13 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,20 +44,27 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_
 public class AdmRosterUpdateDialog extends DialogFragment {
     View mView;
 
-    TextView newsTitle;
-    TextView newsDescription;
-    EditText newsDate;
+    EditText mName;
+    EditText mDateOfBirth;
+    EditText mCity;
+    EditText mEmail;
+    EditText mWebSite;
+    EditText mFacebook;
+    EditText mInstagram;
+    EditText mTwitter;
+    Spinner mSpinnerPosition;
+    ImageView mPhotoProfile;
+    Button mBtnSelectPhoto;
+    Button mBtnSend;
+    ScrollView mLayout;
+    ProgressBar mProgressBar;
 
-    ProgressBar progressBar;
-    LinearLayout form;
-
-    private boolean updating;
-    private String newsID;
-    private String teamID;
+    private String mTeamId;
+    private ArrayList<StringWithTag> positionIds;
 
     public AdmRosterUpdateDialog(String teamID){
         super();
-        this.teamID = teamID;
+        this.mTeamId = teamID;
     }
 
     @Override
@@ -62,24 +73,25 @@ public class AdmRosterUpdateDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         mView = inflater.inflate(R.layout.dialog_adm_roster_update, null);
 
-        progressBar = (ProgressBar) mView.findViewById(R.id.dialog_adm_news_progressbar);
-        form = (LinearLayout) mView.findViewById(R.id.dialog_adm_news_form);
+        mProgressBar = (ProgressBar) mView.findViewById(R.id.dialog_adm_roster_update_progressbar);
+        mLayout = (ScrollView) mView.findViewById(R.id.dialog_adm_roster_update_layout);
+        mName = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_name);
+        mDateOfBirth = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_date_of_birth);
+        mDateOfBirth.addTextChangedListener(Mask.insert("##/##/####", mDateOfBirth));
+        mCity = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_city);
+        mEmail = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_email);
+        mWebSite = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_website);
+        mFacebook = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_facebook);
+        mInstagram = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_instagram);
+        mTwitter = (EditText) mView.findViewById(R.id.dialog_adm_roster_update_edittext_twitter);
+        mSpinnerPosition = (Spinner) mView.findViewById(R.id.dialog_adm_roster_update_spinner_positions);
+        mPhotoProfile = (ImageView) mView.findViewById(R.id.dialog_adm_roster_update_imageview_profilephoto);
 
-        newsTitle = (TextView) mView.findViewById(R.id.dialog_adm_news_title);
-        newsDescription = (TextView) mView.findViewById(R.id.dialog_adm_news_news);
-        newsDate = (EditText) mView.findViewById(R.id.dialog_adm_news_date);
-        newsDate.addTextChangedListener(Mask.insert("##/##/####", newsDate));
+        mBtnSelectPhoto = (Button) mView.findViewById(R.id.dialog_adm_roster_update_button_selectphoto);
 
-        updating = !this.getTag().toString().equals("");
-        newsID = this.getTag();
-
-        if (this.getTag().equals("")) {
-            builder.setTitle("Incluíndo notícia");
-        } else {
-            builder.setTitle("Alterando notícia");
-            LoadNewsTask loadNewsTask = new LoadNewsTask();
-            loadNewsTask.execute(newsID);
-        }
+        builder.setTitle("Alterando atleta");
+        LoadAthleteInfoTask loadAthleteInfoTask = new LoadAthleteInfoTask();
+        loadAthleteInfoTask.execute();
 
         builder.setView(mView);
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
@@ -87,22 +99,11 @@ public class AdmRosterUpdateDialog extends DialogFragment {
 
                 JSONObject postParameters = new JSONObject();
                 try {
-                    if (!newsID.equals("")){
-                        postParameters.put("id", newsID);
-                    }
-
-                    postParameters.put("title", newsTitle.getText().toString());
-                    postParameters.put("description", newsDescription.getText().toString());
-                    postParameters.put("date", newsDate.getText().toString());
-                    postParameters.put("user", SaveSharedPreference.getUserName(getContext()));
-                    postParameters.put("teamId", teamID);
-
+                    postParameters.getString("");
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
 
-                SaveNewsTask saveNewsTask = new SaveNewsTask(updating, postParameters);
-                saveNewsTask.execute();
 
                 Fragment fragment = getTargetFragment();
                 Integer targetRequestCode = getTargetRequestCode();
@@ -137,8 +138,8 @@ public class AdmRosterUpdateDialog extends DialogFragment {
         private JSONArray positions;
 
         protected void onPreExecute() {
-            form.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
+            mLayout.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -178,24 +179,7 @@ public class AdmRosterUpdateDialog extends DialogFragment {
             ArrayList<String> athleteStringList = new ArrayList<String>();
             ArrayList<String> positionsStringList = new ArrayList<String>();
 
-            athleteIds = new ArrayList<StringWithTag>();
             positionIds = new ArrayList<StringWithTag>();
-
-            if (athletes != null && athletes.length() > 0) {
-                try {
-                    for (int i = 0; i < athletes.length(); i ++) {
-                        JSONObject athlete = new JSONObject(athletes.getString(i));
-                        athleteStringList.add(athlete.getString("name"));
-                        athleteIds.add(new StringWithTag(athlete.getString("name"), athlete.getString("id")));
-                    }
-
-                    spinnerAthlete.setAdapter(new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_dropdown_item,
-                            athleteStringList));
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                }
-            }
 
             if (positions != null && athletes.length() > 0) {
                 try {
@@ -205,7 +189,7 @@ public class AdmRosterUpdateDialog extends DialogFragment {
                         positionIds.add(new StringWithTag(position.getString("description"), position.getString("initials")));
                     }
 
-                    spinnerPosition.setAdapter(new ArrayAdapter<String>(getActivity(),
+                    mSpinnerPosition.setAdapter(new ArrayAdapter<String>(getActivity(),
                             android.R.layout.simple_spinner_dropdown_item,
                             positionsStringList));
                 } catch (JSONException ex) {
@@ -213,8 +197,8 @@ public class AdmRosterUpdateDialog extends DialogFragment {
                 }
             }
 
-            form.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
+            mLayout.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
