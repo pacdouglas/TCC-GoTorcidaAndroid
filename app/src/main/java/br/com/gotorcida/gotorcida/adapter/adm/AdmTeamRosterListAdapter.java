@@ -30,7 +30,7 @@ public class AdmTeamRosterListAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_team_roster, parent, false);
-        holder = new TeamRosterListHolder(view);
+        holder = new TeamRosterListHolder(view, null);
         return holder;
     }
 

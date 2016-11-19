@@ -28,16 +28,17 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
     Context context;
     JSONObject data;
     TeamRosterListHolder holder;
-
-    public TeamRosterListAdapter(List<JSONObject> athlete, Context context){
+    String teamId;
+    public TeamRosterListAdapter(List<JSONObject> athlete, Context context, String teamId){
         this.athlete = athlete;
         this.context = context;
+        this.teamId = teamId;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_team_roster, parent, false);
-        holder = new TeamRosterListHolder(view);
+        holder = new TeamRosterListHolder(view, teamId);
         return holder;
     }
 

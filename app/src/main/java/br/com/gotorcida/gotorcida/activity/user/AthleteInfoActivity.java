@@ -1,13 +1,13 @@
 package br.com.gotorcida.gotorcida.activity.user;
 
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,21 +16,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_ATHLETE;
 
 public class AthleteInfoActivity extends AppCompatActivity {
     ProgressBar progressBar;
-    RelativeLayout layoutBody;
     TextView athleteName;
-    TextView athletePosition;
+    TextView athletePositionNumber;
     TextView athleteWebsite;
     TextView athleteEmail;
     TextView athleteRegistrationDate;
@@ -44,16 +45,17 @@ public class AthleteInfoActivity extends AppCompatActivity {
     private String facebookLink;
     private String twitterLink;
     private String instagramLink;
-
+    private String teamId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete_info);
         Bundle bundle = getIntent().getExtras();
         athleteId = bundle.getString("athleteId");
+        teamId = bundle.getString("teamId");
         athleteName = (TextView) findViewById(R.id.athlete_textview_name);
         athleteEmail = (TextView) findViewById(R.id.athlete_textview_teamemail);
-        athletePosition = (TextView) findViewById(R.id.athlete_textview_position);
+        athletePositionNumber = (TextView) findViewById(R.id.athlete_textview_position_number);
         athleteWebsite = (TextView) findViewById(R.id.athlete_textview_website);
         athleteRegistrationDate = (TextView) findViewById(R.id.athlete_textview_registrationdate);
         athletePhoto = (ImageView) findViewById(R.id.athlete_imageview_perfil_photo);
@@ -61,14 +63,13 @@ public class AthleteInfoActivity extends AppCompatActivity {
         athleteTwitter = (ImageView) findViewById(R.id.athlete_imageview_twitter);
         athleteInstagram = (ImageView) findViewById(R.id.athlete_imageview_instagram);
         progressBar = (ProgressBar) findViewById(R.id.athlete_perfil_progress);
-        layoutBody = (RelativeLayout) findViewById(R.id.athlete_body_layout);
 
         athleteFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String facebookAppLink;
                 PackageManager packageManager = getPackageManager();
-        //
+
                 try {
                     int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
                     if (versionCode >= 3002850) {
@@ -123,10 +124,10 @@ public class AthleteInfoActivity extends AppCompatActivity {
 
     public class AthleteInfoTask extends AsyncTask{
         JSONObject athlete;
+        String idade;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            layoutBody.setVisibility(View.GONE);
             athleteFacebook.setVisibility(View.GONE);
             athleteTwitter.setVisibility(View.GONE);
             athleteInstagram.setVisibility(View.GONE);
@@ -154,7 +155,20 @@ public class AthleteInfoActivity extends AppCompatActivity {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             try {
+                String auxImg = athlete.getString("urlImage");
+                if(!auxImg.equals("null")){
+                    Glide.with(AthleteInfoActivity.this).load(URL_IMAGES_BASE + auxImg +".png").asBitmap().centerCrop().into(new BitmapImageViewTarget(athletePhoto) {
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable circularBitmapDrawable =
+                                    RoundedBitmapDrawableFactory.create(getResources(), resource);
+                            circularBitmapDrawable.setCircular(true);
+                            athletePhoto.setImageDrawable(circularBitmapDrawable);
+                        }
+                    });
+                }
                 athleteName.setText(athlete.getString("name"));
+                athletePositionNumber.setText(athlete.getString("position") + athlete.getString("number"));
                 athleteWebsite.setText(athlete.getString("website"));
                 athleteEmail.setText(athlete.getString("emailAddress"));
                 athleteRegistrationDate.setText(athlete.getString("formatedRegistrationDate"));
@@ -177,7 +191,6 @@ public class AthleteInfoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             progressBar.setVisibility(View.GONE);
-            layoutBody.setVisibility(View.VISIBLE);
         }
     }
 

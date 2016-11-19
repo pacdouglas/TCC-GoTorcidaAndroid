@@ -17,12 +17,13 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
     TextView athleteId;
     TextView athletePosition;
     ImageView athletImageProfile;
-
+    String teamId;
     ItemClickListener itemClickListener;
 
-    public TeamRosterListHolder(View itemView) {
+    public TeamRosterListHolder(View itemView, String teamId) {
         super(itemView);
         itemView.setOnClickListener(this);
+        this.teamId = teamId;
         nameAthlete = (TextView) itemView.findViewById(R.id.team_textview_athlete_name);
         athleteId = (TextView) itemView.findViewById(R.id.team_teamviwer_athlete_id);
         athletePosition = (TextView) itemView.findViewById(R.id.team_roster_athlete_position);
@@ -38,6 +39,7 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
         this.itemClickListener.onItemClick(this.getLayoutPosition());
         Bundle bundle = new Bundle();
         bundle.putString("athleteId", athleteId.getText().toString());
+        bundle.putString("teamId", this.teamId);
         Intent it = new Intent(itemView.getContext(), AthleteInfoActivity.class);
         it.putExtras(bundle);
         itemView.getContext().startActivity(it);

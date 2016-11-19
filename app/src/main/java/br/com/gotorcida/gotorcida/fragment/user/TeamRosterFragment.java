@@ -89,7 +89,7 @@ public class TeamRosterFragment extends Fragment {
         @Override
         public void onPostExecute(Object result) {
             athletesList.setHasFixedSize(true);
-            TeamRosterListAdapter adapter = new TeamRosterListAdapter(listAthlete, getActivity().getBaseContext());
+            TeamRosterListAdapter adapter = new TeamRosterListAdapter(listAthlete, getActivity().getBaseContext(), teamId);
 
             RecyclerView.LayoutManager layout = new StaggeredGridLayoutManager(2, 1);
             athletesList.setLayoutManager(layout);
