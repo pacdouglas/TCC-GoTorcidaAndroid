@@ -3,8 +3,6 @@ package br.com.gotorcida.gotorcida.activity.adm;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,6 +27,8 @@ import java.util.List;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.user.HomeUserActivity;
 import br.com.gotorcida.gotorcida.dialog.user.ConfirmExitDialog;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmAddAthleteFragment;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmAddTeamFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmEditInfoFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmMachesFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmNewsFragment;
@@ -121,6 +121,10 @@ public class HomeAdmActivity extends AppCompatActivity
             ft.replace(R.id.home_adm_frame_fragment, new TeamAdmRosterFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_contact) {
             ft.replace(R.id.home_adm_frame_fragment, new TeamAdmEditInfoFragment(mTeamId)).commit();
+        } else if (id == R.id.nav_adm_add_athlete) {
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmAddAthleteFragment(mTeamId)).commit();
+        } else if (id == R.id.nav_adm_add_team) {
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmAddTeamFragment(mTeamId)).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

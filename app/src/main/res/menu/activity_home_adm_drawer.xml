@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_adm_matches"
             android:icon="@drawable/ic_menu_table_matches"
-            android:title="Jogos" />
+            android:title="Novo Jogo/Evento" />
         <item
             android:id="@+id/nav_adm_news"
             android:icon="@drawable/ic_menu_news"
@@ -18,6 +18,14 @@
             android:id="@+id/nav_adm_contact"
             android:icon="@drawable/ic_menu_manage"
             android:title="Editar Informações" />
+        <item
+            android:id="@+id/nav_adm_add_athlete"
+            android:icon="@drawable/ic_menu_add_athlete"
+            android:title="Criar Atleta" />
+        <item
+            android:id="@+id/nav_adm_add_team"
+            android:icon="@drawable/ic_menu_add_team"
+            android:title="Criar Oponente/Time" />
     </group>
 
 </menu>
