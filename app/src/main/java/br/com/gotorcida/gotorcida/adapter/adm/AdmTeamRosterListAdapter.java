@@ -63,7 +63,7 @@ public class AdmTeamRosterListAdapter extends RecyclerView.Adapter {
             holder.athleteId.setText(data.getString("id"));
 
             String auxImg = data.getString("urlImage");
-            if(!auxImg.equals("null")){
+            if(!auxImg.equals("null") && !auxImg.isEmpty() && !auxImg.equals("")){
                 Glide.with(context).load(URL_IMAGES_BASE + auxImg +".png").asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.athleteImageProfile) {
                     @Override
                     protected void setResource(Bitmap resource) {

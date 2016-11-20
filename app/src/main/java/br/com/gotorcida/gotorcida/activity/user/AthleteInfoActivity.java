@@ -154,7 +154,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
             super.onPostExecute(o);
             try {
                 String auxImg = athlete.getString("urlImage");
-                if(!auxImg.equals("null")){
+                if(!auxImg.equals("null") && !auxImg.isEmpty() && !auxImg.equals("")){
                     Glide.with(AthleteInfoActivity.this).load(URL_IMAGES_BASE + auxImg +".png").asBitmap().centerCrop().into(new BitmapImageViewTarget(athletePhoto) {
                         @Override
                         protected void setResource(Bitmap resource) {

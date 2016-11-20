@@ -13,8 +13,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -23,15 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.json.JSONArray;
@@ -39,29 +34,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import br.com.gotorcida.gotorcida.R;
-import br.com.gotorcida.gotorcida.activity.user.AthleteInfoActivity;
 import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Mask;
-import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.utils.StringWithTag;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
-import static android.R.attr.data;
 import static android.app.Activity.RESULT_OK;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_ADD_ATHLETE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_ATHLETE;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_NEWS;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_AVAILABLE_ATHLETES;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_ATHLETE;
-import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_NEWS;
-import static java.lang.System.load;
 
 public class AdmRosterUpdateDialog extends DialogFragment {
 
@@ -276,7 +261,7 @@ public class AdmRosterUpdateDialog extends DialogFragment {
 
                 String urlImage = athlete.getString("urlImage");
 
-                if (!urlImage.equals("") || !urlImage.equals("null")) {
+                if (!urlImage.equals("") && !urlImage.equals("null") && !urlImage.isEmpty()) {
                     Glide.with(getContext()).load(URL_IMAGES_BASE + athlete.getString("urlImage") + ".png").into(mPhotoProfile);
                 }
 
