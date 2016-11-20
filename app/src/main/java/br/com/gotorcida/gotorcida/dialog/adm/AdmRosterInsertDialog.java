@@ -193,7 +193,7 @@ public class AdmRosterInsertDialog extends DialogFragment {
                 }
             }
 
-            if (positions != null && athletes.length() > 0) {
+            if (positions != null && positions.length() > 0) {
                 try {
                     for (int i = 0; i < positions.length(); i ++) {
                         JSONObject position = new JSONObject(positions.getString(i));

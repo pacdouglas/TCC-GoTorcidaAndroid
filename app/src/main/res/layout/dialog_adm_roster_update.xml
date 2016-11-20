@@ -52,6 +52,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:id="@+id/dialog_adm_roster_update_edittext_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Número"
+                    android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
                     android:id="@+id/dialog_adm_roster_update_edittext_date_of_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,7 +134,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingRight="15dp">
+
                 <ImageView
                     android:id="@+id/dialog_adm_roster_update_imageview_profilephoto"
                     android:layout_width="100dp"
@@ -132,17 +146,11 @@
                 <Button
                     android:id="@+id/dialog_adm_roster_update_button_selectphoto"
                     android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Adicionar Foto" />
+                    android:text="Adicionar Foto"
+                    />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/dialog_adm_roster_update_button_send"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enviar"/>
 
         </LinearLayout>
     </ScrollView>

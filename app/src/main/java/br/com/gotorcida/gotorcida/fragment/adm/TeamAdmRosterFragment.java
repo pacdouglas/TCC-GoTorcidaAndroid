@@ -82,12 +82,6 @@ public class TeamAdmRosterFragment extends Fragment {
                 admRosterInsertDialog.setTargetFragment(this, DIALOG_FRAGMENT);
                 admRosterInsertDialog.show(getActivity().getSupportFragmentManager().beginTransaction(),  "");
             break;
-
-            case UPDATE:
-                AdmRosterUpdateDialog admRosterUpdateDialog = new AdmRosterUpdateDialog(mTeamId);
-                admRosterUpdateDialog.setTargetFragment(this, DIALOG_FRAGMENT);
-                admRosterUpdateDialog.show(getActivity().getSupportFragmentManager().beginTransaction(),  "");
-            break;
         }
     }
 

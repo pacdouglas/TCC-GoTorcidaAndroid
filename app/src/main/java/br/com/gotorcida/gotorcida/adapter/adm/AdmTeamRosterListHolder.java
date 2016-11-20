@@ -44,7 +44,7 @@ public class AdmTeamRosterListHolder extends RecyclerView.ViewHolder implements 
 
     @Override
     public void onClick(View v) {
-        AdmRosterUpdateDialog admRosterUpdateDialog = new AdmRosterUpdateDialog(teamId);
+        AdmRosterUpdateDialog admRosterUpdateDialog = new AdmRosterUpdateDialog(teamId, athleteId.getText().toString());
         admRosterUpdateDialog.setTargetFragment(fragment, 666);
         admRosterUpdateDialog.show(fragmentManager.beginTransaction(), athleteId.getText().toString());
     }

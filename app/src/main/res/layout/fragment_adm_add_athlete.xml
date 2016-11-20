@@ -126,7 +126,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingRight="15dp">
+
                 <ImageView
                     android:id="@+id/adm_add_athlete_imageview_profilephoto"
                     android:layout_width="100dp"
@@ -135,7 +138,7 @@
                 <Button
                     android:id="@+id/adm_add_athlete_button_selectphoto"
                     android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Adicionar Foto" />
             </LinearLayout>
