@@ -30,7 +30,7 @@ import br.com.gotorcida.gotorcida.dialog.user.ConfirmExitDialog;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmAddAthleteFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmAddTeamFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmEditInfoFragment;
-import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmMachesFragment;
+import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmMatchesFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmNewsFragment;
 import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmRosterFragment;
 import br.com.gotorcida.gotorcida.utils.Constants;
@@ -114,7 +114,7 @@ public class HomeAdmActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (id == R.id.nav_adm_matches) {
-            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmMachesFragment(mTeamId)).commit();
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmMatchesFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_news) {
             ft.replace(R.id.home_adm_frame_fragment, new TeamAdmNewsFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_roster) {
