@@ -49,7 +49,7 @@ public class TeamAdmNewsFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_adm_news, container, false);
-        newsList = (RecyclerView) mView.findViewById(R.id.fragment_adm_matches_listview_matches);
+        newsList = (RecyclerView) mView.findViewById(R.id.fragment_adm_news_listview_news);
         progressBar = (ProgressBar) mView.findViewById(R.id.fragment_adm_news_progressbar);
         newsList.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);

@@ -22,7 +22,59 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Insira os dados da Partida"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"/>
+
             <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/adm_matches_insert_edittext_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome do Evento"
+                    android:inputType="text"
+                    android:maxLines="1"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/adm_matches_insert_edittext_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data: DD/MM/AAAA"
+                android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/adm_matches_insert_edittext_hour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Horário: 00:00"
+                android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:layout_marginTop="15dp"
+                android:id="@+id/adm_matches_insert_textview_location_address_fixed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Endereço"
+                android:visibility="gone"
+                android:textSize="13sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_marginTop="15dp"
+                android:id="@+id/textInput1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
@@ -33,6 +85,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInput2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
@@ -47,6 +100,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Procurar Endereço"/>
+
+            <Spinner
+                android:id="@+id/adm_matches_insert_spinner_firt_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dropDownSelector="@color/cardview_dark_background"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginTop="5dp"
+                android:spinnerMode="dialog"
+                />
+
+            <Spinner
+                android:id="@+id/adm_matches_insert_spinner_second_team"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dropDownSelector="@color/cardview_dark_background"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_marginLeft="-5dp"
+                android:layout_marginTop="5dp"
+                android:spinnerMode="dialog"
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/adm_matches_insert_edittext_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descrição da Partida"
+                    android:inputType="textMultiLine"/>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -58,7 +58,7 @@
         <activity
             android:name=".activity.user.EventDetailsActivity"
             android:label="Detalhes da Partida"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -91,7 +91,8 @@
 
         <activity
             android:name=".fragment.user.MapsFragment"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".activity.adm.ChoseLocationActivity"></activity>
     </application>
 
 </manifest>
