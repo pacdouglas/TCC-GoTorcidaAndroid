@@ -6,7 +6,8 @@ public class Constants {
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_TEAM = URL_SERVER + "event/listByTeam";
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_USER = URL_SERVER + "event/listByUser";
     public static final String URL_SERVER_JSON_LIST_EVENTS_BY_SPORT = URL_SERVER + "event/listBySport";
-    public static final String URL_SERVER_JSON_INSERT_EVENT = URL_SERVER + "/event/update";
+    public static final String URL_SERVER_JSON_INSERT_EVENT = URL_SERVER + "/event/save";
+    public static final String URL_SERVER_JSON_SET_EVENT_RESULT = URL_SERVER + "eventResult/update";
     public static final String URL_SERVER_JSON_LIST_NEWS = URL_SERVER + "news/find";
     public static final String URL_SERVER_JSON_UPDATE_NEWS = URL_SERVER + "news/update";
     public static final String URL_SERVER_JSON_INSERT_NEWS = URL_SERVER + "news/save";

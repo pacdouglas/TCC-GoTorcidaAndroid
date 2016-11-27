@@ -55,9 +55,30 @@ public class AdmMatchesTableListHolder extends RecyclerView.ViewHolder implement
 
     @Override
     public void onClick(View v) {
-        FragmentTransaction transaction = ((FragmentActivity)mView.getContext()).getSupportFragmentManager().beginTransaction();
-        AdmMatchesResultDialog admMatchesResultDialog = new AdmMatchesResultDialog(eventId.getText().toString());
-        admMatchesResultDialog.show(transaction,  "");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mView.getContext());
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+        builder.setPositiveButton("Atribuir Resultado", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FragmentTransaction transaction = ((FragmentActivity)mView.getContext()).getSupportFragmentManager().beginTransaction();
+                AdmMatchesResultDialog admMatchesResultDialog = new AdmMatchesResultDialog(eventId.getText().toString());
+                admMatchesResultDialog.show(transaction,  "");
+            }
+        });
+        builder.setNeutralButton("Editar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     @Override
