@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.adm.ChoseLocationActivity;
 import br.com.gotorcida.gotorcida.utils.Mask;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.utils.StringWithTag;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
@@ -111,12 +112,13 @@ public class AdmMatchesInsertDialog extends DialogFragment {
                 if(test) {
                     JSONObject parameters = null;
                     try {
+                        parameters.put("userId", SaveSharedPreference.getUserName(getActivity()));
                         parameters.put("teamId", mTeamId);
                         parameters.put("name", mNameEvent.getText().toString());
                         parameters.put("date", mDate.getText().toString());
                         parameters.put("hour", mHour.getText().toString());
-                        parameters.put("address", mLocation.getText().toString());
-                        parameters.put("location", mLocationCity.getText().toString());
+                        parameters.put("location", mLocation.getText().toString());
+                        parameters.put("city", mLocationCity.getText().toString());
                         parameters.put("description", mDescription.getText().toString());
                         parameters.put("firstTeam", firstTeamId.getTag().toString());
                         parameters.put("secondTeam", secondTeamId.getTag().toString());
