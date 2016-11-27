@@ -1,6 +1,7 @@
 package br.com.gotorcida.gotorcida.fragment.adm;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -31,6 +32,7 @@ import br.com.gotorcida.gotorcida.webservice.PostRequest;
 import static android.app.Activity.RESULT_OK;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_ADD_TEAM;
 
+@SuppressLint("ValidFragment")
 public class TeamAdmAddTeamFragment extends Fragment{
     View mView;
     private static final int RESULT_LOAD_IMAGE = 1;

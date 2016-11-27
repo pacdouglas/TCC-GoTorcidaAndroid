@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -48,6 +49,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_AT
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_ATHLETE;
 
+@SuppressLint("ValidFragment")
 public class AdmRosterUpdateDialog extends DialogFragment {
 
     private static final int RESULT_LOAD_IMAGE = 1;

@@ -15,10 +15,6 @@
             android:icon="@drawable/ic_menu_roster"
             android:title="Elenco" />
         <item
-            android:id="@+id/nav_adm_contact"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Editar Informações" />
-        <item
             android:id="@+id/nav_adm_add_athlete"
             android:icon="@drawable/ic_menu_add_athlete"
             android:title="Criar Atleta" />

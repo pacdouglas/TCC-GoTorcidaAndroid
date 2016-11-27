@@ -63,6 +63,7 @@
             <Button
                 android:id="@+id/adm_add_team_button_selectphoto"
                 android:layout_marginLeft="10dp"
+                android:theme="@style/AppTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Adicionar Logo" />
@@ -73,6 +74,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.Button"
             android:text="Enviar"/>
 
     </LinearLayout>

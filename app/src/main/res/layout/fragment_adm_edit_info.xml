@@ -113,13 +113,27 @@
                 android:hint="Instagram" />
         </android.support.design.widget.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/adm_edit_info_imageview_team_logo"
-            android:layout_marginTop="10dp"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/icon_mook"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:id="@+id/adm_edit_info_imageview_team_logo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_team_no_logo"/>
+            <Button
+                android:id="@+id/adm_edit_info_button_selectphoto"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alterar Logo" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/adm_edit_info_button_send"
             android:layout_width="match_parent"

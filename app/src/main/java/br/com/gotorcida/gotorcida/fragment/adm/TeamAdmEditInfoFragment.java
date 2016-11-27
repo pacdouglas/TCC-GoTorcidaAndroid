@@ -1,9 +1,17 @@
 package br.com.gotorcida.gotorcida.fragment.adm;
 
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,10 +31,13 @@ import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
+import static android.app.Activity.RESULT_OK;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_TEAM_UPDATE;
 
+@SuppressLint("ValidFragment")
 public class TeamAdmEditInfoFragment extends Fragment{
+    private static final int RESULT_LOAD_IMAGE = 1;
     View mView;
     String mTeamId;
     ProgressBar progressBar;
@@ -42,10 +54,15 @@ public class TeamAdmEditInfoFragment extends Fragment{
     TextView mSucces;
 
     ImageView mTeamLogo;
+    Button mBtnLoadImage;
     Button mSendPost;
-    public TeamAdmEditInfoFragment(String teamId) {
-        this.mTeamId = teamId;
+    Bitmap mBitMap;
+
+    public TeamAdmEditInfoFragment(String mTeamId) {
+        this.mTeamId = mTeamId;
+        this.mBitMap = null;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_adm_edit_info, container, false);
@@ -61,10 +78,21 @@ public class TeamAdmEditInfoFragment extends Fragment{
         mTeamLogo = (ImageView) mView.findViewById(R.id.adm_edit_info_imageview_team_logo);
         mSendPost = (Button) mView.findViewById(R.id.adm_edit_info_button_send);
         mSucces = (TextView) mView.findViewById(R.id.adm_edit_info_textview_sucess);
+        mBtnLoadImage= (Button) mView.findViewById(R.id.adm_edit_info_button_selectphoto);
 
         progressBar.setVisibility(View.VISIBLE);
         layout.setVisibility(View.GONE);
         mSucces.setVisibility(View.GONE);
+
+        mBtnLoadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(
+                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(it, RESULT_LOAD_IMAGE);
+            }
+        });
 
         mSendPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +136,19 @@ public class TeamAdmEditInfoFragment extends Fragment{
         protected Object doInBackground(Object[] params) {
             PostRequest postRequest;
             postRequest = new PostRequest(URL_SERVER_JSON_TEAM_UPDATE+"/"+mTeamId);
+
+            if(mBitMap != null){
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                mBitMap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                try {
+                    mPostParameters.put("image", encoded);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
             resultPost = postRequest.execute(mPostParameters.toString());
             return null;
         }
@@ -166,6 +207,26 @@ public class TeamAdmEditInfoFragment extends Fragment{
 
             progressBar.setVisibility(View.GONE);
             layout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            mBitMap = BitmapFactory.decodeFile(picturePath);
+            mTeamLogo.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
     }
 }

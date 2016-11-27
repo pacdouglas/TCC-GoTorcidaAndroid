@@ -100,8 +100,9 @@
 
             <Button
                 android:id="@+id/adm_matches_insert_button_location"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.Button"
                 android:text="Procurar Endereço"/>
 
             <TextView

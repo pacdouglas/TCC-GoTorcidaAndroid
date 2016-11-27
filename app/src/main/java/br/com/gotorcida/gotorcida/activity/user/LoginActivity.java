@@ -1,8 +1,10 @@
 package br.com.gotorcida.gotorcida.activity.user;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,8 +12,11 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -39,11 +44,13 @@ import java.util.Date;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.utils.Constants;
+import br.com.gotorcida.gotorcida.utils.MailSender;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 import static br.com.gotorcida.gotorcida.R.id.email;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_FIND_USER;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_NEW_USER;
 
 
@@ -51,7 +58,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private ScrollView formView;
+    private TextView mRememberPassword;
+    private LinearLayout formView;
     private ProgressBar progressBar;
     private SignInButton googleSignInButton;
     private GoogleApiClient mGoogleApiClient;
@@ -72,7 +80,44 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
         mEmailView = (AutoCompleteTextView) findViewById(email);
         mPasswordView = (EditText) findViewById(R.id.password);
-        formView = (ScrollView) findViewById(R.id.login_form);
+        formView = (LinearLayout) findViewById(R.id.email_login_form);
+        mRememberPassword = (TextView) findViewById(R.id.sign_in_textview_passwordremember);
+
+        mRememberPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);
+                alertDialog.setTitle("Lembrar Senha");
+                alertDialog.setMessage("Insira seu Email");
+                final EditText input = new EditText(LoginActivity.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+
+                alertDialog.setPositiveButton("Enviar Senha",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String email = input.getText().toString().replaceAll(" ", "");
+                                if (email.compareTo("") == 0) {
+                                    Toast.makeText(LoginActivity.this, "Email Inválido", Toast.LENGTH_LONG).show();
+                                }else {
+                                    SendMailTask sendMailTask = new SendMailTask(email);
+                                    sendMailTask.execute();
+                                }
+                            }
+                        });
+
+                alertDialog.setNegativeButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -244,7 +289,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     break;
 
                 case "GOOGLE":
-                    mGetRequest = new GetRequest(Constants.URL_SERVER_FIND_USER, mEmail);
+                    mGetRequest = new GetRequest(URL_SERVER_FIND_USER, mEmail);
                     mGetRequest.execute();
 
                     try {
@@ -259,7 +304,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     mPostRequest.execute(userData.toString());
 
                                     if (mPostRequest.getMessage().getSystem().get("code").equals(200)) {
-                                            mGetRequest = new GetRequest(Constants.URL_SERVER_FIND_USER, mEmail);
+                                            mGetRequest = new GetRequest(URL_SERVER_FIND_USER, mEmail);
                                             mGetRequest.execute();
 
                                             if (mGetRequest.getMessage().getSystem().get("code").equals(200)) {
@@ -300,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 break;
 
                 case "FACEBOOK":
-                    mGetRequest = new GetRequest(Constants.URL_SERVER_FIND_USER, mEmail);
+                    mGetRequest = new GetRequest(URL_SERVER_FIND_USER, mEmail);
                     mGetRequest.execute();
 
                     try {
@@ -315,7 +360,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             mPostRequest.execute(userData.toString());
 
                             if (mPostRequest.getMessage().getSystem().get("code").equals(200)) {
-                                mGetRequest = new GetRequest(Constants.URL_SERVER_FIND_USER, mEmail);
+                                mGetRequest = new GetRequest(URL_SERVER_FIND_USER, mEmail);
                                 mGetRequest.execute();
 
                                 if (mGetRequest.getMessage().getSystem().get("code").equals(200)) {
@@ -393,5 +438,44 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
-}
 
+    public class SendMailTask extends AsyncTask {
+        boolean send = false;
+        String email;
+
+        public SendMailTask(String email) {
+            this.email = email;
+        }
+        protected void onPreExecute() {
+            Toast.makeText(LoginActivity.this, "Enviando mensagem...", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Object doInBackground(Object... args) {
+            GetRequest getRequest = new GetRequest(URL_SERVER_FIND_USER, email);
+            getRequest.execute();
+
+            try {
+                JSONObject json = new JSONObject(getRequest.getMessage().getData().getString("user"));
+                String pass = json.getString("password");
+                MailSender mailSender = new MailSender(LoginActivity.this, email, "Recuperação de Senha - GoTorcida", "Senha: "+ pass);
+                send = mailSender.send();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        @Override
+        public void onPostExecute(Object result) {
+            if(send){
+                Toast.makeText(LoginActivity.this, "Mensagem Enviada Com Sucesso! Verifique seu email", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(LoginActivity.this, "Erro no envio da mensagem. Tente novamente", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+}

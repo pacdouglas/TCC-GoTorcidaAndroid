@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_NEWS;
 
+@SuppressLint("ValidFragment")
 public class AdmNewsEditDialog extends DialogFragment {
     View mView;
 

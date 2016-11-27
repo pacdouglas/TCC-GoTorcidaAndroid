@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_AV
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_SAVE_ATHLETE_ON_TEAM;
 
+@SuppressLint("ValidFragment")
 public class AdmRosterInsertDialog extends DialogFragment {
     View mView;
 

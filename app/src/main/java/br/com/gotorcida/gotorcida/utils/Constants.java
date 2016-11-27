@@ -27,6 +27,7 @@ public class Constants {
     public static final String URL_SERVER_DASHBOARD_SAVECONFIG = URL_SERVER + "dashboardConfig";
     public static final String URL_SERVER_NEW_USER = URL_SERVER + "user";
     public static final String URL_SERVER_FIND_USER = URL_SERVER + "user/find";
+    public static final String URL_SERVER_UPDATE_USER = URL_SERVER + "user/update";
     public static final String URL_SERVER_LOGIN = URL_SERVER + "login";
     public static final String URL_IMAGES_BASE = "http://gotorcida.com.br/img/";
     public static final int SLEEP_THREAD = 1000;

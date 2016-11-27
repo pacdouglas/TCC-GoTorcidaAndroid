@@ -139,6 +139,7 @@
                     android:id="@+id/adm_add_athlete_button_selectphoto"
                     android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
+                    android:theme="@style/AppTheme.Button"
                     android:layout_height="wrap_content"
                     android:text="Adicionar Foto" />
             </LinearLayout>
@@ -146,6 +147,7 @@
             <Button
                 android:id="@+id/adm_add_athlete_button_send"
                 android:layout_marginTop="10dp"
+                android:theme="@style/AppTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Enviar"/>

@@ -34,6 +34,7 @@ import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.adm.HomeAdmActivity;
 import br.com.gotorcida.gotorcida.dialog.user.AboutDialog;
 import br.com.gotorcida.gotorcida.dialog.user.ConfirmExitDialog;
+import br.com.gotorcida.gotorcida.dialog.user.EditUserInfoDialog;
 import br.com.gotorcida.gotorcida.dialog.user.MyTeamHereDialog;
 import br.com.gotorcida.gotorcida.fragment.user.MatchesTableFragment;
 import br.com.gotorcida.gotorcida.fragment.user.UserTeamsFragment;
@@ -48,7 +49,6 @@ public class HomeUserActivity extends AppCompatActivity
     NavigationView navigationView;
     TextView mUserName;
     TextView mUserEmail;
-    ImageView mUserImgProfile;
     Spinner mSpinnerSelectPerfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,6 @@ public class HomeUserActivity extends AppCompatActivity
 
         mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_username);
         mUserEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_text_view_email);
-        mUserImgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_image_view_profile);
         mSpinnerSelectPerfil = (Spinner) navigationView.getHeaderView(0).findViewById(R.id.nav_header_spinner_select_perfil);
 
         UserConfigTask userConfigTask = new UserConfigTask();
@@ -105,12 +104,14 @@ public class HomeUserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_edit_prefs) {
             startActivity(new Intent(HomeUserActivity.this, SelectSportActivity.class));
             finish();
             return true;
+        } else if(id == R.id.action_settings_edit_user){
+            EditUserInfoDialog editUserInfoDialog = new EditUserInfoDialog();
+            editUserInfoDialog.show(getSupportFragmentManager(), "TAG");
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -188,7 +189,7 @@ public class HomeUserActivity extends AppCompatActivity
                     }
 
                     adapter = new ArrayAdapter<>(
-                            HomeUserActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+                            HomeUserActivity.this, R.layout.spinner_item, spinnerArray);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 }
             } catch (Exception e) {

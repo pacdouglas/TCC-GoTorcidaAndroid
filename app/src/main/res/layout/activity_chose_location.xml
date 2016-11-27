@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:theme="@style/AppTheme.Button"
             android:layout_below="@id/chose_location_edittext_address"
             android:text="Procurar novamente"/>
 
@@ -39,6 +40,7 @@
         <Button
             android:id="@+id/chose_location_button_location_ok"
             android:layout_below="@id/chose_location_frame_map"
+            android:theme="@style/AppTheme.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Confirmar endereço"/>

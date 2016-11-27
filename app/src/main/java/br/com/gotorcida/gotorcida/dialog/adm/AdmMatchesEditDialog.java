@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_EV
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_EVENT;
 
+@SuppressLint("ValidFragment")
 public class AdmMatchesEditDialog extends DialogFragment {
     View mView;
     private String mEventId;

@@ -178,7 +178,7 @@
             android:layout_height="32dp"
             android:layout_gravity="end"
             android:padding="5dp"
-            style="@style/MessengerButton.White.Large"
+            android:theme="@style/AppTheme.Button"
             android:text="@string/como_chegar"
             />
     </LinearLayout>

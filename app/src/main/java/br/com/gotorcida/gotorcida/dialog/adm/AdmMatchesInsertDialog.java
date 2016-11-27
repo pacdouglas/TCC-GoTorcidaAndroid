@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,7 @@ import static android.app.Activity.RESULT_OK;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_EVENT;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 
+@SuppressLint("ValidFragment")
 public class AdmMatchesInsertDialog extends DialogFragment {
     View mView;
     static final int PICK_LOCATION_REQUEST = 56;

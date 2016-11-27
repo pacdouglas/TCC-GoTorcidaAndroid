@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/edit_user_info_progressbar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <ScrollView
+            android:padding="10dp"
+            android:id="@+id/edit_user_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Altere suas informações"/>
+
+                <EditText
+                    android:id="@+id/edit_user_info_edittext_email"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"/>
+
+                <EditText
+                    android:id="@+id/edit_user_info_edittext_oldpassword"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Senha Atual"
+                    android:inputType="textPassword"/>
+
+                <EditText
+                    android:id="@+id/edit_user_info_edittext_newpassword"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nova Senha"
+                    android:inputType="textPassword"/>
+
+                <EditText
+                    android:id="@+id/edit_user_info_edittext_repeatnewpassword"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Repita Nova Senha"
+                    android:inputType="textPassword"/>
+
+                <EditText
+                    android:id="@+id/edit_user_info_edittext_celnumber"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Celular"
+                    android:inputType="number"/>
+            </LinearLayout>
+        </ScrollView>
+</RelativeLayout>

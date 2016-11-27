@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ import br.com.gotorcida.gotorcida.webservice.PostRequest;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_SET_EVENT_RESULT;
 
+@SuppressLint("ValidFragment")
 public class AdmMatchesResultDialog extends DialogFragment {
     View mView;
     private String mEventId;

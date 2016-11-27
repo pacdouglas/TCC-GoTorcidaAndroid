@@ -98,12 +98,12 @@ public class HomeAdmActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_edit_info_adm) {
+            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmEditInfoFragment(mTeamId)).commit();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -120,8 +120,6 @@ public class HomeAdmActivity extends AppCompatActivity
             ft.replace(R.id.home_adm_frame_fragment, new TeamAdmNewsFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_roster) {
             ft.replace(R.id.home_adm_frame_fragment, new TeamAdmRosterFragment(mTeamId)).commit();
-        } else if (id == R.id.nav_adm_contact) {
-            ft.replace(R.id.home_adm_frame_fragment, new TeamAdmEditInfoFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_add_athlete) {
             ft.replace(R.id.home_adm_frame_fragment, new TeamAdmAddAthleteFragment(mTeamId)).commit();
         } else if (id == R.id.nav_adm_add_team) {
@@ -166,7 +164,7 @@ public class HomeAdmActivity extends AppCompatActivity
                         }
                     }
                     adapter = new ArrayAdapter<>(
-                            HomeAdmActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerArray);
+                            HomeAdmActivity.this, R.layout.spinner_item, spinnerArray);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 }
             } catch (Exception e) {
