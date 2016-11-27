@@ -10,9 +10,71 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/adm_add_team_progressbar"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Tela de Criar Time Oponente"/>
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/adm_add_team_textview_success"
+        android:text="Equipe cadastrada com sucesso"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+    <ScrollView
+        android:id="@+id/adm_add_team_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/adm_add_team_edittext_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome da Equipe" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingRight="15dp">
+
+            <ImageView
+                android:id="@+id/adm_add_team_imageview_logo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_team_no_logo"/>
+            <Button
+                android:id="@+id/adm_add_team_button_selectphoto"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adicionar Logo" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/adm_add_team_button_send"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar"/>
+
+    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

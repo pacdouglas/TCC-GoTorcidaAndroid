@@ -226,7 +226,7 @@ public class AdmMatchesInsertDialog extends DialogFragment {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            ArrayAdapter<StringWithTag> adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_spinner_item, teamsList);
+            ArrayAdapter<StringWithTag> adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_spinner_dropdown_item, teamsList);
             mFirstTeam.setAdapter(adapter);
             mSecondTeam.setAdapter(adapter);
             mFirstTeam.setSelection(positionSelectedSpinner);

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content" android:layout_height="wrap_content">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ProgressBar
         android:id="@+id/dialog_adm_matches_insert_progressbar"
@@ -109,9 +111,8 @@
                 android:text="Time da Casa:"/>
             <Spinner
                 android:id="@+id/adm_matches_insert_spinner_firt_team"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dialog"
                 />
 
@@ -122,9 +123,8 @@
                 android:text="Time da Visitante:"/>
             <Spinner
                 android:id="@+id/adm_matches_insert_spinner_second_team"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:spinnerMode="dialog"
                 />
 

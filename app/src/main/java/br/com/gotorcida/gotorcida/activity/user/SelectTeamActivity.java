@@ -99,8 +99,10 @@ public class SelectTeamActivity extends AppCompatActivity {
                         if(!edit){
                             object = new JSONObject(array.getString(j));
                             object.put("isChecked", false);
-                            teamsList.add(object);
-                            arrayListChecked.add(false);
+                            if(object.getString("active").equals("S")){
+                                teamsList.add(object);
+                                arrayListChecked.add(false);
+                            }
                         }else{
                             String teamId = new JSONObject(array.getString(j)).getString("id");
                             boolean test = false;
@@ -113,13 +115,17 @@ public class SelectTeamActivity extends AppCompatActivity {
                             if(test){
                                 object = new JSONObject(array.getString(j));
                                 object.put("isChecked", true);
-                                teamsList.add(object);
-                                arrayListChecked.add(true);
+                                if(object.getString("active").equals("S")) {
+                                    teamsList.add(object);
+                                    arrayListChecked.add(true);
+                                }
                             }else{
                                 object = new JSONObject(array.getString(j));
                                 object.put("isChecked", false);
-                                teamsList.add(object);
-                                arrayListChecked.add(false);
+                                if(object.getString("active").equals("S")) {
+                                    teamsList.add(object);
+                                    arrayListChecked.add(false);
+                                }
                             }
                         }
                     }

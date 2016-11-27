@@ -72,7 +72,7 @@ public class TeamsListAdapter extends RecyclerView.Adapter {
             }
         });
         try {
-            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.teamImg);
+            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").error(R.drawable.ic_team_no_logo).into(holder.teamImg);
         } catch (JSONException e) {
             e.printStackTrace();
         }

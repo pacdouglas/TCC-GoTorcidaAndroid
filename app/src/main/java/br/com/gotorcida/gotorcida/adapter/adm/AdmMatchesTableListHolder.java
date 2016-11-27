@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.dialog.adm.AdmMatchesEditDialog;
 import br.com.gotorcida.gotorcida.dialog.adm.AdmMatchesResultDialog;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
 
@@ -74,7 +75,9 @@ public class AdmMatchesTableListHolder extends RecyclerView.ViewHolder implement
         builder.setNeutralButton("Editar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-
+                FragmentTransaction transaction = ((FragmentActivity)mView.getContext()).getSupportFragmentManager().beginTransaction();
+                AdmMatchesEditDialog admMatchesEditDialog = new AdmMatchesEditDialog(eventId.getText().toString());
+                admMatchesEditDialog.show(transaction,  "");
             }
         });
         builder.create();

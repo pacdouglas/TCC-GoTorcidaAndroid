@@ -63,7 +63,7 @@ public class SportsListAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").into(holder.iconSport);
+            Glide.with(context).load(URL_IMAGES_BASE + data.getString("urlImage")+".png").error(R.drawable.ic_team_no_logo).into(holder.iconSport);
 
             int auxCountTeams = data.getInt("activeTeams");
 

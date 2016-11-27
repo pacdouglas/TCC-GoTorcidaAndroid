@@ -138,6 +138,7 @@ public class AdmMatchesResultDialog extends DialogFragment {
                     urlFirstTeam = firstTeam.getString("urlImage");
                     secondTeamName = secondTeam.getString("name");
                     urlSecondTeam = secondTeam.getString("urlImage");
+                    //TODO: Verificar o winner e colocar se existir
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -152,7 +153,7 @@ public class AdmMatchesResultDialog extends DialogFragment {
             mResultSecondTeam.setHint(secondTeamName);
 
             Glide.with(getActivity()).load(URL_IMAGES_BASE + urlFirstTeam+".png")
-                    .into(mLogoFirstTeam);
+                    .error(R.drawable.ic_team_no_logo).into(mLogoFirstTeam);
             Glide.with(getActivity()).load(URL_IMAGES_BASE + urlSecondTeam+".png")
                     .into(mLogoSecondTeam);
 
