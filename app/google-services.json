@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "581094464408",
-    "project_id": "firebase-gotorcida"
+    "firebase_url": "https://fir-gotorcida.firebaseio.com",
+    "project_id": "firebase-gotorcida",
+    "storage_bucket": "firebase-gotorcida.appspot.com"
   },
   "client": [
     {
@@ -13,12 +15,24 @@
       },
       "oauth_client": [
         {
+          "client_id": "581094464408-q17k75b18l39otif5a88cu55egn21l3v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.gotorcida.gotorcida",
+            "certificate_hash": "307CBE2D54720D89FB569A315146862E1450177E"
+          }
+        },
+        {
           "client_id": "581094464408-k1groc90l0clgsbl0h71r10mj1518je6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.gotorcida.gotorcida",
             "certificate_hash": "FFAC987851CA60C4FDA67ECF3B941DBF8BE370B6"
           }
+        },
+        {
+          "client_id": "581094464408-kghb7787pjlu50js62v6atsveq2ioqg0.apps.googleusercontent.com",
+          "client_type": 3
         },
         {
           "client_id": "581094464408-1jc6kvbcvsg5uqf15hkd2j9844urqpjl.apps.googleusercontent.com",
@@ -35,11 +49,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "581094464408-kghb7787pjlu50js62v6atsveq2ioqg0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

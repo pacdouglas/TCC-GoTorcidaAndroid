@@ -1,9 +1,11 @@
 package br.com.gotorcida.gotorcida.activity.adm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,7 +29,8 @@ public class ChoseLocationActivity extends AppCompatActivity {
         mBtnConfirm = (Button) findViewById(R.id.chose_location_button_location_ok);
         mBtnLocationAgain =(Button) findViewById(R.id.chose_location_button_location_again);
 
-        String location = bundle.getString("location");
+        String location = "";
+        location = bundle.getString("location");
         mLocation.setText(location);
 
         final MapsAdmFragment mapsAdmFragment = new MapsAdmFragment(location);
@@ -51,6 +54,8 @@ public class ChoseLocationActivity extends AppCompatActivity {
         mBtnLocationAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 mapsAdmFragment.setNewAddress(mLocation.getText().toString());
             }
         });

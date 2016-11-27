@@ -21,6 +21,7 @@ public class MapsAdmFragment extends SupportMapFragment implements OnMapReadyCal
     private GoogleMap mMap;
     private String mAddress;
     private LatLng mLocation;
+    private MarkerOptions mMarkerOptions;
     public MapsAdmFragment(String address) {
         this.mAddress = address;
 
@@ -37,13 +38,25 @@ public class MapsAdmFragment extends SupportMapFragment implements OnMapReadyCal
         mMap = googleMap;
 
         mLocation = getLocationFromAddress(mAddress);
-        mMap.addMarker(new MarkerOptions().position(mLocation).title(mAddress));
+
+        mMarkerOptions = new MarkerOptions().position(mLocation).title(mAddress);
+        mMap.addMarker(mMarkerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mLocation));
 
         CameraUpdate cameraPosition = CameraUpdateFactory.newLatLngZoom(mLocation, 16);
         mMap.moveCamera(cameraPosition);
         mMap.animateCamera(cameraPosition);
         mMap.getUiSettings().setAllGesturesEnabled(true);
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                mMap.clear();
+                mLocation = latLng;
+                mMarkerOptions.position(latLng);
+                mMap.addMarker(mMarkerOptions);
+            }
+        });
     }
 
     public LatLng getLatitudeLongitudeString(){

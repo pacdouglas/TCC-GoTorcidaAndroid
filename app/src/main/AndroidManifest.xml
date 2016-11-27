@@ -12,6 +12,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <service
+        android:name=".services.NotificationEventService">
+        <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+        </intent-filter>
+    </service>
     <application
         android:name=".utils.GoTorcidaApp"
         android:allowBackup="true"
@@ -91,7 +97,8 @@
 
         <activity
             android:name=".fragment.user.MapsFragment"
-            android:label="@string/title_activity_maps" />
+            android:screenOrientation="portrait"
+            android:label="Confirme a Localização" />
         <activity android:name=".activity.adm.ChoseLocationActivity"></activity>
     </application>
 

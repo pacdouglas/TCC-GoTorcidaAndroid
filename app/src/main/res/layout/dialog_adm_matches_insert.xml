@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Insira os dados da Partida"
@@ -101,25 +102,29 @@
                 android:layout_height="match_parent"
                 android:text="Procurar Endereço"/>
 
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Time da Casa:"/>
             <Spinner
                 android:id="@+id/adm_matches_insert_spinner_firt_team"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dropDownSelector="@color/cardview_dark_background"
                 style="@android:style/Widget.Holo.Light.Spinner"
-                android:layout_marginLeft="-5dp"
-                android:layout_marginTop="5dp"
                 android:spinnerMode="dialog"
                 />
 
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Time da Visitante:"/>
             <Spinner
                 android:id="@+id/adm_matches_insert_spinner_second_team"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dropDownSelector="@color/cardview_dark_background"
                 style="@android:style/Widget.Holo.Light.Spinner"
-                android:layout_marginLeft="-5dp"
-                android:layout_marginTop="5dp"
                 android:spinnerMode="dialog"
                 />
 
