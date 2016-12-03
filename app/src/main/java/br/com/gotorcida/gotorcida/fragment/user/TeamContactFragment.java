@@ -2,6 +2,7 @@ package br.com.gotorcida.gotorcida.fragment.user;
 
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -55,20 +56,23 @@ public class TeamContactFragment extends Fragment {
         mTeamTwitter = (ImageView) mView.findViewById(R.id.team_contact_imageview_twitter);
         mTeamInstagram = (ImageView) mView.findViewById(R.id.team_contact_imageview_instagram);
 
+
         mTeamFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String facebookAppLink;
                 PackageManager packageManager = getContext().getPackageManager();
+
+                String url = "http://www.facebook.com/";
                 try {
                     int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
                     if (versionCode >= 3002850) {
-                        facebookAppLink =  "fb://facewebmodal/f?href=" + mFacebookLink;
+                        facebookAppLink =  "fb://facewebmodal/f?href=" + url + mFacebookLink;
                     } else {
-                        facebookAppLink =  "fb://page/" + mFacebookLink;
+                        facebookAppLink =  "fb://page/" + url + mFacebookLink;
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-                    facebookAppLink = mFacebookLink;
+                    facebookAppLink = url + mFacebookLink;
                 }
 
                 Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
@@ -80,30 +84,32 @@ public class TeamContactFragment extends Fragment {
         mTeamTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mTwitterLink));
-                startActivity(browserIntent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("twitter://user?screen_name=" + mTwitterLink));
+                    startActivity(intent);
+
+                }catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://twitter.com/#!/" + mTwitterLink)));
+                }
             }
         });
 
         mTeamInstagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String instagramAppLink;
+                Uri uri = Uri.parse("http://instagram.com/_u/" + mInstagramLink);
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
-                if (mInstagramLink.contains("https")) {
-                    instagramAppLink = mInstagramLink.replace("https://www.instagram.com/", "http://instagram.com/_u/");
-                } else {
-                    instagramAppLink = mInstagramLink.replace("http://www.instagram.com/", "http://instagram.com/_u/");
-                }
+                likeIng.setPackage("com.instagram.android");
 
-                Intent instagramIntent;
                 try {
-                    getContext().getPackageManager().getPackageInfo("com.instagram.android", 0);
-                    instagramIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagramAppLink));
-                } catch (Exception e) {
-                    instagramIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mInstagramLink));
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/" + mInstagramLink)));
                 }
-                startActivity(instagramIntent);
             }
         });
         LoadTeamData loadTeamData = new LoadTeamData();

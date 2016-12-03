@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.activity.user;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -67,15 +69,16 @@ public class AthleteInfoActivity extends AppCompatActivity {
                 String facebookAppLink;
                 PackageManager packageManager = getPackageManager();
 
+                String url = "http://www.facebook.com/";
                 try {
                     int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
                     if (versionCode >= 3002850) {
-                        facebookAppLink =  "fb://facewebmodal/f?href=" + facebookLink;
+                        facebookAppLink =  "fb://facewebmodal/f?href=" + url + facebookLink;
                     } else {
-                        facebookAppLink =  "fb://page/" + facebookLink;
+                        facebookAppLink =  "fb://page/" + url + facebookLink;
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-                    facebookAppLink = facebookLink;
+                    facebookAppLink = url + facebookLink;
                 }
 
                 Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
@@ -87,30 +90,32 @@ public class AthleteInfoActivity extends AppCompatActivity {
         athleteTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(twitterLink));
-                startActivity(browserIntent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("twitter://user?screen_name=" + twitterLink));
+                    startActivity(intent);
+
+                }catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://twitter.com/#!/" + twitterLink)));
+                }
             }
         });
 
         athleteInstagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String instagramAppLink;
+                Uri uri = Uri.parse("http://instagram.com/_u/" + instagramLink);
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
-                if (instagramLink.contains("https")) {
-                    instagramAppLink = instagramLink.replace("https://www.instagram.com/", "http://instagram.com/_u/");
-                } else {
-                    instagramAppLink = instagramLink.replace("http://www.instagram.com/", "http://instagram.com/_u/");
-                }
+                likeIng.setPackage("com.instagram.android");
 
-                Intent instagramIntent;
                 try {
-                    getPackageManager().getPackageInfo("com.instagram.android", 0);
-                    instagramIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagramAppLink));
-                } catch (Exception e) {
-                    instagramIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(instagramLink));
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/" + instagramLink)));
                 }
-                startActivity(instagramIntent);
             }
         });
 
@@ -191,6 +196,20 @@ public class AthleteInfoActivity extends AppCompatActivity {
                         athleteInstagram.setVisibility(View.VISIBLE);
                         instagramLink = athlete.getString("instagram");
                     }
+
+                    try {
+                        athleteWebsite.append(athlete.getString("website"));
+                        Linkify.addLinks(athleteWebsite, Linkify.WEB_URLS);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        athleteEmail.append(athlete.getString("emailAddress"));
+                        Linkify.addLinks(athleteEmail, Linkify.EMAIL_ADDRESSES);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

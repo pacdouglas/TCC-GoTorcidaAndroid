@@ -128,7 +128,7 @@ public class AdmMatchesInsertDialog extends DialogFragment  {
         AlertDialog d = (AlertDialog) getDialog();
 
         if (d != null) {
-            Button positiveButton  = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            final Button positiveButton  = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,6 +144,8 @@ public class AdmMatchesInsertDialog extends DialogFragment  {
                     }
 
                     if (CollectionUtils.ValidateFields(getContext(), mNameEvent, mDate, mHour, mCost)) {
+                        positiveButton.setEnabled(false);
+
                         if (mAddressFixed.getVisibility() == View.VISIBLE) {
                             JSONObject parameters = new JSONObject();
                             try {

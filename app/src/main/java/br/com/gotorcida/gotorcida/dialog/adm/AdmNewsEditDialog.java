@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
@@ -35,8 +37,8 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_UPDATE_
 public class AdmNewsEditDialog extends DialogFragment {
     View mView;
 
-    TextView newsTitle;
-    TextView newsDescription;
+    EditText newsTitle;
+    EditText newsDescription;
     EditText newsDate;
 
     ProgressBar progressBar;
@@ -60,8 +62,8 @@ public class AdmNewsEditDialog extends DialogFragment {
         progressBar = (ProgressBar) mView.findViewById(R.id.dialog_adm_news_progressbar);
         form = (LinearLayout) mView.findViewById(R.id.dialog_adm_news_form);
 
-        newsTitle = (TextView) mView.findViewById(R.id.dialog_adm_news_title);
-        newsDescription = (TextView) mView.findViewById(R.id.dialog_adm_news_news);
+        newsTitle = (EditText) mView.findViewById(R.id.dialog_adm_news_title);
+        newsDescription = (EditText) mView.findViewById(R.id.dialog_adm_news_news);
         newsDate = (EditText) mView.findViewById(R.id.dialog_adm_news_date);
         newsDate.addTextChangedListener(Mask.insert("##/##/####", newsDate));
 
@@ -80,32 +82,6 @@ public class AdmNewsEditDialog extends DialogFragment {
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                JSONObject postParameters = new JSONObject();
-                try {
-                    if (!newsID.equals("")){
-                        postParameters.put("id", newsID);
-                    }
-
-                    postParameters.put("title", newsTitle.getText().toString());
-                    postParameters.put("description", newsDescription.getText().toString());
-                    postParameters.put("date", newsDate.getText().toString());
-                    postParameters.put("user", SaveSharedPreference.getUserName(getContext()));
-                    postParameters.put("teamId", teamID);
-
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
-                }
-
-                SaveNewsTask saveNewsTask = new SaveNewsTask(updating, postParameters);
-                saveNewsTask.execute();
-
-                Fragment fragment = getTargetFragment();
-                Integer targetRequestCode = getTargetRequestCode();
-
-                Activity activity = getActivity();
-                Intent intent = activity.getIntent();
-
-                fragment.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent);
             }
         });
 
@@ -125,6 +101,53 @@ public class AdmNewsEditDialog extends DialogFragment {
         return builder.create();
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog d = (AlertDialog) getDialog();
+
+        if (d != null) {
+            final Button positiveButton  = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (CollectionUtils.ValidateFields(getContext(), newsDate, newsDescription, newsTitle)) {
+                        positiveButton.setEnabled(false);
+
+                        JSONObject postParameters = new JSONObject();
+                        try {
+                            if (!newsID.equals("")) {
+                                postParameters.put("id", newsID);
+                            }
+
+                            postParameters.put("title", newsTitle.getText().toString());
+                            postParameters.put("description", newsDescription.getText().toString());
+                            postParameters.put("date", newsDate.getText().toString());
+                            postParameters.put("user", SaveSharedPreference.getUserName(getContext()));
+                            postParameters.put("teamId", teamID);
+
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        SaveNewsTask saveNewsTask = new SaveNewsTask(updating, postParameters);
+                        saveNewsTask.execute();
+
+                        Fragment fragment = getTargetFragment();
+                        Integer targetRequestCode = getTargetRequestCode();
+
+                        Activity activity = getActivity();
+                        Intent intent = activity.getIntent();
+
+                        fragment.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent);
+                    }
+                }
+            });
+        }
+    }
 
     public class LoadNewsTask extends AsyncTask {
 
@@ -200,7 +223,7 @@ public class AdmNewsEditDialog extends DialogFragment {
 
         @Override
         public void onPostExecute(Object result) {
-
+            AdmNewsEditDialog.this.dismiss();
         }
     }
 

@@ -26,11 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/dialog_adm_news_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Título"
+                    android:hint="Título*"
                     android:inputType="text"
                     android:maxLines="1" />
 
@@ -44,18 +44,18 @@
                     android:id="@+id/dialog_adm_news_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Data"
+                    android:hint="Data*"
                     android:inputType="date"
                     android:maxLines="1"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/dialog_adm_news_news"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Notícia"
+                    android:hint="Notícia*"
                     android:inputType="textMultiLine"
                     android:maxLines="10"
                     android:singleLine="true" />
