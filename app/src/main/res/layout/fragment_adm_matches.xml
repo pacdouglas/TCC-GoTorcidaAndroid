@@ -14,10 +14,8 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
+        android:layout_gravity="center"
+        android:visibility="visible"
         />
 
     <android.support.v7.widget.RecyclerView

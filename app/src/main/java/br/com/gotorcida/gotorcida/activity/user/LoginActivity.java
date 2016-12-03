@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -420,6 +418,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 finish();
             }else{
                 Toast.makeText(LoginActivity.this, "Login ou Senha Incorreto", Toast.LENGTH_LONG).show();
+                formView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         }
     }

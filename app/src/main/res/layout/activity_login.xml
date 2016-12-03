@@ -96,17 +96,26 @@
             android:textSize="12dp"
             android:gravity="right"/>
 
-            <com.facebook.login.widget.LoginButton
-                android:layout_marginTop="5dp"
-                android:id="@+id/facebook_sign_in_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+
             <com.google.android.gms.common.SignInButton
-                android:layout_marginTop="5dp"
                 android:id="@+id/google_sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/google_sign_in_button"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
 
     </LinearLayout>
 </LinearLayout>

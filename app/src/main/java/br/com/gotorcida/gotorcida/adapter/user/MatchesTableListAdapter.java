@@ -45,11 +45,23 @@ public class MatchesTableListAdapter extends RecyclerView.Adapter {
         holder.setIsRecyclable(false);
         try {
             holder.firstTeamName.setText(data.getString("firstTeamName"));
-            holder.firstTeamScore.setText(data.getString("firstTeamScore"));
-            holder.secondTeamName.setText(data.getString("secondTeamName"));
-            holder.secondTeamScore.setText(data.getString("secondTeamScore"));
-            holder.eventDate.setText(data.getString("eventDate"));
 
+            String aux = data.getString("firstTeamScore");
+            if(aux.equals("-1")){
+                holder.firstTeamScore.setText("?");
+            }else{
+                holder.firstTeamScore.setText(aux);
+            }
+            aux = data.getString("secondTeamScore");
+            if(aux.equals("-1")){
+                holder.secondTeamScore.setText("?");
+            }else{
+                holder.secondTeamScore.setText(aux);
+            }
+
+            holder.secondTeamName.setText(data.getString("secondTeamName"));
+            holder.eventDate.setText(data.getString("eventDate") + " - " + data.getString("time"));
+            holder.eventCity.setText(data.getString("location"));
 
             Glide.with(context).load(URL_IMAGES_BASE + data.getString("firstTeamImageURL")+".png").into(holder.firstTeamLogo);
             Glide.with(context).load(URL_IMAGES_BASE + data.getString("secondTeamImageURL")+".png").into(holder.secondTeamLogo);

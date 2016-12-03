@@ -126,9 +126,17 @@ public class EventDetailsActivity extends AppCompatActivity {
                     firstTeamName = firstTeam.getString("name");
                     urlFirstTeam = firstTeam.getString("urlImage");
                     scoreFirstTeam = eventResult.getString("firstTeamScore");
+                    scoreFirstTeam = scoreFirstTeam.substring(0, scoreFirstTeam.indexOf("."));
+                    if(scoreFirstTeam.equals("-1")){
+                        scoreFirstTeam = "?";
+                    }
                     secondTeamName = secondTeam.getString("name");
                     urlSecondTeam = secondTeam.getString("urlImage");
                     scoreSecondTeam = eventResult.getString("secondTeamScore");
+                    scoreSecondTeam = scoreSecondTeam.substring(0, scoreSecondTeam.indexOf("."));
+                    if(scoreSecondTeam.equals("-1")){
+                        scoreSecondTeam = "?";
+                    }
                     latitude = event.getDouble("latitude");
                     longitude = event.getDouble("longitude");
                     mLatitude = event.getString("latitude");

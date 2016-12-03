@@ -1,6 +1,7 @@
 package br.com.gotorcida.gotorcida.fragment.user;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_NEWS;
 
+@SuppressLint("ValidFragment")
 public class TeamNewsFragment extends Fragment {
 
     View mView;

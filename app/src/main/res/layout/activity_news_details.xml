@@ -75,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data da notícia"
+            android:paddingLeft="10dp"
             android:textSize="10dp"
             android:textStyle="italic"
             android:layout_weight="1"
@@ -85,7 +86,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Autor da notícia"
+            android:gravity="right"
             android:textSize="10dp"
+            android:paddingRight="10dp"
             android:textStyle="italic"
             android:layout_weight="1"
             />

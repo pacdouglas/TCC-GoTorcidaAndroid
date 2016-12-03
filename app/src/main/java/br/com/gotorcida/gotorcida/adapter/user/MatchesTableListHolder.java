@@ -26,6 +26,7 @@ public class MatchesTableListHolder extends RecyclerView.ViewHolder implements V
 
     final TextView eventId;
     final TextView eventDate;
+    final TextView eventCity;
     ItemClickListener itemClickListener;
     public MatchesTableListHolder(View itemView) {
         super(itemView);
@@ -41,6 +42,7 @@ public class MatchesTableListHolder extends RecyclerView.ViewHolder implements V
 
         eventDate = (TextView) itemView.findViewById(R.id.item_matches_table_textview_eventDate);
         eventId = (TextView) itemView.findViewById(R.id.item_matches_table_textview_eventId);
+        eventCity = (TextView) itemView.findViewById(R.id.item_maches_table_textview_city);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener){
@@ -50,7 +52,6 @@ public class MatchesTableListHolder extends RecyclerView.ViewHolder implements V
     @Override
     public void onClick(View v) {
         this.itemClickListener.onItemClick(this.getLayoutPosition());
-        String testando = firstTeamName.getText().toString();
         Intent it = new Intent(itemView.getContext(), EventDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("eventId", eventId.getText().toString());

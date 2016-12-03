@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.fragment.user;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,6 +43,7 @@ public class MatchesTableFragment extends Fragment {
         mNextEvents = true;
     }
 
+    @SuppressLint("ValidFragment")
     public MatchesTableFragment(boolean team, String teamId){
         this.mFilterByUser = team;
         this.mTeamId = teamId;
@@ -108,8 +110,10 @@ public class MatchesTableFragment extends Fragment {
                     JSONObject firstTeam = eventsArray.getJSONObject(i).getJSONObject("firstTeam");
                     JSONObject secondTeam = eventsArray.getJSONObject(i).getJSONObject("secondTeam");
                     JSONObject eventResult = eventsArray.getJSONObject(i).getJSONObject("result");
-
+                    String locationAux = eventsArray.getJSONObject(i).getString("location");
+                    card.put("location", locationAux.substring(locationAux.indexOf(":")+1, locationAux.length()));
                     card.put("eventDate", eventsArray.getJSONObject(i).getString("formatedEventDate"));
+                    card.put("time", eventsArray.getJSONObject(i).getString("time"));
                     card.put("firstTeamName", firstTeam.getString("name"));
                     card.put("firstTeamScore", eventResult.getString("firstTeamScore"));
                     card.put("firstTeamImageURL", firstTeam.getString("urlImage"));

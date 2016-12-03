@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
@@ -24,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnSignup;
     private EditText edtFullname;
     private TextInputLayout edtPassword;
+    private TextInputLayout edtPasswordConfirm;
     private EditText email;
     private EditText edtDateOfBirth;
 
@@ -44,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         edtFullname = (EditText) findViewById(R.id.input_name);
         edtPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+        edtPasswordConfirm = (TextInputLayout) findViewById(R.id.input_layout_password_confirm);
         email = (EditText) findViewById(R.id.input_email);
 
         btnSignup = (Button) findViewById(R.id.btn_signup);
@@ -52,20 +55,27 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PostRequest service = new PostRequest(URL_SERVER_NEW_USER);
-                JSONObject userData = new JSONObject();
+                if(edtPassword.getEditText().getText().toString().equals(edtPasswordConfirm.getEditText().getText().toString())){
+                    PostRequest service = new PostRequest(URL_SERVER_NEW_USER);
+                    JSONObject userData = new JSONObject();
 
-                try {
-                    userData.put("emailAddress", email.getText().toString());
-                    userData.put("password", edtPassword.getEditText().getText().toString());
-                    userData.put("fullName", edtFullname.getText().toString());
-                    userData.put("dateOfBirth", edtDateOfBirth.getText().toString());
+                    if(CollectionUtils.ValidateFields(RegisterActivity.this, email, edtPassword.getEditText(), edtFullname, edtDateOfBirth)){
+                        try {
+                            userData.put("emailAddress", email.getText().toString());
+                            userData.put("password", edtPassword.getEditText().getText().toString());
+                            userData.put("fullName", edtFullname.getText().toString());
+                            userData.put("dateOfBirth", edtDateOfBirth.getText().toString());
 
-                    RegisterUserTask saveDashboardOptionsTask = new RegisterUserTask(userData);
-                    saveDashboardOptionsTask.execute();
-                } catch (JSONException ex) {
-                    ex.printStackTrace();
+                            RegisterUserTask saveDashboardOptionsTask = new RegisterUserTask(userData);
+                            saveDashboardOptionsTask.execute();
+                        } catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }else{
+                    Toast.makeText(RegisterActivity.this, "As senhas não são iguais", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

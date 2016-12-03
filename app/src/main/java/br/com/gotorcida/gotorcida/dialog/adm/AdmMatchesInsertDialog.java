@@ -152,7 +152,7 @@ public class AdmMatchesInsertDialog extends DialogFragment  {
                                 parameters.put("date", mDate.getText().toString());
                                 parameters.put("time", mHour.getText().toString());
                                 parameters.put("costs", mCost.getText().toString());
-                                parameters.put("location", mLocation.getText().toString() + " : " + mLocationCity.getText().toString());
+                                parameters.put("location", mLocation.getText().toString() + ":" + mLocationCity.getText().toString());
                                 parameters.put("description", mDescription.getText().toString());
                                 parameters.put("firstTeam", firstTeamId.getTag().toString());
                                 parameters.put("secondTeam", secondTeamId.getTag().toString());

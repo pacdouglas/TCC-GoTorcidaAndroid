@@ -1,6 +1,7 @@
 package br.com.gotorcida.gotorcida.fragment.adm;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -33,6 +34,7 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static android.app.Activity.RESULT_OK;
 
+@SuppressLint("ValidFragment")
 public class TeamAdmMatchesFragment extends Fragment{
 
     public static final int DIALOG_FRAGMENT = 666;
@@ -40,6 +42,7 @@ public class TeamAdmMatchesFragment extends Fragment{
     String mTeamId;
     RecyclerView mMatchesList;
     ProgressBar mProgressBar;
+    @SuppressLint("ValidFragment")
     public TeamAdmMatchesFragment(String teamId) {
         this.mTeamId = teamId;
     }
@@ -105,6 +108,7 @@ public class TeamAdmMatchesFragment extends Fragment{
                     JSONObject eventResult = eventsArray.getJSONObject(i).getJSONObject("result");
 
                     card.put("eventDate", eventsArray.getJSONObject(i).getString("formatedEventDate"));
+                    card.put("time", eventsArray.getJSONObject(i).getString("time"));
                     card.put("firstTeamName", firstTeam.getString("name"));
                     card.put("firstTeamScore", eventResult.getString("firstTeamScore"));
                     card.put("firstTeamImageURL", firstTeam.getString("urlImage"));

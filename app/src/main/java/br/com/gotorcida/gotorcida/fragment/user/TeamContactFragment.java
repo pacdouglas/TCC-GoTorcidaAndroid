@@ -1,6 +1,7 @@
 package br.com.gotorcida.gotorcida.fragment.user;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 
+@SuppressLint("ValidFragment")
 public class TeamContactFragment extends Fragment {
 
     View mView;

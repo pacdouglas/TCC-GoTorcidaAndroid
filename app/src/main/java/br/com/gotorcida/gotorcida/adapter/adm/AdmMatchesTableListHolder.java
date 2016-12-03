@@ -7,31 +7,20 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.dialog.adm.AdmMatchesEditDialog;
 import br.com.gotorcida.gotorcida.dialog.adm.AdmMatchesResultDialog;
-import br.com.gotorcida.gotorcida.fragment.adm.TeamAdmMatchesFragment;
 import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
-import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 public class AdmMatchesTableListHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
@@ -43,9 +32,10 @@ public class AdmMatchesTableListHolder extends RecyclerView.ViewHolder implement
     final TextView secondTeamName;
     final TextView secondTeamScore;
     final ImageView secondTeamLogo;
-
+    final TextView eventCity;
     final TextView eventId;
     final TextView eventDate;
+
     private final FragmentManager fragmentManager;
     ItemClickListener itemClickListener;
 
@@ -71,6 +61,7 @@ public class AdmMatchesTableListHolder extends RecyclerView.ViewHolder implement
 
         eventDate = (TextView) itemView.findViewById(R.id.item_matches_table_textview_eventDate);
         eventId = (TextView) itemView.findViewById(R.id.item_matches_table_textview_eventId);
+        eventCity = (TextView) itemView.findViewById(R.id.item_maches_table_textview_city);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener){
