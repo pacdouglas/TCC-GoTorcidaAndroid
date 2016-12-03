@@ -122,15 +122,9 @@ public class TeamAdmNewsFragment extends Fragment{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case DIALOG_FRAGMENT:
-
-                if (resultCode == Activity.RESULT_OK) {
-                    MakeListNewsTask makeListNewsTask = new MakeListNewsTask();
-                    makeListNewsTask.execute();
-                }
-
-                break;
+        if (resultCode == Activity.RESULT_OK) {
+            MakeListNewsTask makeListNewsTask = new MakeListNewsTask();
+            makeListNewsTask.execute();
         }
     }
 }

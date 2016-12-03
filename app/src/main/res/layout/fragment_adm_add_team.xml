@@ -44,7 +44,7 @@
                 android:id="@+id/adm_add_team_edittext_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nome da Equipe" />
+                android:hint="Nome da Equipe*" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout

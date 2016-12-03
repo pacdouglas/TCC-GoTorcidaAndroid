@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 import static android.app.Activity.RESULT_OK;
@@ -65,17 +66,15 @@ public class TeamAdmAddTeamFragment extends Fragment{
         mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mTeamName.getText().toString().isEmpty()){
-
-                }else{
-                    try {
-                        mParameters.put("name", mTeamName.getText().toString());
-                        SendTeamTask sendTeamTask = new SendTeamTask();
-                        sendTeamTask.execute();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            if (CollectionUtils.ValidateFields(getContext(), mTeamName)) {
+                try {
+                    mParameters.put("name", mTeamName.getText().toString());
+                    SendTeamTask sendTeamTask = new SendTeamTask();
+                    sendTeamTask.execute();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
             }
         });
 

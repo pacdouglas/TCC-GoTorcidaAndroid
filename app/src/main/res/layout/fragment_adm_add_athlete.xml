@@ -49,7 +49,7 @@
                     android:id="@+id/adm_add_athlete_edittext_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome " />
+                    android:hint="Nome*" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -59,7 +59,7 @@
                     android:id="@+id/adm_add_athlete_edittext_date_of_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Data de Nascimento" />
+                    android:hint="Data de Nascimento*" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -69,7 +69,7 @@
                     android:id="@+id/adm_add_athlete_edittext_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Cidade" />
+                    android:hint="Cidade*" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -79,7 +79,7 @@
                     android:id="@+id/adm_add_athlete_edittext_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="E-mail" />
+                    android:hint="E-mail*" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

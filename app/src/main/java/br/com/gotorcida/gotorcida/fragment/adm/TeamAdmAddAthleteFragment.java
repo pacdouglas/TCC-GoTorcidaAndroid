@@ -28,7 +28,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.Collection;
+
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
@@ -97,10 +100,7 @@ public class TeamAdmAddAthleteFragment extends Fragment{
         mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mName.getText().toString().isEmpty() || mDateOfBirth.getText().toString().isEmpty()) {
-                    Toast.makeText(getActivity(), "Campos Nome e Data de Nascimento Obrigatório", Toast.LENGTH_LONG).show();
-                }else {
-
+                if (CollectionUtils.ValidateFields(getContext(), mName, mDateOfBirth, mEmail, mCity)) {
                     JSONObject jsonObject = new JSONObject();
                     JSONObject athleteData = new JSONObject();
                     try {

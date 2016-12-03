@@ -13,6 +13,7 @@ public class Constants {
     public static final String URL_SERVER_JSON_LIST_NEWS = URL_SERVER + "news/find";
     public static final String URL_SERVER_JSON_UPDATE_NEWS = URL_SERVER + "news/update";
     public static final String URL_SERVER_JSON_INSERT_NEWS = URL_SERVER + "news/save";
+    public static final String URL_SERVER_JSON_DELETE_NEWS = URL_SERVER + "news/delete";
     public static final String URL_SERVER_JSON_FIND_ATHLETE = URL_SERVER + "athlete/findAthleteOnTeam";
     public static final String URL_SERVER_JSON_LIST_SPORTS = URL_SERVER + "sport";
     public static final String URL_SERVER_JSON_FIND_TEAM = URL_SERVER + "team";
@@ -25,6 +26,7 @@ public class Constants {
     public static final String URL_SERVER_JSON_UPDATE_ATHLETE = URL_SERVER + "athlete/update";
     public static final String URL_SERVER_JSON_LIST_POSITIONS_BY_SPORT = URL_SERVER + "position/listBySport";
     public static final String URL_SERVER_JSON_SAVE_ATHLETE_ON_TEAM = URL_SERVER + "team/saveAthleteOnTeam";
+    public static final String URL_SERVER_JSON_REMOVE_ATHLETE_OF_TEAM = URL_SERVER + "team/removeAthleteOfTeam";
     public static final String URL_SERVER_DASHBOARD_SAVECONFIG = URL_SERVER + "dashboardConfig";
     public static final String URL_SERVER_NEW_USER = URL_SERVER + "user";
     public static final String URL_SERVER_FIND_USER = URL_SERVER + "user/find";

@@ -137,15 +137,9 @@ public class TeamAdmRosterFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case DIALOG_FRAGMENT:
-
-                if (resultCode == Activity.RESULT_OK) {
-                    CreateRosterListTask createRosterListTask = new CreateRosterListTask();
-                    createRosterListTask.execute();
-                }
-
-                break;
+        if (resultCode == Activity.RESULT_OK) {
+            CreateRosterListTask createRosterListTask = new CreateRosterListTask();
+            createRosterListTask.execute();
         }
     }
 }

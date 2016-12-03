@@ -1,10 +1,12 @@
 package br.com.gotorcida.gotorcida.adapter.adm;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,7 +21,10 @@ import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.user.NewsDetailsActivity;
 import br.com.gotorcida.gotorcida.dialog.adm.AdmNewsEditDialog;
 import br.com.gotorcida.gotorcida.utils.ItemClickListener;
+import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_DELETE_NEWS;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_REMOVE_ATHLETE_OF_TEAM;
 import static java.security.AccessController.getContext;
 
 public class AdmTeamNewsListHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
@@ -79,7 +84,8 @@ public class AdmTeamNewsListHolder extends RecyclerView.ViewHolder implements Vi
         builder.setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Todo: excluir o bagulho
+                RemoveNewsTask removeNewsTask = new RemoveNewsTask(newsId.getText().toString());
+                removeNewsTask.execute();
             }
         });
         builder.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -91,5 +97,35 @@ public class AdmTeamNewsListHolder extends RecyclerView.ViewHolder implements Vi
         builder.create();
         builder.show();
         return false;
+    }
+
+
+    public class RemoveNewsTask extends AsyncTask {
+
+        private final String newsId;
+
+        public RemoveNewsTask(String newsId) {
+            this.newsId = newsId;
+        }
+
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            PostRequest postRequest;
+            postRequest = new PostRequest(URL_SERVER_JSON_DELETE_NEWS+"/"+this.newsId);
+            postRequest.execute("delete");
+            return null;
+        }
+
+        @Override
+        public void onPostExecute(Object result) {
+            Integer targetRequestCode = fragment.getTargetRequestCode();
+            Activity activity = fragment.getActivity();
+            Intent intent = activity.getIntent();
+            fragment.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent);
+        }
     }
 }
