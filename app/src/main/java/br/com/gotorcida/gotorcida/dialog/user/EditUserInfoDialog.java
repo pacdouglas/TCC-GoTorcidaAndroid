@@ -25,7 +25,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_UPDATE_USER;
 public class EditUserInfoDialog extends DialogFragment {
     View mView;
 
-    EditText mEmail, mOldPassword, mNewPassword, mRepeatNewPassword, mCelNumber;
+    EditText mNickname, mOldPassword, mNewPassword, mRepeatNewPassword, mCelNumber;
 
     JSONObject mParameters = null;
 
@@ -36,7 +36,7 @@ public class EditUserInfoDialog extends DialogFragment {
         mView = inflater.inflate(R.layout.dialog_edit_user_info, null);
         builder.setView(mView);
 
-        mEmail = (EditText) mView.findViewById(R.id.edit_user_info_edittext_email);
+        mNickname = (EditText) mView.findViewById(R.id.edit_user_info_edittext_nickname);
         mOldPassword = (EditText) mView.findViewById(R.id.edit_user_info_edittext_oldpassword);
         mNewPassword = (EditText) mView.findViewById(R.id.edit_user_info_edittext_newpassword);
         mRepeatNewPassword = (EditText) mView.findViewById(R.id.edit_user_info_edittext_repeatnewpassword);
@@ -50,7 +50,7 @@ public class EditUserInfoDialog extends DialogFragment {
                 }else{
                     mParameters = new JSONObject();
                     try {
-                        mParameters.put("email", mEmail.getText().toString());
+                        mParameters.put("nickname", mNickname.getText().toString());
                         mParameters.put("oldPassword", mOldPassword.getText().toString());
                         mParameters.put("newPassword", mNewPassword.getText().toString());
                         mParameters.put("celNumber", mCelNumber.getText().toString());

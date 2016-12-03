@@ -1,6 +1,8 @@
 package br.com.gotorcida.gotorcida.adapter.adm;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,21 +22,25 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 
 public class AdmMatchesTableListAdapter extends RecyclerView.Adapter {
 
+    private final Fragment fragment;
+    private final FragmentManager fragmentManager;
     List<JSONObject> events;
     Context context;
     JSONObject data;
     AdmMatchesTableListHolder holder;
 
-    public AdmMatchesTableListAdapter(List<JSONObject> events, Context context){
+    public AdmMatchesTableListAdapter(List<JSONObject> events, Context context, FragmentManager fragmentManager, Fragment fragment){
         this.events = events;
         this.context = context;
+        this.fragment = fragment;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_matches_table, parent, false);
 
-        holder = new AdmMatchesTableListHolder(view);
+        holder = new AdmMatchesTableListHolder(fragment, fragmentManager, view);
         return holder;
     }
 

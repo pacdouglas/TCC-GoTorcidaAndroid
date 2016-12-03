@@ -23,7 +23,7 @@ public class CollectionUtils {
     }
 
     public static boolean ValidateFields(Context context, EditText... params){
-        for(int i = 0; i < params.length-1; i++){
+        for(int i = 0; i < params.length; i++){
             EditText editText = params[i];
             if(editText.getText().toString().isEmpty()){
                 Toast.makeText(context, "Os campos com * são obrigatórios", Toast.LENGTH_SHORT).show();

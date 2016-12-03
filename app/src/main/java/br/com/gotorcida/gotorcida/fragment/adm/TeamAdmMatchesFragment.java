@@ -1,8 +1,14 @@
 package br.com.gotorcida.gotorcida.fragment.adm;
 
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +31,10 @@ import br.com.gotorcida.gotorcida.dialog.adm.AdmMatchesInsertDialog;
 import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 
+import static android.app.Activity.RESULT_OK;
+
 public class TeamAdmMatchesFragment extends Fragment{
+
     public static final int DIALOG_FRAGMENT = 666;
     View mView;
     String mTeamId;
@@ -114,7 +123,7 @@ public class TeamAdmMatchesFragment extends Fragment{
 
         @Override
         public void onPostExecute(Object result) {
-            AdmMatchesTableListAdapter adapter = new AdmMatchesTableListAdapter(eventsList, getActivity().getBaseContext());
+            AdmMatchesTableListAdapter adapter = new AdmMatchesTableListAdapter(eventsList, getActivity().getBaseContext(), getFragmentManager(), TeamAdmMatchesFragment.this);
             RecyclerView.LayoutManager layout = new LinearLayoutManager(getActivity().getBaseContext());
             mMatchesList.setLayoutManager(layout);
             mMatchesList.setAdapter(adapter);
@@ -123,5 +132,14 @@ public class TeamAdmMatchesFragment extends Fragment{
             mMatchesList.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            MatchesListTask matchesListTask = new MatchesListTask();
+            matchesListTask.execute();
+        }
+    }
+
 
 }

@@ -1,16 +1,20 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +27,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Constants;
+import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
+import br.com.gotorcida.gotorcida.utils.StringWithTag;
 import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
@@ -63,34 +70,59 @@ public class AdmMatchesResultDialog extends DialogFragment {
 
         builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if(mResultFirstTeam.getText().toString().isEmpty() || mResultSecondTeam.getText().toString().isEmpty()){
-                    Toast.makeText(getActivity(), "Erro: Campos não foram preenchidos", Toast.LENGTH_SHORT).show();
-                }else{
-                    parameters = new JSONObject();
-                    try {
-                        parameters.put("resultFirstTeam", mResultFirstTeam.getText().toString());
-                        parameters.put("resultSecondTeam", mResultSecondTeam.getText().toString());
-                        SaveEventResultTask saveEventResultTask = new SaveEventResultTask();
-                        saveEventResultTask.execute();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+
             }
         });
+
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
+
         LoadEventTask loadEventTask = new LoadEventTask();
         loadEventTask.execute();
 
         return builder.create();
     }
 
-    public class SaveEventResultTask extends AsyncTask{
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog d = (AlertDialog) getDialog();
+
+        if (d != null) {
+            Button positiveButton  = d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (CollectionUtils.ValidateFields(getContext(), mResultFirstTeam, mResultSecondTeam)) {
+                        parameters = new JSONObject();
+                        try {
+                            parameters.put("resultFirstTeam", mResultFirstTeam.getText().toString());
+                            parameters.put("resultSecondTeam", mResultSecondTeam.getText().toString());
+                            SaveEventResultTask saveEventResultTask = new SaveEventResultTask();
+                            saveEventResultTask.execute();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Fragment fragment = getTargetFragment();
+                        Integer targetRequestCode = getTargetRequestCode();
+
+                        Activity activity = getActivity();
+                        Intent intent = activity.getIntent();
+
+                        fragment.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent);
+                    }
+                }
+            });
+        }
+    }
+
+
+    public class SaveEventResultTask extends AsyncTask {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -101,9 +133,15 @@ public class AdmMatchesResultDialog extends DialogFragment {
         @Override
         protected Object doInBackground(Object[] params) {
             PostRequest postRequest;
-            postRequest = new PostRequest(URL_SERVER_JSON_SET_EVENT_RESULT);
+            postRequest = new PostRequest(URL_SERVER_JSON_SET_EVENT_RESULT + "/" + mEventId);
             postRequest.execute(parameters.toString());
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            AdmMatchesResultDialog.this.dismiss();
         }
     }
 
@@ -140,7 +178,6 @@ public class AdmMatchesResultDialog extends DialogFragment {
                     urlFirstTeam = firstTeam.getString("urlImage");
                     secondTeamName = secondTeam.getString("name");
                     urlSecondTeam = secondTeam.getString("urlImage");
-                    //TODO: Verificar o winner e colocar se existir
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

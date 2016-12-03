@@ -32,11 +32,11 @@
                     android:text="Altere suas informações"/>
 
                 <EditText
-                    android:id="@+id/edit_user_info_edittext_email"
+                    android:id="@+id/edit_user_info_edittext_nickname"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"/>
+                    android:hint="Apelido"/>
 
                 <EditText
                     android:id="@+id/edit_user_info_edittext_oldpassword"

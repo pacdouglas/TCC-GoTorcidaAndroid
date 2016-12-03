@@ -39,7 +39,7 @@
                     android:id="@+id/adm_matches_insert_edittext_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nome do Evento"
+                    android:hint="Nome do Evento*"
                     android:inputType="text"
                     android:maxLines="1"/>
             </android.support.design.widget.TextInputLayout>
@@ -51,7 +51,7 @@
                 android:id="@+id/adm_matches_insert_edittext_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Data: DD/MM/AAAA"
+                android:hint="Data* DD/MM/AAAA"
                 android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -59,13 +59,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/adm_matches_insert_edittext_hour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Horário: 00:00"
-                android:inputType="number"/>
+                <EditText
+                    android:id="@+id/adm_matches_insert_edittext_hour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Horário* 00:00"
+                    android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/adm_matches_insert_edittext_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Custo da entrada*"
+                    android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+
             <TextView
                 android:layout_marginTop="15dp"
                 android:id="@+id/adm_matches_insert_textview_location_address_fixed"
@@ -84,7 +97,7 @@
                     android:id="@+id/adm_matches_insert_edittext_location_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Endereço" />
+                    android:hint="Endereço*" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -95,15 +108,15 @@
                     android:id="@+id/adm_matches_insert_edittext_location_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Cidade" />
+                    android:hint="Cidade*" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/adm_matches_insert_button_location"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppTheme.Button"
-                android:text="Procurar Endereço"/>
+                android:text="Confirmar Endereço"/>
 
             <TextView
                 android:layout_marginTop="10dp"

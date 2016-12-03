@@ -1,13 +1,16 @@
 package br.com.gotorcida.gotorcida.dialog.adm;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 
 import br.com.gotorcida.gotorcida.R;
 import br.com.gotorcida.gotorcida.activity.adm.ChoseLocationActivity;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Mask;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
 import br.com.gotorcida.gotorcida.utils.StringWithTag;
@@ -37,7 +41,7 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_INSERT_
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 
 @SuppressLint("ValidFragment")
-public class AdmMatchesInsertDialog extends DialogFragment {
+public class AdmMatchesInsertDialog extends DialogFragment  {
     View mView;
     static final int PICK_LOCATION_REQUEST = 56;
     private String mTeamId;
@@ -46,6 +50,7 @@ public class AdmMatchesInsertDialog extends DialogFragment {
     private EditText mNameEvent;
     private EditText mDate;
     private EditText mHour;
+    private EditText mCost;
     private EditText mDescription;
     private Spinner mFirstTeam;
     private Spinner mSecondTeam;
@@ -76,6 +81,7 @@ public class AdmMatchesInsertDialog extends DialogFragment {
         mDate = (EditText) mView.findViewById(R.id.adm_matches_insert_edittext_date);
         mDate.addTextChangedListener(Mask.insert("##/##/####", mDate));
         mHour = (EditText) mView.findViewById(R.id.adm_matches_insert_edittext_hour);
+        mCost = (EditText) mView.findViewById(R.id.adm_matches_insert_edittext_cost);
         mHour.addTextChangedListener(Mask.insert("##:##", mHour));
         mDescription = (EditText) mView.findViewById(R.id.adm_matches_insert_edittext_description);
         mFirstTeam = (Spinner) mView.findViewById(R.id.adm_matches_insert_spinner_firt_team);
@@ -86,7 +92,12 @@ public class AdmMatchesInsertDialog extends DialogFragment {
         mBtnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String location = mLocation.getText().toString()+" - "+mLocationCity.getText().toString();
+                if (mLocation.getText().toString().isEmpty() || mLocationCity.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Preencha o endereço e a cidade!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String location = mLocation.getText().toString() + " - " + mLocationCity.getText().toString();
 
                 Intent it = new Intent(getContext(), ChoseLocationActivity.class);
                 it.putExtra("location", location);
@@ -94,55 +105,79 @@ public class AdmMatchesInsertDialog extends DialogFragment {
             }
         });
 
-        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                boolean test = true;
-                StringWithTag firstTeamId = (StringWithTag) mFirstTeam.getSelectedItem();
-                StringWithTag secondTeamId = (StringWithTag) mSecondTeam.getSelectedItem();
-
-                if(!firstTeamId.getTag().toString().equals(mTeamId) && !secondTeamId.getTag().toString().equals(mTeamId)){
-                    Toast.makeText(mView.getContext(), "Você só pode criar partidas da sua equipe", Toast.LENGTH_LONG).show();
-                    test = false;
-                }else
-                if(firstTeamId.getTag().toString().equals(secondTeamId.getTag().toString())){
-                    Toast.makeText(mView.getContext(), "Escolha a outra equipe", Toast.LENGTH_LONG).show();
-                    test = false;
-                }
-
-                if(test) {
-                    JSONObject parameters = null;
-                    try {
-                        parameters.put("userId", SaveSharedPreference.getUserName(getActivity()));
-                        parameters.put("teamId", mTeamId);
-                        parameters.put("name", mNameEvent.getText().toString());
-                        parameters.put("date", mDate.getText().toString());
-                        parameters.put("hour", mHour.getText().toString());
-                        parameters.put("location", mLocation.getText().toString());
-                        parameters.put("city", mLocationCity.getText().toString());
-                        parameters.put("description", mDescription.getText().toString());
-                        parameters.put("firstTeam", firstTeamId.getTag().toString());
-                        parameters.put("secondTeam", secondTeamId.getTag().toString());
-                        parameters.put("latitude", mLatitude);
-                        parameters.put("longitude", mLongitude);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    SaveMatcheTask saveMatcheTask = new SaveMatcheTask(parameters);
-                    saveMatcheTask.execute();
-                }
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+               builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
             }
         });
 
+        builder.setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {}
+        });
+
         LoadSpinnersTeams loadSpinnersTeams = new LoadSpinnersTeams();
         loadSpinnersTeams.execute();
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog d = (AlertDialog) getDialog();
+
+        if (d != null) {
+            Button positiveButton  = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StringWithTag firstTeamId = (StringWithTag) mFirstTeam.getSelectedItem();
+                    StringWithTag secondTeamId = (StringWithTag) mSecondTeam.getSelectedItem();
+
+                    if (!firstTeamId.getTag().toString().equals(mTeamId) && !secondTeamId.getTag().toString().equals(mTeamId)) {
+                        Toast.makeText(mView.getContext(), "Você só pode criar partidas em que sua equipe participe.", Toast.LENGTH_LONG).show();
+                        return;
+                    } else if (firstTeamId.getTag().toString().equals(secondTeamId.getTag().toString())) {
+                        Toast.makeText(mView.getContext(), "Escolha equipes diferentes.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    if (CollectionUtils.ValidateFields(getContext(), mNameEvent, mDate, mHour, mCost)) {
+                        if (mAddressFixed.getVisibility() == View.VISIBLE) {
+                            JSONObject parameters = new JSONObject();
+                            try {
+                                parameters.put("eventOwner", SaveSharedPreference.getUserName(getContext()));
+                                parameters.put("name", mNameEvent.getText().toString());
+                                parameters.put("date", mDate.getText().toString());
+                                parameters.put("time", mHour.getText().toString());
+                                parameters.put("costs", mCost.getText().toString());
+                                parameters.put("location", mLocation.getText().toString() + " : " + mLocationCity.getText().toString());
+                                parameters.put("description", mDescription.getText().toString());
+                                parameters.put("firstTeam", firstTeamId.getTag().toString());
+                                parameters.put("secondTeam", secondTeamId.getTag().toString());
+                                parameters.put("latitude", mLatitude);
+                                parameters.put("longitude", mLongitude);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            SaveMatcheTask saveMatcheTask = new SaveMatcheTask(parameters);
+                            saveMatcheTask.execute();
+                        } else {
+                            Toast.makeText(getContext(), "É necessário confirmar o endereço do evento.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Fragment fragment = getTargetFragment();
+                        Integer targetRequestCode = getTargetRequestCode();
+
+                        Activity activity = getActivity();
+                        Intent intent = activity.getIntent();
+
+                        fragment.onActivityResult(targetRequestCode, Activity.RESULT_OK, intent);
+                    }
+                }
+            });
+        }
     }
 
     public class SaveMatcheTask extends AsyncTask {
@@ -169,6 +204,7 @@ public class AdmMatchesInsertDialog extends DialogFragment {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
+            AdmMatchesInsertDialog.this.dismiss();
         }
     }
 
