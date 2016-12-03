@@ -51,11 +51,13 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     public class NewsDetailsTask extends AsyncTask {
         JSONObject news;
+        boolean success;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             relativeLayout.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+            success = true;
         }
 
         @Override
@@ -66,7 +68,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
             JSONArray newsArray = null;
             try {
                 if(getRequest.getMessage().getSystem().getInt("code") == 500){
-                    Toast.makeText(NewsDetailsActivity.this, getRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                    success = false;
                 }else{
                     newsArray = json.getJSONArray("newsList");
                 }
@@ -79,6 +81,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                success = false;
             }
             return null;
         }
@@ -86,16 +89,20 @@ public class NewsDetailsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            try {
-                newsTitle.setText(news.getString("title"));
-                newsBody.setText(news.getString("description"));
-                newsDate.setText(news.getString("formatedRegistrationDate"));
-                newsAuthor.setText(news.getString("fullName"));
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if(success){
+                try {
+                    newsTitle.setText(news.getString("title"));
+                    newsBody.setText(news.getString("description"));
+                    newsDate.setText(news.getString("formatedRegistrationDate"));
+                    newsAuthor.setText(news.getString("fullName"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressBar.setVisibility(View.GONE);
+                relativeLayout.setVisibility(View.VISIBLE);
+            }else{
+                Toast.makeText(NewsDetailsActivity.this, "Erro ao carregar os detalhes da notícias", Toast.LENGTH_LONG).show();
             }
-            progressBar.setVisibility(View.GONE);
-            relativeLayout.setVisibility(View.VISIBLE);
         }
     }
 }

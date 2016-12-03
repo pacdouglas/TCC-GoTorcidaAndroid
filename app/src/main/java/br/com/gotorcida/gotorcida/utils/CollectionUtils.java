@@ -1,10 +1,10 @@
 package br.com.gotorcida.gotorcida.utils;
 
-import java.util.List;
+import android.content.Context;
+import android.widget.EditText;
+import android.widget.Toast;
 
-/**
- * Created by Ricardo Zanardo on 19/11/2016.
- */
+import java.util.List;
 
 public class CollectionUtils {
 
@@ -20,5 +20,16 @@ public class CollectionUtils {
         }
 
         return searchItem;
+    }
+
+    public static boolean ValidateFields(Context context, EditText... params){
+        for(int i = 0; i < params.length-1; i++){
+            EditText editText = params[i];
+            if(editText.getText().toString().isEmpty()){
+                Toast.makeText(context, "Os campos com * são obrigatórios", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
     }
 }

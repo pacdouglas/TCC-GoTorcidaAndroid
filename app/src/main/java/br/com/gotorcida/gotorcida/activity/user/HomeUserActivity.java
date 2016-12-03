@@ -153,15 +153,13 @@ public class HomeUserActivity extends AppCompatActivity
         boolean userTeamAdm;
         private GetRequest mGetRequest;
         ArrayAdapter<StringWithTag> adapter;
-        UserConfigTask() {
-
-        }
-
+        boolean success;
         @Override
         protected void onPreExecute() {
             userName = "userName";
             userEmail = "email";
             userTeamAdm = false;
+            success = true;
         }
 
         @Override
@@ -169,69 +167,77 @@ public class HomeUserActivity extends AppCompatActivity
             try {
                 mGetRequest = new GetRequest(Constants.URL_SERVER_NEW_USER + "/" +SaveSharedPreference.getUserName(HomeUserActivity.this));
                 mGetRequest.execute();
-                JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
-                userName = userData.getString("fullName");
-                userEmail = userData.getString("emailAddress");
 
-                if(userData.getString("userType").equals("Team")){
-                    userTeamAdm = true;
+                if (mGetRequest.getMessage().getSystem().get("code").equals(200)) {
+                    JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
+                    userName = userData.getString("fullName");
+                    userEmail = userData.getString("emailAddress");
 
-                    JSONArray teamsManaged = userData.getJSONArray("managedTeams");
+                    if(userData.getString("userType").equals("Team")){
+                        userTeamAdm = true;
 
-                    List<StringWithTag> spinnerArray =  new ArrayList<>();
-                    spinnerArray.add(new StringWithTag(userName,
-                            Integer.getInteger(SaveSharedPreference.getUserName(HomeUserActivity.this))));
+                        JSONArray teamsManaged = userData.getJSONArray("managedTeams");
 
-                    JSONObject jsonAux = null;
-                    for(int i = 0; i < teamsManaged.length(); i++){
-                        jsonAux = teamsManaged.getJSONObject(i);
-                        spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
+                        List<StringWithTag> spinnerArray =  new ArrayList<>();
+                        spinnerArray.add(new StringWithTag(userName,
+                                Integer.getInteger(SaveSharedPreference.getUserName(HomeUserActivity.this))));
+
+                        JSONObject jsonAux = null;
+                        for(int i = 0; i < teamsManaged.length(); i++){
+                            jsonAux = teamsManaged.getJSONObject(i);
+                            spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
+                        }
+
+                        adapter = new ArrayAdapter<>(
+                                HomeUserActivity.this, R.layout.spinner_item, spinnerArray);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     }
-
-                    adapter = new ArrayAdapter<>(
-                            HomeUserActivity.this, R.layout.spinner_item, spinnerArray);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                }else{
+                    success = false;
                 }
+
             } catch (Exception e) {
-                Toast.makeText(HomeUserActivity.this, "Erro em carregar os dados do usuário", Toast.LENGTH_SHORT).show();
+                success = false;
             }
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mUserName.setText(userName);
-            mUserEmail.setText(userEmail);
-            if(userTeamAdm){
-                mSpinnerSelectPerfil.setAdapter(adapter);
-                mSpinnerSelectPerfil.setVisibility(View.VISIBLE);
-                mUserName.setVisibility(View.GONE);
+            if(success){
+                mUserName.setText(userName);
+                mUserEmail.setText(userEmail);
+                if(userTeamAdm){
+                    mSpinnerSelectPerfil.setAdapter(adapter);
+                    mSpinnerSelectPerfil.setVisibility(View.VISIBLE);
+                    mUserName.setVisibility(View.GONE);
 
-                mSpinnerSelectPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if(position != 0){
-                            StringWithTag selected = (StringWithTag) mSpinnerSelectPerfil.getItemAtPosition(position);
+                    mSpinnerSelectPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if(position != 0){
+                                StringWithTag selected = (StringWithTag) mSpinnerSelectPerfil.getItemAtPosition(position);
 
-                            Intent it = new Intent(HomeUserActivity.this, HomeAdmActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("teamName", selected.toString());
-                            bundle.putString("teamId", selected.getTag().toString());
-                            bundle.putString("userName", userName);
-                            it.putExtras(bundle);
-                            startActivity(it);
+                                Intent it = new Intent(HomeUserActivity.this, HomeAdmActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("teamName", selected.toString());
+                                bundle.putString("teamId", selected.getTag().toString());
+                                bundle.putString("userName", userName);
+                                it.putExtras(bundle);
+                                startActivity(it);
 
-                            finish();
+                                finish();
+                            }
                         }
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
+                        }
+                    });
+                }
+            }else{
+                Toast.makeText(HomeUserActivity.this, "Erro em carregar os dados do usuário", Toast.LENGTH_LONG).show();
             }
         }
     }
-
-
 }

@@ -1,19 +1,12 @@
 package br.com.gotorcida.gotorcida.activity.user;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -88,7 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onBackPressed() {
         finish();
@@ -115,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                     setResult(99, it);
 
                 } else {
-                    Toast.makeText(RegisterActivity.this, postRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                    register = false;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -126,7 +118,9 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             if(register)
-            finish();
+                finish();
+            else
+                Toast.makeText(RegisterActivity.this, "Erro interno da aplicação", Toast.LENGTH_LONG).show();
         }
     }
 }

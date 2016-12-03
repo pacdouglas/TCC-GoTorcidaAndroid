@@ -55,9 +55,11 @@ public class SelectTeamActivity extends AppCompatActivity {
     }
 
     public class MakeListTeamsTask extends AsyncTask {
+        boolean success;
         protected void onPreExecute() {
             listTeams.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+            success = true;
         }
 
         @Override
@@ -65,86 +67,101 @@ public class SelectTeamActivity extends AppCompatActivity {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_TEAMS, "1",
                                                         bundle.getString("selectedSports"));
             getRequest.execute();
-            JSONObject json = getRequest.getMessage().getData();
 
-            GetRequest getRequestUser = new GetRequest(URL_SERVER_NEW_USER, SaveSharedPreference.getUserName(SelectTeamActivity.this));
-            getRequestUser.execute();
-            JSONObject jsonUser = getRequestUser.getMessage().getData();
-
-            JSONArray teams = null;
             try {
-                teams = json.getJSONArray("teams");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                if (getRequest.getMessage().getSystem().get("code").equals(200)) {
+                    JSONObject json = getRequest.getMessage().getData();
 
-            JSONArray arrayTeamsUser = null;
-            boolean edit = false;
-            try {
-                arrayTeamsUser = new JSONArray(new JSONObject(jsonUser.getString("user")).getString("teams"));
-                if(arrayTeamsUser.length() > 0){
-                    edit = true;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                    GetRequest getRequestUser = new GetRequest(URL_SERVER_NEW_USER, SaveSharedPreference.getUserName(SelectTeamActivity.this));
+                    getRequestUser.execute();
+                    JSONObject jsonUser = getRequestUser.getMessage().getData();
 
-            teamsList = new ArrayList<>();
-            JSONObject object = null;
+                    JSONArray teams = null;
+                    try {
+                        teams = json.getJSONArray("teams");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-            for (int i=0; i < teams.length(); i++) {
-                try {
-                    JSONArray array = teams.getJSONArray(i);
-                    for (int j = 0; j < array.length(); j++) {
-                        if(!edit){
-                            object = new JSONObject(array.getString(j));
-                            object.put("isChecked", false);
-                            if(object.getString("active").equals("S")){
-                                teamsList.add(object);
-                                arrayListChecked.add(false);
-                            }
-                        }else{
-                            String teamId = new JSONObject(array.getString(j)).getString("id");
-                            boolean test = false;
-                            for(int k = 0; k < arrayTeamsUser.length(); k++){
-                                if(teamId.compareTo(arrayTeamsUser.getJSONObject(k).getString("id")) == 0){
-                                    test = true;
+                    JSONArray arrayTeamsUser = null;
+                    boolean edit = false;
+                    try {
+                        arrayTeamsUser = new JSONArray(new JSONObject(jsonUser.getString("user")).getString("teams"));
+                        if(arrayTeamsUser.length() > 0){
+                            edit = true;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    teamsList = new ArrayList<>();
+                    JSONObject object = null;
+
+                    for (int i=0; i < teams.length(); i++) {
+                        try {
+                            JSONArray array = teams.getJSONArray(i);
+                            for (int j = 0; j < array.length(); j++) {
+                                if(!edit){
+                                    object = new JSONObject(array.getString(j));
+                                    object.put("isChecked", false);
+                                    if(object.getString("active").equals("S")){
+                                        teamsList.add(object);
+                                        arrayListChecked.add(false);
+                                    }
+                                }else{
+                                    String teamId = new JSONObject(array.getString(j)).getString("id");
+                                    boolean test = false;
+                                    for(int k = 0; k < arrayTeamsUser.length(); k++){
+                                        if(teamId.compareTo(arrayTeamsUser.getJSONObject(k).getString("id")) == 0){
+                                            test = true;
+                                        }
+                                    }
+
+                                    if(test){
+                                        object = new JSONObject(array.getString(j));
+                                        object.put("isChecked", true);
+                                        if(object.getString("active").equals("S")) {
+                                            teamsList.add(object);
+                                            arrayListChecked.add(true);
+                                        }
+                                    }else{
+                                        object = new JSONObject(array.getString(j));
+                                        object.put("isChecked", false);
+                                        if(object.getString("active").equals("S")) {
+                                            teamsList.add(object);
+                                            arrayListChecked.add(false);
+                                        }
+                                    }
                                 }
                             }
-
-                            if(test){
-                                object = new JSONObject(array.getString(j));
-                                object.put("isChecked", true);
-                                if(object.getString("active").equals("S")) {
-                                    teamsList.add(object);
-                                    arrayListChecked.add(true);
-                                }
-                            }else{
-                                object = new JSONObject(array.getString(j));
-                                object.put("isChecked", false);
-                                if(object.getString("active").equals("S")) {
-                                    teamsList.add(object);
-                                    arrayListChecked.add(false);
-                                }
-                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                }else{
+                    success = false;
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                success = false;
             }
             return null;
         }
 
         @Override
         public void onPostExecute(Object result) {
-            listTeams.setAdapter(new TeamsListAdapter(teamsList, getBaseContext()));
+            if(success){
+                listTeams.setAdapter(new TeamsListAdapter(teamsList, getBaseContext()));
 
-            RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
-            listTeams.setLayoutManager(layout);
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
+                listTeams.setLayoutManager(layout);
 
-            listTeams.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
+                listTeams.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }else{
+                Toast.makeText(SelectTeamActivity.this, "Não foi possível carregar os dados. Tente novamente mais tarde", Toast.LENGTH_SHORT).show();
+            }
+
         }
 
     }

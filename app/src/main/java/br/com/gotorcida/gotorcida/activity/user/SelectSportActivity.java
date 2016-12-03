@@ -55,87 +55,102 @@ public class SelectSportActivity extends AppCompatActivity {
 
 
     public class MakeListSportsTask extends AsyncTask {
-
+        boolean success;
         ArrayList<JSONObject> sportsList;
         protected void onPreExecute() {
             listSports.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+            success = true;
         }
 
         @Override
         protected Object doInBackground(Object... args) {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_LIST_SPORTS);
             getRequest.execute();
-            JSONObject json = getRequest.getMessage().getData();
 
-            GetRequest getRequestUser = new GetRequest(URL_SERVER_NEW_USER, SaveSharedPreference.getUserName(SelectSportActivity.this));
-            getRequestUser.execute();
-            JSONObject jsonUser = getRequestUser.getMessage().getData();
-
-            sports = null;
             try {
-                sports = json.getJSONArray("sports");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                if (getRequest.getMessage().getSystem().get("code").equals(200)) {
+                    JSONObject json = getRequest.getMessage().getData();
 
-            sportsList = new ArrayList<>();
+                    GetRequest getRequestUser = new GetRequest(URL_SERVER_NEW_USER, SaveSharedPreference.getUserName(SelectSportActivity.this));
+                    getRequestUser.execute();
+                    JSONObject jsonUser = getRequestUser.getMessage().getData();
 
-            JSONArray arraySportsUser = null;
-            boolean edit = false;
-            try {
-                arraySportsUser = new JSONArray(new JSONObject(jsonUser.getString("user")).getString("sports"));
-                if(arraySportsUser.length() > 0){
-                    edit = true;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            for(int i=0; i < sports.length(); i++)
-            {
-                try {
-                    JSONObject aux = (JSONObject)sports.get(i);
-                    if(!edit){
-                        aux.put("isChecked", false);
-                        sportsList.add(aux);
-                        arrayListChecked.add(false);
-                    }else{
-                        String sportIdAux = aux.getString("id");
-                        boolean test = false;
-                        for(int j = 0; j < arraySportsUser.length(); j++){
-                            if(sportIdAux.compareTo(arraySportsUser.getJSONObject(j).getString("id")) == 0){
-                                test = true;
-                            }
-                        }
-                        if(test){
-                            aux.put("isChecked", true);
-                            sportsList.add(aux);
-                            arrayListChecked.add(true);
-                        }else{
-                            aux.put("isChecked", false);
-                            sportsList.add(aux);
-                            arrayListChecked.add(false);
-                        }
+                    sports = null;
+                    try {
+                        sports = json.getJSONArray("sports");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    sportsList = new ArrayList<>();
+
+                    JSONArray arraySportsUser = null;
+                    boolean edit = false;
+                    try {
+                        arraySportsUser = new JSONArray(new JSONObject(jsonUser.getString("user")).getString("sports"));
+                        if(arraySportsUser.length() > 0){
+                            edit = true;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    for(int i=0; i < sports.length(); i++)
+                    {
+                        try {
+                            JSONObject aux = (JSONObject)sports.get(i);
+                            if(!edit){
+                                aux.put("isChecked", false);
+                                sportsList.add(aux);
+                                arrayListChecked.add(false);
+                            }else{
+                                String sportIdAux = aux.getString("id");
+                                boolean test = false;
+                                for(int j = 0; j < arraySportsUser.length(); j++){
+                                    if(sportIdAux.compareTo(arraySportsUser.getJSONObject(j).getString("id")) == 0){
+                                        test = true;
+                                    }
+                                }
+                                if(test){
+                                    aux.put("isChecked", true);
+                                    sportsList.add(aux);
+                                    arrayListChecked.add(true);
+                                }else{
+                                    aux.put("isChecked", false);
+                                    sportsList.add(aux);
+                                    arrayListChecked.add(false);
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }else{
+                    success = false;
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                success = false;
             }
             return null;
         }
 
         @Override
         public void onPostExecute(Object result) {
-            listSports.setAdapter(new SportsListAdapter(sportsList, getBaseContext()));
-            listSports.setHasFixedSize(true);
-            RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
-            listSports.setLayoutManager(layout);
+            if(success){
+                listSports.setAdapter(new SportsListAdapter(sportsList, getBaseContext()));
+                listSports.setHasFixedSize(true);
+                RecyclerView.LayoutManager layout = new LinearLayoutManager(getBaseContext());
+                listSports.setLayoutManager(layout);
 
-            progressBar.setVisibility(View.GONE);
-            listSports.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                listSports.setVisibility(View.VISIBLE);
+            }else{
+                Toast.makeText(SelectSportActivity.this, "Não foi possível carregar os dados. Tente novamente mais tarde", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

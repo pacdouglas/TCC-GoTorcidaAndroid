@@ -110,7 +110,6 @@ public class HomeAdmActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
@@ -135,9 +134,10 @@ public class HomeAdmActivity extends AppCompatActivity
         private GetRequest mGetRequest;
         ArrayAdapter<StringWithTag> adapter;
         int positionSelected = 0;
+        boolean success;
         @Override
         protected void onPreExecute() {
-
+            success = true;
         }
 
         @Override
@@ -145,56 +145,65 @@ public class HomeAdmActivity extends AppCompatActivity
             try {
                 mGetRequest = new GetRequest(Constants.URL_SERVER_NEW_USER + "/" + SaveSharedPreference.getUserName(HomeAdmActivity.this));
                 mGetRequest.execute();
-                JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
-                String userName = userData.getString("fullName");
 
-                if(userData.getString("userType").equals("Team")){
+                if (mGetRequest.getMessage().getSystem().get("code").equals(200)) {
+                    JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
+                    String userName = userData.getString("fullName");
 
-                    JSONArray teamsManaged = userData.getJSONArray("managedTeams");
-                    List<StringWithTag> spinnerArray =  new ArrayList<>();
-                    spinnerArray.add(new StringWithTag(userName,
-                            Integer.getInteger(SaveSharedPreference.getUserName(HomeAdmActivity.this))));
+                    if(userData.getString("userType").equals("Team")){
 
-                    JSONObject jsonAux = null;
-                    for(int i = 0; i < teamsManaged.length(); i++){
-                        jsonAux = teamsManaged.getJSONObject(i);
-                        spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
-                        if(jsonAux.getString("id").compareTo(mTeamId) == 0){
-                            positionSelected = i+1;
+                        JSONArray teamsManaged = userData.getJSONArray("managedTeams");
+                        List<StringWithTag> spinnerArray =  new ArrayList<>();
+                        spinnerArray.add(new StringWithTag(userName,
+                                Integer.getInteger(SaveSharedPreference.getUserName(HomeAdmActivity.this))));
+
+                        JSONObject jsonAux = null;
+                        for(int i = 0; i < teamsManaged.length(); i++){
+                            jsonAux = teamsManaged.getJSONObject(i);
+                            spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
+                            if(jsonAux.getString("id").compareTo(mTeamId) == 0){
+                                positionSelected = i+1;
+                            }
                         }
+                        adapter = new ArrayAdapter<>(
+                                HomeAdmActivity.this, R.layout.spinner_item, spinnerArray);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     }
-                    adapter = new ArrayAdapter<>(
-                            HomeAdmActivity.this, R.layout.spinner_item, spinnerArray);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                }else{
+                    success = false;
                 }
+
             } catch (Exception e) {
-                Toast.makeText(HomeAdmActivity.this, "Erro em carregar os dados do usuário", Toast.LENGTH_SHORT).show();
+                success = false;
             }
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mSpinnerSelectPerfil.setAdapter(adapter);
-            mSpinnerSelectPerfil.setSelection(positionSelected);
+            if(this.success){
+                mSpinnerSelectPerfil.setAdapter(adapter);
+                mSpinnerSelectPerfil.setSelection(positionSelected);
 
-            mSpinnerSelectPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(position == 0) {
-                        startActivity(new Intent(HomeAdmActivity.this, HomeUserActivity.class));
-                        finish();
-                    }else{
-                        StringWithTag aux = (StringWithTag) mSpinnerSelectPerfil.getItemAtPosition(position);
-                        mTeamId = aux.getTag().toString();
+                mSpinnerSelectPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(position == 0) {
+                            startActivity(new Intent(HomeAdmActivity.this, HomeUserActivity.class));
+                            finish();
+                        }else{
+                            StringWithTag aux = (StringWithTag) mSpinnerSelectPerfil.getItemAtPosition(position);
+                            mTeamId = aux.getTag().toString();
+                        }
                     }
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
 
-                }
-            });
-
+                    }
+                });
+            }else{
+                Toast.makeText(HomeAdmActivity.this, "Erro em carregar os dados do usuário.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

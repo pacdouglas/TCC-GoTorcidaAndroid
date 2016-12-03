@@ -1,5 +1,6 @@
 package br.com.gotorcida.gotorcida.fragment.adm;
 
+import android.annotation.SuppressLint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -16,12 +17,14 @@ import java.io.IOException;
 import java.util.List;
 
 
+@SuppressLint("ValidFragment")
 public class MapsAdmFragment extends SupportMapFragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private String mAddress;
     private LatLng mLocation;
     private MarkerOptions mMarkerOptions;
+    
     public MapsAdmFragment(String address) {
         this.mAddress = address;
 

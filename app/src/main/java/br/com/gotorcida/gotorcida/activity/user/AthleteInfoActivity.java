@@ -122,7 +122,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
     public class AthleteInfoTask extends AsyncTask{
 
         JSONObject athlete;
-
+        boolean success;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -130,6 +130,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
             athleteTwitter.setVisibility(View.GONE);
             athleteInstagram.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+            success = true;
         }
 
         @Override
@@ -138,13 +139,14 @@ public class AthleteInfoActivity extends AppCompatActivity {
             getRequest.execute();
 
             try {
-                if(getRequest.getMessage().getSystem().getInt("code") == 500){
-                    Toast.makeText(AthleteInfoActivity.this, getRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
-                }else{
+                if (getRequest.getMessage().getSystem().get("code").equals(200)) {
                     athlete = new JSONObject(getRequest.getMessage().getData().getString("athlete"));
+                }else{
+                   success = false;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                success = false;
             }
             return null;
         }
@@ -152,46 +154,50 @@ public class AthleteInfoActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            try {
-                String auxImg = athlete.getString("urlImage");
-                if(!auxImg.equals("null") && !auxImg.isEmpty() && !auxImg.equals("")){
-                    Glide.with(AthleteInfoActivity.this).load(URL_IMAGES_BASE + auxImg +".png").asBitmap().centerCrop().into(new BitmapImageViewTarget(athletePhoto) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            athletePhoto.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+            if(success){
+                try {
+                    String auxImg = athlete.getString("urlImage");
+                    if(!auxImg.equals("null") && !auxImg.isEmpty() && !auxImg.equals("")){
+                        Glide.with(AthleteInfoActivity.this).load(URL_IMAGES_BASE + auxImg +".png").asBitmap().centerCrop().into(new BitmapImageViewTarget(athletePhoto) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                athletePhoto.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                    }
+                    athleteNameAndAge.setText(athlete.getString("name") + ",  " + athlete.getString("age") + " anos");
+
+                    String position = athlete.getString("position");
+                    position = position.substring(0, position.indexOf("-"));
+
+                    athletePositionNumber.setText(position + " #" + athlete.getString("number"));
+                    athleteWebsite.setText(athlete.getString("website"));
+                    athleteEmail.setText(athlete.getString("emailAddress"));
+
+                    if (!athlete.getString("facebook").equals("")) {
+                        athleteFacebook.setVisibility(View.VISIBLE);
+                        facebookLink = athlete.getString("facebook");
+                    }
+
+                    if (!athlete.getString("twitter").equals("")) {
+                        athleteTwitter.setVisibility(View.VISIBLE);
+                        twitterLink = athlete.getString("twitter");
+                    }
+
+                    if (!athlete.getString("instagram").equals("")) {
+                        athleteInstagram.setVisibility(View.VISIBLE);
+                        instagramLink = athlete.getString("instagram");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                athleteNameAndAge.setText(athlete.getString("name") + ",  " + athlete.getString("age") + " anos");
-
-                String position = athlete.getString("position");
-                position = position.substring(0, position.indexOf("-"));
-
-                athletePositionNumber.setText(position + " #" + athlete.getString("number"));
-                athleteWebsite.setText(athlete.getString("website"));
-                athleteEmail.setText(athlete.getString("emailAddress"));
-
-                if (!athlete.getString("facebook").equals("")) {
-                    athleteFacebook.setVisibility(View.VISIBLE);
-                    facebookLink = athlete.getString("facebook");
-                }
-
-                if (!athlete.getString("twitter").equals("")) {
-                    athleteTwitter.setVisibility(View.VISIBLE);
-                    twitterLink = athlete.getString("twitter");
-                }
-
-                if (!athlete.getString("instagram").equals("")) {
-                    athleteInstagram.setVisibility(View.VISIBLE);
-                    instagramLink = athlete.getString("instagram");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
+            }else{
+                Toast.makeText(AthleteInfoActivity.this, "Erro de comunicação com o servidor. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
             }
-            progressBar.setVisibility(View.GONE);
         }
     }
 

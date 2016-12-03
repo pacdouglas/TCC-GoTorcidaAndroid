@@ -43,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import br.com.gotorcida.gotorcida.R;
+import br.com.gotorcida.gotorcida.utils.CollectionUtils;
 import br.com.gotorcida.gotorcida.utils.Constants;
 import br.com.gotorcida.gotorcida.utils.MailSender;
 import br.com.gotorcida.gotorcida.utils.SaveSharedPreference;
@@ -123,10 +124,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserLoginTask userLoginTask = new UserLoginTask(mEmailView.getText().toString(),
-                        mPasswordView.getText().toString(), "", "", "NORMAL");
-
-                userLoginTask.execute();
+                if(CollectionUtils.ValidateFields(LoginActivity.this, mEmailView, mPasswordView)) {
+                    UserLoginTask userLoginTask = new UserLoginTask(mEmailView.getText().toString(),
+                            mPasswordView.getText().toString(), "", "", "NORMAL");
+                    userLoginTask.execute();
+                }
             }
         });
 
@@ -245,6 +247,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         private GetRequest mGetRequest;
         private PostRequest mPostRequest;
         private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        boolean success;
 
         UserLoginTask(String email, String password, String fullname, String birthdate, String loginType) {
             mEmail = email;
@@ -258,6 +261,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         protected void onPreExecute() {
             formView.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+            success = true;
         }
 
         @Override
@@ -281,10 +285,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 startActivity(it);
                             }
                         } else {
-                            Toast.makeText(LoginActivity.this, mGetRequest.getMessage().getSystem().getString("message"), Toast.LENGTH_SHORT).show();
+                            success = false;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        success = false;
                     }
                     break;
 
@@ -321,10 +326,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                             startActivity(it);
                                                     }
                                             } else {
-                                                    Toast.makeText(LoginActivity.this, "Erro interno da aplicação.", Toast.LENGTH_SHORT).show();
+                                                success = false;
                                             }
                                     } else {
-                                            Toast.makeText(LoginActivity.this, mPostRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                                            success = false;
                                     }
                             } else {
                                     JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
@@ -340,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     }
                             }
                     } catch (JSONException ex) {
-                            Toast.makeText(LoginActivity.this, "Erro interno da aplicação.", Toast.LENGTH_SHORT).show();
+                            success = false;
                     }
                 break;
 
@@ -377,10 +382,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         startActivity(it);
                                     }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Erro interno da aplicação.", Toast.LENGTH_SHORT).show();
+                                    success = false;
                                 }
                             } else {
-                                Toast.makeText(LoginActivity.this, mPostRequest.getMessage().getSystem().get("message").toString(), Toast.LENGTH_SHORT).show();
+                                success = false;
                             }
                         } else {
                             JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
@@ -396,7 +401,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             }
                         }
                     } catch (JSONException ex) {
-                        Toast.makeText(LoginActivity.this, "Erro interno da aplicação.", Toast.LENGTH_SHORT).show();
+                        success = false;
                     }
 
                 break;
@@ -409,8 +414,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
-            finish();
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(success){
+                finish();
+            }else{
+                Toast.makeText(LoginActivity.this, "Login ou Senha Incorreto", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

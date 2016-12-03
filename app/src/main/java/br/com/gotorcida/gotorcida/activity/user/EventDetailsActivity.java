@@ -100,24 +100,24 @@ public class EventDetailsActivity extends AppCompatActivity {
         String description = "";
         String title = "";
         String costs = "";
+        boolean success;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
             mLayout.setVisibility(View.GONE);
+            success = true;
         }
         @Override
         protected Object doInBackground(Object[] params) {
             GetRequest getRequest;
             getRequest = new GetRequest(Constants.URL_SERVER_JSON_FIND_EVENT, mEventId);
             getRequest.execute();
-
             JSONObject requestResult = getRequest.getMessage().getData();
 
             try {
                 if(getRequest.getMessage().getSystem().getInt("code") == 500){
-                    Toast.makeText(EventDetailsActivity.this, "Não foi possível carregar os dados.",
-                            Toast.LENGTH_SHORT).show();
+                    success = false;
                 } else {
                     JSONObject event = new JSONObject(requestResult.getString("event"));
                     JSONObject firstTeam = new JSONObject(event.getString("firstTeam"));
@@ -141,33 +141,37 @@ public class EventDetailsActivity extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                Toast.makeText(EventDetailsActivity.this, "Não foi possível carregar os dados.",
-                        Toast.LENGTH_SHORT).show();
+               success = false;
             }
             return null;
         }
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            mFirstTeamName.setText(firstTeamName);
-            mSecondTeamName.setText(secondTeamName);
-            Glide.with(EventDetailsActivity.this).load(URL_IMAGES_BASE + urlFirstTeam+".png")
-                    .into(mFirstTeamLogo);
-            Glide.with(EventDetailsActivity.this).load(URL_IMAGES_BASE + urlSecondTeam+".png")
-                    .into(mSecondTeamLogo);
-            mFirstTeamScore.setText(scoreFirstTeam);
-            mSecondTeamScore.setText(scoreSecondTeam);
-            mDate.setText(date);
-            mAddress.setText(address);
-            mTitle.setText(title);
-            mCost.setText(costs);
-            mDescription.setText(description);
+            if(success){
+                mFirstTeamName.setText(firstTeamName);
+                mSecondTeamName.setText(secondTeamName);
+                Glide.with(EventDetailsActivity.this).load(URL_IMAGES_BASE + urlFirstTeam+".png")
+                        .into(mFirstTeamLogo);
+                Glide.with(EventDetailsActivity.this).load(URL_IMAGES_BASE + urlSecondTeam+".png")
+                        .into(mSecondTeamLogo);
+                mFirstTeamScore.setText(scoreFirstTeam);
+                mSecondTeamScore.setText(scoreSecondTeam);
+                mDate.setText(date);
+                mAddress.setText(address);
+                mTitle.setText(title);
+                mCost.setText(costs);
+                mDescription.setText(description);
 
-            getSupportFragmentManager().beginTransaction().
-                replace(R.id.event_details_frame, new MapsFragment(latitude,longitude, title)).commit();
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.event_details_frame, new MapsFragment(latitude,longitude, title)).commit();
 
-            progressBar.setVisibility(View.GONE);
-            mLayout.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                mLayout.setVisibility(View.VISIBLE);
+            }else{
+                Toast.makeText(EventDetailsActivity.this, "Não foi possível carregar os dados.",
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
