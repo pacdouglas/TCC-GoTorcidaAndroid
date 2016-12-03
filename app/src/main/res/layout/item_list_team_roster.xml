@@ -13,6 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="55"
+            android:id="@+id/team_roster_athlete_number"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"
+            android:layout_above="@+id/team_textview_athlete_name" />
+
         <ImageView
         android:id="@+id/team_roster_athlete_photo"
         android:layout_width="100dp"
@@ -42,9 +53,10 @@
             android:layout_height="wrap_content"
             android:text="QB"
             android:id="@+id/team_roster_athlete_position"
-            android:textSize="20sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="#000000"
+            android:paddingRight="5dp"
             android:layout_above="@+id/team_textview_athlete_name"
             android:layout_alignParentEnd="true" />
 
