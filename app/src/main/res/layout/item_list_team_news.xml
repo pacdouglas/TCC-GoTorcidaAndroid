@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="italic"
-                android:id="@+id/team_textview_newsdate" />
+                android:id="@+id/team_textview_newsdate"/>
 
             <TextView
                 android:text="Titulo da noticia"
