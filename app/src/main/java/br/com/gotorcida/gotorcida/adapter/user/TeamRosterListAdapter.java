@@ -53,6 +53,7 @@ public class TeamRosterListAdapter extends RecyclerView.Adapter {
             String positionFull = data.getString("position");
             String positionSig = positionFull.substring(positionFull.indexOf("-")+1, positionFull.length());
             holder.athletePosition.setText(positionSig);
+            holder.athleteNumber.setText("#" + data.getString("number"));
             holder.athleteId.setText(data.getString("id"));
 
             String auxImg = data.getString("urlImage");

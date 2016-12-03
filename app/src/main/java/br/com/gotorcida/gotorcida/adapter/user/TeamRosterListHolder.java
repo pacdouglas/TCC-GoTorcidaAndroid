@@ -16,6 +16,7 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
     TextView nameAthlete;
     TextView athleteId;
     TextView athletePosition;
+    TextView athleteNumber;
     ImageView athletImageProfile;
     String teamId;
     ItemClickListener itemClickListener;
@@ -27,6 +28,7 @@ public class TeamRosterListHolder extends RecyclerView.ViewHolder implements Vie
         nameAthlete = (TextView) itemView.findViewById(R.id.team_textview_athlete_name);
         athleteId = (TextView) itemView.findViewById(R.id.team_teamviwer_athlete_id);
         athletePosition = (TextView) itemView.findViewById(R.id.team_roster_athlete_position);
+        athleteNumber = (TextView) itemView.findViewById(R.id.team_roster_athlete_number);
         athletImageProfile = (ImageView) itemView.findViewById(R.id.team_roster_athlete_photo);
     }
 

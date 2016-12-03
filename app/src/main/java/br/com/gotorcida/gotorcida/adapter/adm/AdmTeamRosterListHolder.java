@@ -25,6 +25,7 @@ public class AdmTeamRosterListHolder extends RecyclerView.ViewHolder implements 
     TextView nameAthlete;
     TextView athleteId;
     TextView athletePosition;
+    TextView athleteNumber;
     ImageView athleteImageProfile;
     final FragmentManager fragmentManager;
     final Fragment fragment;
@@ -41,6 +42,7 @@ public class AdmTeamRosterListHolder extends RecyclerView.ViewHolder implements 
         nameAthlete = (TextView) itemView.findViewById(R.id.team_textview_athlete_name);
         athleteId = (TextView) itemView.findViewById(R.id.team_teamviwer_athlete_id);
         athletePosition = (TextView) itemView.findViewById(R.id.team_roster_athlete_position);
+        athleteNumber = (TextView) itemView.findViewById(R.id.team_roster_athlete_number);
         athleteImageProfile = (ImageView) itemView.findViewById(R.id.team_roster_athlete_photo);
     }
 
