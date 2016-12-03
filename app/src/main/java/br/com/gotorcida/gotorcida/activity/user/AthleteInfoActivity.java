@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,22 +31,23 @@ import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_FIND_ATHLETE;
 
 public class AthleteInfoActivity extends AppCompatActivity {
-    ProgressBar progressBar;
-    TextView athleteNameAndAge;
-    TextView athletePositionNumber;
-    TextView athleteWebsite;
-    TextView athleteEmail;
-    String athleteId;
+    private ProgressBar progressBar;
+    private TextView athleteNameAndAge;
+    private TextView athletePositionNumber;
+    private TextView athleteWebsite;
+    private TextView athleteEmail;
+    private String athleteId;
 
-    ImageView athletePhoto;
-    ImageView athleteFacebook;
-    ImageView athleteTwitter;
-    ImageView athleteInstagram;
+    private ImageView athletePhoto;
+    private ImageView athleteFacebook;
+    private ImageView athleteTwitter;
+    private ImageView athleteInstagram;
 
     private String facebookLink;
     private String twitterLink;
     private String instagramLink;
     private String teamId;
+    private LinearLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         athleteId = bundle.getString("athleteId");
         teamId = bundle.getString("teamId");
+        layout = (LinearLayout) findViewById(R.id.linearLayout) ;
         athleteNameAndAge = (TextView) findViewById(R.id.athlete_textview_name_and_age);
         athleteEmail = (TextView) findViewById(R.id.athlete_textview_teamemail);
         athletePositionNumber = (TextView) findViewById(R.id.athlete_textview_position_number);
@@ -134,6 +137,7 @@ public class AthleteInfoActivity extends AppCompatActivity {
             athleteFacebook.setVisibility(View.GONE);
             athleteTwitter.setVisibility(View.GONE);
             athleteInstagram.setVisibility(View.GONE);
+            layout.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             success = true;
         }
@@ -181,6 +185,8 @@ public class AthleteInfoActivity extends AppCompatActivity {
                     athletePositionNumber.setText(position + " #" + athlete.getString("number"));
                     athleteWebsite.setText(athlete.getString("website"));
                     athleteEmail.setText(athlete.getString("emailAddress"));
+                    Linkify.addLinks(athleteWebsite, Linkify.WEB_URLS);
+                    Linkify.addLinks(athleteEmail, Linkify.EMAIL_ADDRESSES);
 
                     if (!athlete.getString("facebook").equals("")) {
                         athleteFacebook.setVisibility(View.VISIBLE);
@@ -196,24 +202,11 @@ public class AthleteInfoActivity extends AppCompatActivity {
                         athleteInstagram.setVisibility(View.VISIBLE);
                         instagramLink = athlete.getString("instagram");
                     }
-
-                    try {
-                        athleteWebsite.append(athlete.getString("website"));
-                        Linkify.addLinks(athleteWebsite, Linkify.WEB_URLS);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        athleteEmail.append(athlete.getString("emailAddress"));
-                        Linkify.addLinks(athleteEmail, Linkify.EMAIL_ADDRESSES);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 progressBar.setVisibility(View.GONE);
+                layout.setVisibility(View.VISIBLE);
             }else{
                 Toast.makeText(AthleteInfoActivity.this, "Erro de comunicação com o servidor. Tente novamente mais tarde", Toast.LENGTH_LONG).show();
             }

@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
     <RelativeLayout
         android:layout_width="match_parent"
         android:paddingTop="7dp"
@@ -169,15 +169,12 @@
         <FrameLayout
             android:id="@+id/event_details_frame"
             android:layout_width="match_parent"
-            android:layout_height="200sp">
+            android:layout_height="190sp">
         </FrameLayout>
         <Button
             android:id="@+id/event_details_button_route"
-            android:layout_marginTop="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_gravity="end"
-            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:theme="@style/AppTheme.Button"
             android:text="@string/como_chegar"
             />

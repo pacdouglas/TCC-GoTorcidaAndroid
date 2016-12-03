@@ -143,6 +143,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     mLongitude = event.getString("longitude");
                     date = event.getString("formatedEventDate");
                     address = event.getString("location");
+                    address.replaceAll(":", " - ");
                     description = event.getString("description");
                     title = event.getString("name");
                     costs = event.getString("costs");
