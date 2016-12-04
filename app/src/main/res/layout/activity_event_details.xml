@@ -156,10 +156,13 @@
         <TextView
             android:id="@+id/event_details_textview_address"
             android:paddingTop="10sp"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:text="Rua dos bobos número 0 - Hortoândia - SP"/>
+            android:text="Campinas - SP"/>
     </RelativeLayout>
 
     <LinearLayout
