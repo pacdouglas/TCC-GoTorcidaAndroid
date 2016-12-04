@@ -1,10 +1,15 @@
 package br.com.gotorcida.gotorcida.activity.adm;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -44,6 +49,7 @@ public class HomeAdmActivity extends AppCompatActivity
     String mTeamId;
     String mUserName;
     Spinner mSpinnerSelectPerfil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +78,40 @@ public class HomeAdmActivity extends AppCompatActivity
 
         AdmConfigTask admConfigTask = new AdmConfigTask();
         admConfigTask.execute();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 123: {
+
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+
+                    checkPermission();
+                }
+                return;
+            }
+        }
+    }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {//Can add more as per requirement
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                    123);
+
+        } else {
+
+        }
     }
 
     @Override
@@ -135,6 +175,7 @@ public class HomeAdmActivity extends AppCompatActivity
         ArrayAdapter<StringWithTag> adapter;
         int positionSelected = 0;
         boolean success;
+
         @Override
         protected void onPreExecute() {
             success = true;
@@ -150,26 +191,26 @@ public class HomeAdmActivity extends AppCompatActivity
                     JSONObject userData = new JSONObject(mGetRequest.getMessage().getData().getString("user"));
                     String userName = userData.getString("fullName");
 
-                    if(userData.getString("userType").equals("Team")){
+                    if (userData.getString("userType").equals("Team")) {
 
                         JSONArray teamsManaged = userData.getJSONArray("managedTeams");
-                        List<StringWithTag> spinnerArray =  new ArrayList<>();
+                        List<StringWithTag> spinnerArray = new ArrayList<>();
                         spinnerArray.add(new StringWithTag(userName,
                                 Integer.getInteger(SaveSharedPreference.getUserName(HomeAdmActivity.this))));
 
                         JSONObject jsonAux = null;
-                        for(int i = 0; i < teamsManaged.length(); i++){
+                        for (int i = 0; i < teamsManaged.length(); i++) {
                             jsonAux = teamsManaged.getJSONObject(i);
                             spinnerArray.add(new StringWithTag(jsonAux.getString("name"), jsonAux.getInt("id")));
-                            if(jsonAux.getString("id").compareTo(mTeamId) == 0){
-                                positionSelected = i+1;
+                            if (jsonAux.getString("id").compareTo(mTeamId) == 0) {
+                                positionSelected = i + 1;
                             }
                         }
                         adapter = new ArrayAdapter<>(
                                 HomeAdmActivity.this, R.layout.spinner_item, spinnerArray);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     }
-                }else{
+                } else {
                     success = false;
                 }
 
@@ -181,29 +222,31 @@ public class HomeAdmActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            if(this.success){
+            if (this.success) {
                 mSpinnerSelectPerfil.setAdapter(adapter);
                 mSpinnerSelectPerfil.setSelection(positionSelected);
 
                 mSpinnerSelectPerfil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if(position == 0) {
+                        if (position == 0) {
                             startActivity(new Intent(HomeAdmActivity.this, HomeUserActivity.class));
                             finish();
-                        }else{
+                        } else {
                             StringWithTag aux = (StringWithTag) mSpinnerSelectPerfil.getItemAtPosition(position);
                             mTeamId = aux.getTag().toString();
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
-            }else{
+            } else {
                 Toast.makeText(HomeAdmActivity.this, "Erro em carregar os dados do usuário.", Toast.LENGTH_SHORT).show();
             }
+            checkPermission();
         }
     }
 }

@@ -144,9 +144,8 @@ public class AdmMatchesInsertDialog extends DialogFragment  {
                     }
 
                     if (CollectionUtils.ValidateFields(getContext(), mNameEvent, mDate, mHour, mCost)) {
-                        positiveButton.setEnabled(false);
-
                         if (mAddressFixed.getVisibility() == View.VISIBLE) {
+                            positiveButton.setEnabled(false);
                             JSONObject parameters = new JSONObject();
                             try {
                                 parameters.put("eventOwner", SaveSharedPreference.getUserName(getContext()));

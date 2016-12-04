@@ -59,7 +59,8 @@
                     android:id="@+id/adm_add_athlete_edittext_date_of_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Data de Nascimento*" />
+                    android:hint="Data de Nascimento*"
+                    android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

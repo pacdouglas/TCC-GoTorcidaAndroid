@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +35,7 @@ import br.com.gotorcida.gotorcida.webservice.GetRequest;
 import br.com.gotorcida.gotorcida.webservice.PostRequest;
 
 import static android.app.Activity.RESULT_OK;
+import static br.com.gotorcida.gotorcida.utils.Constants.URL_IMAGES_BASE;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_LIST_TEAMS;
 import static br.com.gotorcida.gotorcida.utils.Constants.URL_SERVER_JSON_TEAM_UPDATE;
 
@@ -201,6 +205,7 @@ public class TeamAdmEditInfoFragment extends Fragment{
                 mTeamTwitter.setText(team.getString("twitter"));
                 mTeamInstagram.setText(team.getString("instagram"));
                 mTeamCity.setText(team.getString("city"));
+                Glide.with(getActivity()).load(URL_IMAGES_BASE + team.getString("urlImage")+".png").error(R.drawable.ic_team_no_logo).into(mTeamLogo);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
