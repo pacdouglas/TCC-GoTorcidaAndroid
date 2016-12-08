@@ -146,7 +146,6 @@ public class AthleteInfoActivity extends AppCompatActivity {
         protected Object doInBackground(Object[] params) {
             GetRequest getRequest = new GetRequest(URL_SERVER_JSON_FIND_ATHLETE, athleteId, teamId);
             getRequest.execute();
-
             try {
                 if (getRequest.getMessage().getSystem().get("code").equals(200)) {
                     athlete = new JSONObject(getRequest.getMessage().getData().getString("athlete"));

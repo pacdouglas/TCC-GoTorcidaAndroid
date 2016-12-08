@@ -68,6 +68,7 @@ public class TeamAdmAddTeamFragment extends Fragment{
             public void onClick(View v) {
             if (CollectionUtils.ValidateFields(getContext(), mTeamName)) {
                 try {
+                    mParameters = new JSONObject();
                     mParameters.put("name", mTeamName.getText().toString());
                     SendTeamTask sendTeamTask = new SendTeamTask();
                     sendTeamTask.execute();
